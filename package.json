@@ -1,0 +1,25 @@
+{
+  "name": "awantura-o-kase",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Awantura o kasę – aktywność na Discordzie",
+  "scripts": {
+    "dev": "concurrently -n serwer,strona -c blue,yellow \"node --watch server/index.js\" \"vite\"",
+    "dev:discord": "cross-env TUNNEL=1 concurrently -n serwer,strona -c blue,yellow \"node --watch server/index.js\" \"vite\"",
+    "discord": "cross-env TUNNEL=1 concurrently -n serwer,strona,tunel -c blue,yellow,magenta \"node --watch server/index.js\" \"vite\" \"cloudflared tunnel --url http://localhost:5173\"",
+    "build": "vite build",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "@discord/embedded-app-sdk": "^2.4.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "vite": "^6.0.0"
+  }
+}

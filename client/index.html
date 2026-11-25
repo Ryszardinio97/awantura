@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Awantura o kasę</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="loading" class="screen">
+      <div class="logo">AWANTURA<br /><span>O KASĘ</span></div>
+      <p id="loading-text">Łączenie…</p>
+    </div>
+
+    <!-- Logowanie testowe: widoczne tylko poza Discordem (np. localhost w przeglądarce) -->
+    <form id="dev-login" class="screen hidden">
+      <div class="logo">AWANTURA<br /><span>O KASĘ</span></div>
+      <p class="muted">Tryb testowy poza Discordem</p>
+      <input id="dev-name" placeholder="Twój nick" maxlength="24" required autocomplete="off" />
+      <button type="submit" class="btn primary">Wejdź</button>
+    </form>
+
+    <main id="game" class="hidden">
+      <header>
+        <div class="logo small">AWANTURA <span>O KASĘ</span></div>
+        <div id="round" class="pill"></div>
+        <div id="phase" class="pill"></div>
+        <div id="mode-pill" class="pill"></div>
+        <div id="timer" class="timer"></div>
+        <button id="theme-toggle" class="pill theme-btn" type="button" title="Zmień wygląd (tylko u ciebie)"></button>
+      </header>
+
+      <div class="layout">
+        <div class="left">
+          <!-- Pula: na górze, na środku -->
+          <section class="pool-wrap">
+            <div class="pool-card">
+              <div class="pool-label">PULA</div>
+              <div id="pool" class="pool">0 zł</div>
+            </div>
+          </section>
+
+          <div id="question" class="question hidden"></div>
+          <div id="official" class="official hidden"></div>
+
+          <!-- Tablica: LICYTACJA / STAN KONTA. Kliknięcie w stan konta pokazuje awatary drużyny. -->
+          <section class="board">
+            <div class="board-head">LICYTACJA</div>
+            <div id="bids" class="board-row"></div>
+            <div id="money" class="board-row"></div>
+          </section>
+
+          <!-- Czat = licytacja. W trakcie licytacji sama kwota to oferta. -->
+          <section class="chat">
+            <div id="chat-tabs" class="chat-tabs">
+              <button type="button" class="tab active" data-tab="general">💬 Ogólny <span class="badge hidden" data-badge="general"></span></button>
+              <button type="button" class="tab" data-tab="team" id="team-tab">👥 Moja drużyna <span class="badge hidden" data-badge="team"></span></button>
+            </div>
+            <div id="chat-log" class="chat-log" data-log="general"></div>
+            <div id="team-log" class="chat-log hidden" data-log="team"></div>
+            <form id="chat-form" class="chat-form">
+              <input id="chat-input" autocomplete="off" maxlength="200" placeholder="Napisz wiadomość…" />
+              <button type="submit" class="btn primary">➤</button>
+            </form>
+          </section>
+
+          <!-- Wybór drużyny – pokazuje się tylko, gdy jest potrzebny -->
+          <section id="lobby" class="card hidden">
+            <div id="team-buttons" class="row wrap"></div>
+            <button id="claim-host" class="btn ghost hidden">Zostań prowadzącym</button>
+          </section>
+        </div>
+
+        <aside class="right">
+          <section id="host-panel" class="card hidden">
+            <h2>Panel prowadzącego</h2>
+            <div class="mode-switch">
+              <span class="muted">Tryb gry:</span>
+              <button type="button" class="btn mode-btn" data-mode="voice">🎙️ Głosowy</button>
+              <button type="button" class="btn mode-btn" data-mode="text">⌨️ Tekstowy</button>
+            </div>
+            <div id="host-answer" class="answer"></div>
+            <div id="host-official" class="host-official hidden"></div>
+            <div class="row wrap">
+              <button class="btn" data-action="draw_category">🎲 Losuj kategorię</button>
+              <button class="btn primary" data-action="start_bidding">▶️ Start licytacji</button>
+              <button class="btn" data-action="end_bidding">⏹️ Zamknij licytację</button>
+              <button class="btn primary" data-action="show_question">❓ Pokaż pytanie</button>
+              <button class="btn good" data-action="good">✅ Dobrze</button>
+              <button class="btn bad" data-action="bad">❌ Źle</button>
+              <button class="btn primary" data-action="next_round">⏭️ Następna runda</button>
+            </div>
+            <div id="voice-row" class="row wrap">
+              <button class="btn" data-action="voice_split">🔀 Narada drużyn</button>
+              <button class="btn" data-action="voice_join">↩️ Wszyscy wracają</button>
+            </div>
+            <div id="voice-warn" class="muted hidden">Bot do kanałów głosowych nie jest skonfigurowany (patrz README).</div>
+            <div class="row wrap">
+              <button class="btn" data-action="start_game" data-confirm="1">🔄 Nowa gra</button>
+              <button class="btn" data-action="end_game" data-confirm="1">🏁 Zakończ grę</button>
+              <button class="btn ghost" data-action="release_host" data-confirm="1">Oddaj prowadzenie</button>
+            </div>
+            <form id="adjust-form" class="row wrap">
+              <select id="adjust-target"></select>
+              <input id="adjust-delta" inputmode="numeric" placeholder="np. 500 lub -500" autocomplete="off" />
+              <button type="submit" class="btn">💰 Zmień kwotę</button>
+            </form>
+            <div id="host-info" class="muted"></div>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

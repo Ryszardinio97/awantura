@@ -1,0 +1,25 @@
+[
+  { "kategoria": "Geografia", "pytanie": "Jak nazywa się najdłuższa rzeka w Polsce?", "odpowiedz": "Wisła" },
+  { "kategoria": "Geografia", "pytanie": "Stolicą którego państwa jest Canberra?", "odpowiedz": "Australii" },
+  { "kategoria": "Geografia", "pytanie": "Jak nazywa się najwyższy szczyt polskich Tatr?", "odpowiedz": "Rysy" },
+
+  { "kategoria": "Historia", "pytanie": "W którym roku miał miejsce chrzest Polski?", "odpowiedz": "966" },
+  { "kategoria": "Historia", "pytanie": "W którym roku wybuchło powstanie warszawskie?", "odpowiedz": "1944" },
+  { "kategoria": "Historia", "pytanie": "Który król Polski przegrał bitwę pod Warną?", "odpowiedz": "Władysław III Warneńczyk" },
+
+  { "kategoria": "Nauka", "pytanie": "Jaki symbol chemiczny ma złoto?", "odpowiedz": "Au" },
+  { "kategoria": "Nauka", "pytanie": "Która planeta Układu Słonecznego jest największa?", "odpowiedz": "Jowisz" },
+  { "kategoria": "Nauka", "pytanie": "Ile kości ma dorosły człowiek (w przybliżeniu)?", "odpowiedz": "206" },
+
+  { "kategoria": "Sport", "pytanie": "Ilu zawodników jednej drużyny jest jednocześnie na boisku w siatkówce halowej?", "odpowiedz": "6" },
+  { "kategoria": "Sport", "pytanie": "W jakim mieście odbyły się Letnie Igrzyska Olimpijskie w 2024 roku?", "odpowiedz": "Paryż" },
+  { "kategoria": "Sport", "pytanie": "Ile minut trwa regulaminowy mecz piłki nożnej bez doliczonego czasu?", "odpowiedz": "90" },
+
+  { "kategoria": "Literatura", "pytanie": "Kto napisał „Pana Tadeusza”?", "odpowiedz": "Adam Mickiewicz" },
+  { "kategoria": "Literatura", "pytanie": "Jak nazywa się wiedźmin z sagi Andrzeja Sapkowskiego?", "odpowiedz": "Geralt z Rivii" },
+  { "kategoria": "Literatura", "pytanie": "Kto jest autorem „Lalki”?", "odpowiedz": "Bolesław Prus" },
+
+  { "kategoria": "Gry", "pytanie": "Jakie polskie studio stworzyło grę „Cyberpunk 2077”?", "odpowiedz": "CD Projekt RED" },
+  { "kategoria": "Gry", "pytanie": "Jak nazywa się główny bohater serii „The Legend of Zelda”?", "odpowiedz": "Link" },
+  { "kategoria": "Gry", "pytanie": "Z ilu pól składa się szachownica?", "odpowiedz": "64" }
+]
