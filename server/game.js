@@ -9,9 +9,26 @@ export const CONFIG = {
   firstBidTimerSec: 20,  // ile czasu na pierwszą ofertę po otwarciu licytacji
   bidTimerSec: 10,       // ile sekund bez przebicia zamyka licytację
   answerTimerSec: 60,    // czas na odpowiedź (tylko odliczanie, decyduje prowadzący)
-  spinSec: 10,           // jak długo kręci się koło przy losowaniu kategorii
+  spinSec: Number(process.env.SPIN_SEC) || 10, // jak długo kręci się koło przy losowaniu kategorii
   hintCost: 500,         // cena podpowiedzi 50/50 (trafia do puli); 0 = za darmo
+  finalQuestions: 7,     // ile pytań ma finał z Mistrzami
+  duelFee: 500,          // 1 na 1: tyle wpłaca każda drużyna do puli…
+  duelBonus: 1000,       // …a tyle dokłada prowadzący
+  // Czarna skrzynka: losowana nagroda dla drużyny, która ją wylicytuje.
+  // money = dopisywana kwota, pool = drużyna zgarnia całą pulę. Dopisuj własne!
+  blackBox: [
+    { text: '10 000 zł!', money: 10000 },
+    { text: '5 000 zł', money: 5000 },
+    { text: 'Sztabka złota – 7 500 zł', money: 7500 },
+    { text: '2 000 zł', money: 2000 },
+    { text: 'Cała pula!', pool: true },
+    { text: 'Ogórek kiszony 🥒', money: 0 },
+    { text: 'Pusty karton 📦', money: 0 },
+  ],
 };
+
+export const BOX = 'Czarna skrzynka';
+export const DUEL = '1 na 1';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 const shuffle = (arr) => {
@@ -27,7 +44,9 @@ export const TEAMS = [
   { id: 'blue', name: 'Niebiescy', color: '#3b82f6' },
   { id: 'green', name: 'Zieloni', color: '#22c55e' },
   { id: 'yellow', name: 'Żółci', color: '#eab308' },
+  { id: 'champs', name: 'Mistrzowie', color: '#a855f7' },
 ];
+const STAGE1_TEAMS = ['blue', 'green', 'yellow'];
 
 const TEAM_IDS = TEAMS.map((t) => t.id);
 const teamName = (id) => TEAMS.find((t) => t.id === id)?.name ?? id;
@@ -67,17 +86,26 @@ function freshState() {
     correctIndex: null,
     removed: [], // odpowiedzi usunięte podpowiedzią 50/50
     hintUsed: false,
+    stage: 1, // 1 = trzy drużyny, 2 = finał pretendenta z Mistrzami
+    challenger: null, // drużyna, która wygrała etap 1
+    finalRound: 0, // numer pytania w finale
+    usedSpecials: [], // wykorzystane w finale: czarna skrzynka / 1 na 1
+    special: null, // bieżąca runda: null | 'box' | 'duel'
+    duel: null, // { players: { team: userId }, locked: [team], pending: { team, text, by } }
+    boxPrize: null,
     message: 'Czekamy na prowadzącego.',
   };
 }
 
 export class Game {
-  constructor(id, questions, { saved, hostIds = [], onChange, voice } = {}) {
+  constructor(id, questions, { saved, hostIds = [], onChange, voice, champions } = {}) {
     this.id = id;
     this.questions = questions;
     this.hostIds = hostIds;
     this.onChange = onChange ?? (() => {});
     this.voice = voice ?? null; // bot przenoszący graczy między kanałami głosowymi
+    // Mistrzowie zapamiętani między grami: { ids: [], names: [] } + zapis do pliku
+    this.champions = champions ?? { get: () => ({ ids: [], names: [] }), set: () => {} };
     this.voiceBusy = false;
     this.sockets = new Set(); // każdy socket ma pole .userId
     this.timer = null;
@@ -89,6 +117,8 @@ export class Game {
     this.state.mode ??= 'voice'; // stare zapisy gry nie miały trybu
     this.state.answerMode ??= 'abcd';
     this.state.removed ??= [];
+    this.state.stage ??= 1;
+    this.state.usedSpecials ??= [];
     this.spinTimer = null;
     // Restart serwera w trakcie kręcenia kołem – dokończ ogłoszenie kategorii.
     if (this.state.spin && this.state.spin.endsAt > Date.now()) this.armSpin();
@@ -112,6 +142,11 @@ export class Game {
       team: old?.team ?? null,
       discord: !!user.discord, // true = gracz z Discorda (ma awatar)
     };
+    // Mistrzowie z poprzedniej gry same trafiają do drużyny Mistrzów (przed startem gry).
+    const np = this.state.players[user.id];
+    if (!np.team && ['lobby', 'gameover'].includes(this.state.phase) && this.champions.get().ids.includes(user.id)) {
+      np.team = 'champs';
+    }
     if (!this.state.hostId && this.hostIds.includes(user.id)) this.state.hostId = user.id;
     this.changed();
     this.sendHistory(ws);
@@ -172,6 +207,9 @@ export class Game {
     const isHost = userId === s.hostId;
 
     // Tryb tekstowy: "!odpowiedź" od drużyny, która wygrała licytację = oficjalna odpowiedź.
+    if (text.startsWith('!') && s.phase === 'duel' && p?.team && !isHost) {
+      return this.duelAnswer(userId, text.slice(1).trim());
+    }
     if (text.startsWith('!') && (s.mode === 'text' || s.answerMode === 'abcd') && p?.team && !isHost) {
       return this.officialAnswer(userId, text.slice(1).trim());
     }
@@ -199,9 +237,7 @@ export class Game {
     if (!text) return s.answerMode === 'abcd' ? 'Wpisz literę po wykrzykniku, np. !B' : 'Wpisz odpowiedź po wykrzykniku, np. !Wisła';
     if (s.answerMode === 'abcd' && s.options) {
       // litera A–D albo dokładny tekst odpowiedzi
-      const t = text.trim().replace(/[).:]$/, '').toUpperCase();
-      let i = LETTERS.indexOf(t);
-      if (i < 0) i = s.options.findIndex((o) => o.toUpperCase() === text.trim().toUpperCase());
+      const i = this.parseChoice(text);
       if (i < 0) return 'Wybierz jedną z odpowiedzi: A, B, C albo D (np. !B).';
       if (s.removed.includes(i)) return 'Ta odpowiedź została odrzucona przez podpowiedź.';
       s.officialAnswer = { text: `${LETTERS[i]}) ${s.options[i]}`, index: i, by: p.name };
@@ -249,7 +285,7 @@ export class Game {
     for (const p of Object.values(s.players)) {
       if (!p.discord) continue; // gracze z trybu testowego nie są na Discordzie
       if (kind === 'split') {
-        if (p.team && p.id !== s.hostId) targets.push([p, this.voice.channels[p.team]]);
+        if (p.team && p.id !== s.hostId && this.voice.channels[p.team]) targets.push([p, this.voice.channels[p.team]]);
       } else {
         targets.push([p, this.voice.channels.main]);
       }
@@ -334,6 +370,22 @@ export class Game {
       correctIndex: isHost || s.phase === 'result' ? s.correctIndex : null,
       removed: s.removed,
       hintUsed: s.hintUsed,
+      stage: s.stage,
+      challenger: s.challenger,
+      finalRound: s.finalRound,
+      boardTeams: this.boardTeams(),
+      special: s.special,
+      duel: s.duel
+        ? {
+            players: Object.fromEntries(
+              Object.entries(s.duel.players).map(([t, id]) => [t, { id, name: s.players[id]?.name ?? '?' }]),
+            ),
+            locked: s.duel.locked,
+            pending: s.duel.pending,
+          }
+        : null,
+      boxPrize: s.boxPrize,
+      championsNames: this.champions.get().names,
       spin: s.spin ?? null,
       voiceReady: !!this.voice?.ready,
       voiceBusy: this.voiceBusy,
@@ -362,8 +414,11 @@ export class Game {
         const p = s.players[userId];
         if (!p?.team || userId === s.hostId) return 'Odpowiada drużyna, nie prowadzący.';
         if (s.answerMode !== 'abcd') return 'To pytanie jest bez odpowiedzi do wyboru.';
+        if (s.phase === 'duel') return this.duelAnswer(userId, LETTERS[msg.index] ?? '');
         return this.officialAnswer(userId, LETTERS[msg.index] ?? '');
       }
+      case 'duel_join':
+        return this.duelJoin(userId);
       case 'hint':
         return this.useHint(userId);
       case 'host':
@@ -378,7 +433,7 @@ export class Game {
     const s = this.state;
     if (team !== null && !TEAM_IDS.includes(team)) return 'Nie ma takiej drużyny.';
     if (userId === s.hostId) return 'Prowadzący nie gra w drużynie.';
-    if (['bidding', 'question'].includes(s.phase)) return 'Drużynę można zmienić dopiero po tej rundzie.';
+    if (['bidding', 'question', 'duel', 'box'].includes(s.phase)) return 'Drużynę można zmienić dopiero po tej rundzie.';
     s.players[userId].team = team;
     this.changed();
     // nowa drużyna = inna historia czatu drużynowego
@@ -455,9 +510,18 @@ export class Game {
         this.state.players = players;
         this.state.mode = mode;
         this.state.answerMode = answerMode;
+        // Zapamiętani Mistrzowie -> drużyna Mistrzów; byli Mistrzowie bez tytułu -> bez drużyny.
+        const champIds = this.champions.get().ids;
+        if (champIds.length) {
+          for (const p of Object.values(players)) {
+            if (champIds.includes(p.id) && p.id !== hostId) p.team = 'champs';
+            else if (p.team === 'champs') p.team = null;
+          }
+        }
         this.state.phase = 'category';
         this.state.round = 1;
-        this.say('Runda 1 – prowadzący losuje kategorię.');
+        this.say('Etap 1, runda 1 – prowadzący losuje kategorię.');
+        for (const ws of this.sockets) this.sendHistory(ws);
         break;
       }
       case 'draw_category': {
@@ -466,28 +530,51 @@ export class Game {
         if (this.spinning()) return 'Koło jeszcze się kręci.';
         // Poprzednio wylosowane, ale niezagrane pytanie wraca do puli.
         if (s.question) s.usedQuestions = s.usedQuestions.filter((id) => id !== s.question.id);
+        // …a niezagrane pole specjalne wraca na koło.
+        if (s.special) s.usedSpecials = s.usedSpecials.filter((x) => x !== (s.special === 'box' ? BOX : DUEL));
         const free = this.questions.filter(
           (q) => !s.usedQuestions.includes(q.id) && (s.answerMode !== 'abcd' || q.bledne?.length >= 3),
         );
         if (!free.length) return 'Skończyły się pytania – dopisz nowe do questions.json.';
         const cats = [...new Set(free.map((q) => q.kategoria))];
-        const cat = cats[Math.floor(Math.random() * cats.length)];
-        const inCat = free.filter((q) => q.kategoria === cat);
-        const q = inCat[Math.floor(Math.random() * inCat.length)];
-        s.usedQuestions.push(q.id);
-        s.category = cat;
-        s.question = q;
+        // W finale na kole są też pola specjalne (każde najwyżej raz na finał).
+        const specials = s.stage === 2 ? [BOX, DUEL].filter((x) => !s.usedSpecials.includes(x)) : [];
+        // Koło: do 8 pól (kategorie + pola specjalne); przy małej liczbie kategorii powtarzamy je.
+        let wheelCats = shuffle(cats).slice(0, 8 - specials.length);
+        while (wheelCats.length + specials.length < 6) wheelCats = wheelCats.concat(wheelCats);
+        const wheel = shuffle([...wheelCats.slice(0, 8 - specials.length), ...specials]);
+        let index = Math.floor(Math.random() * wheel.length);
+        // Gwarancja: pod koniec finału koło musi trafić w niewykorzystane pole specjalne.
+        const left = CONFIG.finalQuestions - s.finalRound + 1;
+        if (specials.length && specials.length >= left) {
+          index = wheel.indexOf(specials[Math.floor(Math.random() * specials.length)]);
+        }
+        const picked = wheel[index];
+
+        s.special = picked === BOX ? 'box' : picked === DUEL ? 'duel' : null;
+        s.duel = null;
+        s.boxPrize = null;
+        if (s.special) s.usedSpecials.push(picked);
+        if (s.special === 'box') {
+          s.category = BOX;
+          s.question = null; // w skrzynce nie ma pytania
+          s.options = null;
+          s.correctIndex = null;
+        } else {
+          // 1 na 1: pytanie z losowej kategorii; zwykła runda: z wylosowanej
+          const cat = s.special === 'duel' ? cats[Math.floor(Math.random() * cats.length)] : picked;
+          const inCat = free.filter((q) => q.kategoria === cat);
+          const q = inCat[Math.floor(Math.random() * inCat.length)];
+          s.usedQuestions.push(q.id);
+          s.category = s.special === 'duel' ? `${DUEL} · ${cat}` : cat;
+          s.question = q;
+          this.prepareOptions();
+        }
         s.questionShown = false;
-        this.prepareOptions();
-        // Koło: wylosowana kategoria + do 7 innych (gdy kategorii jest mało, powtarzamy je).
-        const others = cats.filter((c) => c !== cat).sort(() => Math.random() - 0.5).slice(0, 7);
-        let wheel = [cat, ...others];
-        while (wheel.length < 6) wheel = wheel.concat(wheel);
-        wheel = wheel.slice(0, 8).sort(() => Math.random() - 0.5);
         s.spin = {
           id: Date.now(),
           cats: wheel,
-          index: wheel.indexOf(cat),
+          index,
           endsAt: Date.now() + CONFIG.spinSec * 1000,
         };
         this.say('Losowanie kategorii… 🎡');
@@ -499,8 +586,9 @@ export class Game {
         if (err) return err;
         if (!s.category) return 'Najpierw wylosuj kategorię.';
         if (this.spinning()) return 'Poczekaj, aż koło się zatrzyma.';
-        const staffed = this.staffedTeams();
+        const staffed = this.activeTeams();
         if (staffed.length < 2) return 'Do gry potrzeba co najmniej dwóch drużyn z graczami.';
+        if (s.special === 'duel') return this.startDuel();
         for (const id of TEAM_IDS) {
           const t = s.teams[id];
           t.bid = 0;
@@ -519,7 +607,11 @@ export class Game {
         };
         s.log = [];
         s.phase = 'bidding';
-        this.say(`Licytacja otwarta! Wpisowe ${fmt(CONFIG.entryFee)} poszło do puli. Wpiszcie kwotę na czacie.`);
+        this.say(
+          s.special === 'box'
+            ? `Licytujemy CZARNĄ SKRZYNKĘ! W środku może być fortuna… albo ogórek. Wpisowe ${fmt(CONFIG.entryFee)} poszło do puli.`
+            : `Licytacja otwarta! Wpisowe ${fmt(CONFIG.entryFee)} poszło do puli. Wpiszcie kwotę na czacie.`,
+        );
         this.armBidTimer();
         break;
       }
@@ -530,9 +622,22 @@ export class Game {
         return null; // closeBidding samo rozsyła stan
       }
       case 'show_question': {
-        const err = need('question');
+        const err = need('question', 'duel');
         if (err) return err;
+        if (s.phase === 'duel' && Object.keys(s.duel.players).length < this.activeTeams().length)
+          return 'Każda drużyna musi najpierw wybrać gracza do pojedynku.';
+        if (s.questionShown) return 'Pytanie jest już pokazane.';
         s.questionShown = true;
+        if (s.phase === 'duel') {
+          s.answerEndsAt = Date.now() + CONFIG.answerTimerSec * 1000;
+          this.sfx('time');
+          this.say(
+            s.answerMode === 'abcd'
+              ? '⚔️ Pojedynek! Kto pierwszy kliknie dobrą odpowiedź, zgarnia pulę. Błąd = koniec szans.'
+              : '⚔️ Pojedynek! Odpowiedź wpiszcie z wykrzyknikiem (np. !Wisła) – liczy się pierwsza dobra.',
+          );
+          break;
+        }
         s.officialAnswer = null;
         this.sfx('time');
         s.answerEndsAt = Date.now() + CONFIG.answerTimerSec * 1000;
@@ -554,6 +659,7 @@ export class Game {
       }
       case 'good':
       case 'bad': {
+        if (s.phase === 'duel') return this.judgeDuel(msg.action === 'good');
         const err = need('question');
         if (err) return err;
         if (!s.questionShown) return 'Najpierw pokaż pytanie.';
@@ -576,9 +682,14 @@ export class Game {
       case 'next_round': {
         const err = need('result');
         if (err) return err;
-        const able = this.staffedTeams().filter((id) => s.teams[id].money >= CONFIG.entryFee);
-        if (able.length < 2) return this.finish();
+        const able = this.activeTeams().filter((id) => s.teams[id].money >= CONFIG.entryFee);
+        if (s.stage === 2 && s.finalRound >= CONFIG.finalQuestions) return this.finish();
+        if (able.length < 2) return s.stage === 1 ? this.startFinal(true) : this.finish();
         s.round += 1;
+        if (s.stage === 2) s.finalRound += 1;
+        s.special = null;
+        s.duel = null;
+        s.boxPrize = null;
         s.phase = 'category';
         s.category = null;
         s.question = null;
@@ -594,7 +705,11 @@ export class Game {
         s.result = null;
         s.officialAnswer = null;
         for (const id of TEAM_IDS) s.teams[id].bid = 0;
-        this.say(`Runda ${s.round} – prowadzący losuje kategorię.`);
+        this.say(
+          s.stage === 2
+            ? `Finał – pytanie ${s.finalRound} z ${CONFIG.finalQuestions}. Prowadzący losuje kategorię.`
+            : `Etap 1, runda ${s.round} – prowadzący losuje kategorię.`,
+        );
         break;
       }
       case 'end_game': {
@@ -620,6 +735,30 @@ export class Game {
         if (['bidding', 'question'].includes(s.phase)) return 'Tryb zmienisz po zakończeniu rundy.';
         s.mode = msg.mode;
         this.say(msg.mode === 'voice' ? 'Tryb gry: głosowy 🎙️' : 'Tryb gry: tekstowy ⌨️');
+        break;
+      }
+      case 'start_final': {
+        if (s.stage !== 1) return 'Finał już trwa.';
+        if (!(s.phase === 'result' || (s.phase === 'category' && !s.category))) return 'Finał zaczniesz między rundami.';
+        return this.startFinal(false);
+      }
+      case 'open_box':
+        return this.openBox();
+      case 'duel_reset': {
+        if (s.phase !== 'duel' || s.questionShown) return 'Teraz nie można zmienić graczy pojedynku.';
+        s.duel.players = {};
+        this.say('Prowadzący zresetował wybór graczy do pojedynku – zgłoście się jeszcze raz.');
+        break;
+      }
+      case 'assign': {
+        // prowadzący przypisuje gracza do drużyny (np. ustala Mistrzów na starcie)
+        const p = s.players[msg.userId];
+        if (!p) return 'Nie ma takiego gracza.';
+        if (msg.team !== null && !TEAM_IDS.includes(msg.team)) return 'Nie ma takiej drużyny.';
+        if (p.id === s.hostId) return 'Prowadzący nie gra w drużynie.';
+        if (['bidding', 'question', 'duel', 'box'].includes(s.phase)) return 'Drużyny zmienisz po zakończeniu rundy.';
+        p.team = msg.team;
+        for (const ws of this.sockets) if (ws.userId === p.id) this.sendHistory(ws);
         break;
       }
       case 'set_answer_mode': {
@@ -677,6 +816,13 @@ export class Game {
       s.pool += t.bid;
     }
     s.bidding.endsAt = null;
+    if (s.special === 'box' && s.bidding.highestTeam) {
+      s.winnerTeam = s.bidding.highestTeam;
+      s.phase = 'box';
+      this.say(`Czarną skrzynkę wylicytowali ${teamName(s.winnerTeam)} za ${fmt(s.bidding.highest)}! Prowadzący otwiera skrzynkę…`);
+      this.changed();
+      return;
+    }
     if (!s.bidding.highestTeam) {
       s.phase = 'result';
       s.result = 'nobid';
@@ -717,7 +863,11 @@ export class Game {
     const spin = this.state.spin;
     this.spinTimer = setTimeout(() => {
       if (this.state.spin?.id !== spin.id) return;
-      this.say(`Kategoria: ${this.state.category}`);
+      const st = this.state;
+      if (st.special === 'box') this.say('⬛ CZARNA SKRZYNKA! Licytujemy skrzynkę w ciemno.');
+      else if (st.special === 'duel')
+        this.say(`⚔️ 1 NA 1! Bez licytacji: każda drużyna daje ${fmt(CONFIG.duelFee)}, prowadzący dokłada ${fmt(CONFIG.duelBonus)}. Pytanie z kategorii: ${st.question.kategoria}.`);
+      else this.say(`Kategoria: ${st.category}`);
       this.changed();
     }, Math.max(0, spin.endsAt - Date.now()));
   }
@@ -729,19 +879,231 @@ export class Game {
   }
 
   // Drużyny, do których ktoś dołączył (puste drużyny nie grają).
-  staffedTeams() {
+  staffedTeams(ids = TEAM_IDS) {
     const players = Object.values(this.state.players);
-    return TEAM_IDS.filter((id) => players.some((p) => p.team === id));
+    return ids.filter((id) => players.some((p) => p.team === id));
   }
 
-  finish() {
+  // Drużyny grające w bieżącym etapie.
+  activeTeams() {
+    const s = this.state;
+    if (s.stage === 2) return [s.challenger, 'champs'];
+    return this.staffedTeams(STAGE1_TEAMS);
+  }
+
+  // Drużyny pokazywane na tablicy.
+  boardTeams() {
+    return this.state.stage === 2 ? [this.state.challenger, 'champs'] : STAGE1_TEAMS;
+  }
+
+  parseChoice(text) {
+    const s = this.state;
+    if (!s.options) return -1;
+    const t = String(text).trim().replace(/[).:]$/, '').toUpperCase();
+    const i = LETTERS.indexOf(t);
+    if (i >= 0) return i;
+    return s.options.findIndex((o) => o.toUpperCase() === String(text).trim().toUpperCase());
+  }
+
+  // ---------- finał z Mistrzami ----------
+
+  startFinal(auto) {
+    const s = this.state;
+    this.clearTimer();
+    const teams = this.staffedTeams(STAGE1_TEAMS);
+    if (!teams.length) return 'Brak drużyn w etapie 1.';
+    const best = Math.max(...teams.map((id) => s.teams[id].money));
+    const leaders = teams.filter((id) => s.teams[id].money === best);
+    if (leaders.length > 1) {
+      const msg = `Remis w etapie 1 (${leaders.map(teamName).join(', ')}) – rozstrzygnijcie dogrywką albo popraw kasę i kliknij Finał jeszcze raz.`;
+      if (auto) {
+        s.phase = 'result';
+        this.say(msg);
+        this.changed();
+        return null;
+      }
+      return msg;
+    }
+    const challenger = leaders[0];
+    if (!this.staffedTeams(['champs']).length) {
+      // Nie ma Mistrzów – zwycięzca etapu 1 od razu zostaje Mistrzami.
+      this.say(`Nie ma Mistrzów w grze – ${teamName(challenger)} wygrywają etap 1 i zostają nowymi Mistrzami! 🏆`);
+      return this.finish(challenger);
+    }
+    s.stage = 2;
+    s.challenger = challenger;
+    s.teams.champs.money = s.teams[challenger].money; // Mistrzowie dostają tyle samo
+    for (const id of TEAM_IDS) {
+      s.teams[id].bid = 0;
+      s.teams[id].out = ![challenger, 'champs'].includes(id);
+    }
+    s.pool = 0;
+    s.finalRound = 1;
+    s.usedSpecials = [];
+    s.round += 1;
+    Object.assign(s, {
+      phase: 'category', category: null, question: null, questionShown: false, spin: null,
+      options: null, correctIndex: null, removed: [], hintUsed: false, bidding: null, log: [],
+      winnerTeam: null, result: null, officialAnswer: null, special: null, duel: null, boxPrize: null,
+    });
+    this.say(
+      `🏆 FINAŁ! ${teamName(challenger)} (${fmt(s.teams[challenger].money)}) kontra Mistrzowie (${fmt(s.teams.champs.money)}). ` +
+        `${CONFIG.finalQuestions} pytań, na kole czekają czarna skrzynka i 1 na 1.`,
+    );
+    this.changed();
+    return null;
+  }
+
+  openBox() {
+    const s = this.state;
+    if (s.phase !== 'box') return 'Teraz nie ma skrzynki do otwarcia.';
+    const prize = CONFIG.blackBox[Math.floor(Math.random() * CONFIG.blackBox.length)];
+    const team = s.teams[s.winnerTeam];
+    let gain = 0;
+    if (prize.pool) {
+      gain = s.pool;
+      s.pool = 0;
+    } else {
+      gain = prize.money ?? 0;
+    }
+    team.money += gain;
+    s.boxPrize = prize.text;
+    s.result = 'box';
+    s.phase = 'result';
+    this.sfx(gain > 0 ? (Math.random() < 0.5 ? 'good1' : 'good2') : 'fail');
+    this.say(
+      gain > 0
+        ? `⬛ W skrzynce: ${prize.text} ${teamName(s.winnerTeam)} zyskują ${fmt(gain)}!`
+        : `⬛ W skrzynce: ${prize.text} Pech! Pula ${fmt(s.pool)} przechodzi dalej.`,
+    );
+    this.changed();
+    return null;
+  }
+
+  startDuel() {
+    const s = this.state;
+    for (const id of TEAM_IDS) {
+      s.teams[id].bid = 0;
+      s.teams[id].out = !this.activeTeams().includes(id);
+    }
+    let paid = 0;
+    for (const id of this.activeTeams()) {
+      const fee = Math.min(CONFIG.duelFee, s.teams[id].money);
+      s.teams[id].money -= fee;
+      paid += fee;
+    }
+    s.pool += paid + CONFIG.duelBonus;
+    s.duel = { players: {}, locked: [], pending: null };
+    s.phase = 'duel';
+    s.questionShown = false;
+    this.say(`⚔️ 1 na 1! Pula: ${fmt(s.pool)}. Każda drużyna wybiera jednego gracza – kliknijcie „Gram!”.`);
+    this.changed();
+    return null;
+  }
+
+  duelJoin(userId) {
+    const s = this.state;
+    const p = s.players[userId];
+    if (s.phase !== 'duel' || s.questionShown) return 'Teraz nie można zgłosić się do pojedynku.';
+    if (!p?.team || !this.activeTeams().includes(p.team) || userId === s.hostId) return 'Nie grasz w drużynie biorącej udział w pojedynku.';
+    if (s.duel.players[p.team]) return 'Wasza drużyna ma już gracza w pojedynku.';
+    s.duel.players[p.team] = userId;
+    this.say(`${teamName(p.team)}: do pojedynku staje ${p.name}!`);
+    this.changed();
+    return null;
+  }
+
+  duelAnswer(userId, text) {
+    const s = this.state;
+    const p = s.players[userId];
+    if (s.phase !== 'duel' || !s.questionShown) return 'Pytanie pojedynku jeszcze nie padło.';
+    if (s.duel.players[p?.team] !== userId) return 'Odpowiadają tylko gracze wybrani do pojedynku.';
+    if (s.duel.locked.includes(p.team)) return 'Twoja odpowiedź była zła – teraz kolej rywala.';
+    if (s.duel.pending) return 'Prowadzący ocenia odpowiedź rywala.';
+    if (!text) return s.answerMode === 'abcd' ? 'Kliknij odpowiedź albo wpisz np. !B' : 'Wpisz odpowiedź po wykrzykniku.';
+    if (s.answerMode === 'abcd' && s.options) {
+      const i = this.parseChoice(text);
+      if (i < 0) return 'Wybierz A, B, C albo D.';
+      this.addChat({ name: p.name, team: p.team, answer: true, text: `${LETTERS[i]}) ${s.options[i]}` });
+      if (i === s.correctIndex) return this.duelWin(p.team);
+      s.duel.locked.push(p.team);
+      this.say(`Źle! ${p.name} odpada – ${LETTERS[i]} to nie ta odpowiedź.`);
+      if (s.duel.locked.length >= this.activeTeams().length) return this.duelNoWin();
+      this.changed();
+      return null;
+    }
+    s.duel.pending = { team: p.team, text: text.slice(0, 150), by: p.name };
+    this.addChat({ name: p.name, team: p.team, answer: true, text: s.duel.pending.text });
+    this.changed();
+    return null;
+  }
+
+  judgeDuel(good) {
+    const s = this.state;
+    if (!s.duel?.pending) return 'Nie ma odpowiedzi do oceny.';
+    const team = s.duel.pending.team;
+    s.duel.pending = null;
+    if (good) return this.duelWin(team);
+    s.duel.locked.push(team);
+    this.say(`Źle! ${teamName(team)} tracą szansę w pojedynku.`);
+    if (s.duel.locked.length >= this.activeTeams().length) return this.duelNoWin();
+    this.changed();
+    return null;
+  }
+
+  duelWin(team) {
+    const s = this.state;
+    s.teams[team].money += s.pool;
+    this.sfx(Math.random() < 0.5 ? 'good1' : 'good2');
+    this.say(`Dobrze! Pojedynek wygrywają ${teamName(team)} i zgarniają ${fmt(s.pool)}!`);
+    s.pool = 0;
+    s.winnerTeam = team;
+    s.result = 'good';
+    s.answerEndsAt = null;
+    s.phase = 'result';
+    this.changed();
+    return null;
+  }
+
+  duelNoWin() {
+    const s = this.state;
+    this.sfx('fail');
+    this.say(`Nikt nie trafił! Pula ${fmt(s.pool)} przechodzi dalej.`);
+    s.result = 'bad';
+    s.answerEndsAt = null;
+    s.phase = 'result';
+    this.changed();
+    return null;
+  }
+
+  // forcedWinner: gdy etap 1 kończy się bez Mistrzów
+  finish(forcedWinner) {
     const s = this.state;
     this.clearTimer();
     s.phase = 'gameover';
-    const pool = this.staffedTeams();
-    const best = (pool.length ? pool : TEAM_IDS).reduce((a, b) => (s.teams[b].money > s.teams[a].money ? b : a));
+    const pool = this.activeTeams().filter(Boolean);
+    let best = forcedWinner;
+    if (!best) {
+      const list = pool.length ? pool : TEAM_IDS;
+      best = list.reduce((a, b) => (s.teams[b].money > s.teams[a].money ? b : a));
+      // remis w finale: Mistrzowie bronią tytułu
+      if (s.stage === 2 && s.teams.champs.money === s.teams[s.challenger].money) best = 'champs';
+    }
     s.winnerTeam = best;
-    this.say(`Koniec gry! Wygrywają ${teamName(best)} z kwotą ${fmt(s.teams[best].money)}!`);
+    // Zapamiętaj nowych Mistrzów (gracze zwycięskiej drużyny).
+    const winners = Object.values(s.players).filter((p) => p.team === best);
+    if (winners.length && (s.stage === 2 || forcedWinner)) {
+      this.champions.set({ ids: winners.map((p) => p.id), names: winners.map((p) => p.name) });
+    }
+    if (s.stage === 2) {
+      this.say(
+        best === 'champs'
+          ? `🏆 Koniec gry! Mistrzowie obronili tytuł z kwotą ${fmt(s.teams.champs.money)}!`
+          : `🏆 Koniec gry! ${teamName(best)} pokonali Mistrzów (${fmt(s.teams[best].money)}) i zostają nowymi Mistrzami!`,
+      );
+    } else if (!forcedWinner) {
+      this.say(`Koniec gry! Wygrywają ${teamName(best)} z kwotą ${fmt(s.teams[best].money)}!`);
+    }
     this.changed();
     return null;
   }

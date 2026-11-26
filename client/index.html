@@ -60,6 +60,7 @@
 
           <!-- Wybór drużyny – pokazuje się tylko, gdy jest potrzebny -->
           <section id="lobby" class="card hidden">
+            <div id="champs-info" class="champs-info hidden"></div>
             <div id="team-buttons" class="row wrap"></div>
             <button id="claim-host" class="btn ghost hidden">Zostań prowadzącym</button>
           </section>
@@ -89,6 +90,9 @@
               <button class="btn bad" data-action="bad">❌ Źle</button>
               <button class="btn" data-action="hint">💡 Podpowiedź 50/50</button>
               <button class="btn primary" data-action="next_round">⏭️ Następna runda</button>
+              <button class="btn primary" data-action="open_box">📦 Otwórz skrzynkę</button>
+              <button class="btn" data-action="duel_reset">↺ Zmień graczy 1 na 1</button>
+              <button class="btn champ-btn" data-action="start_final" data-confirm="1">🏆 Finał z Mistrzami</button>
             </div>
             <div id="voice-row" class="row wrap">
               <button class="btn" data-action="voice_split">🔀 Narada drużyn</button>
@@ -100,6 +104,10 @@
               <button class="btn" data-action="end_game" data-confirm="1">🏁 Zakończ grę</button>
               <button class="btn ghost" data-action="release_host" data-confirm="1">Oddaj prowadzenie</button>
             </div>
+            <details class="assign">
+              <summary>👥 Drużyny graczy (ustal Mistrzów)</summary>
+              <div id="assign-list"></div>
+            </details>
             <form id="adjust-form" class="row wrap">
               <select id="adjust-target"></select>
               <input id="adjust-delta" inputmode="numeric" placeholder="np. 500 lub -500" autocomplete="off" />

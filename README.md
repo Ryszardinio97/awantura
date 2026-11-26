@@ -90,6 +90,29 @@ Discord odtwarza dźwięk przy każdym przeniesieniu. Każdy gracz może go wył
 Nowy dźwięk przerywa poprzedni (np. GOOD przerywa TIME). Każdy gracz może wyciszyć dźwięki u siebie przyciskiem 🔊 w nagłówku.
 Przeglądarka nie pozwala grać dźwięków, zanim ktoś kliknie w okno gry, więc pierwsze kliknięcie je „odblokowuje”.
 
+## Mistrzowie i finał
+
+**Etap 1:** Niebiescy, Zieloni i Żółci grają zwykłe rundy. Mistrzowie czekają.
+
+**Finał:** prowadzący klika **🏆 Finał z Mistrzami** między rundami. Finał zaczyna się też sam, gdy już tylko jedną drużynę z etapu 1 stać na wpisowe.
+- Drużyna z największą kasą zostaje pretendentem i wchodzi do finału ze swoją kasą. Mistrzowie dostają tyle samo.
+- Przy remisie gra prosi o dogrywkę albo o ręczną poprawkę kwot.
+- Finał trwa 7 pytań (`CONFIG.finalQuestions`). Wygrywa drużyna z większą kasą, a przy remisie Mistrzowie bronią tytułu.
+- Zwycięzcy zostają nowymi Mistrzami. Gra zapamiętuje ich w `data/champions.json`, więc w następnej grze (także po restarcie) sami trafią do drużyny Mistrzów.
+- Gdy w grze nie ma Mistrzów, zwycięzca etapu 1 od razu zostaje Mistrzami.
+
+**Ustalanie Mistrzów ręcznie:** w panelu prowadzącego rozwiń **👥 Drużyny graczy** i ustaw graczom drużynę „Mistrzowie”. Gracze mogą też sami kliknąć „Mistrzowie” przed startem.
+
+**Pola specjalne na kole (tylko w finale, każde raz):**
+- **⬛ Czarna skrzynka:** drużyny licytują skrzynkę w ciemno, a prowadzący klika **📦 Otwórz skrzynkę**. Nagrodę losuje gra z listy `CONFIG.blackBox` w `server/game.js` (np. 10 000 zł, cała pula, ogórek kiszony). Listę możesz zmieniać.
+- **⚔️ 1 na 1:** bez licytacji. Każda drużyna wpłaca 500 zł, a prowadzący dokłada 1000 zł (`duelFee`, `duelBonus`). Każda drużyna wybiera jednego gracza przyciskiem **Gram!**.
+  - W trybie ABCD wygrywa pierwsza poprawna odpowiedź. Kto się pomyli, odpada.
+  - W trybie bez odpowiedzi gracze wpisują `!odpowiedź`, a prowadzący ocenia.
+  - Gdy obaj się pomylą, pula przechodzi dalej.
+- Gdy zostaje tyle pytań, ile niewylosowanych pól specjalnych, koło musi w nie trafić, więc oba zawsze się pojawią.
+
+Opcjonalnie w `.env`: `VOICE_CHAMPS` to kanał głosowy Mistrzów do narad w trybie głosowym.
+
 ---
 
 ## Krok 1: Programy

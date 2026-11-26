@@ -137,6 +137,8 @@ const PHASES = {
   question: 'Pytanie',
   result: 'Wynik rundy',
   gameover: 'Koniec gry',
+  box: 'Czarna skrzynka',
+  duel: '1 na 1',
 };
 
 const me = () => state.players.find((p) => p.id === state.you);
@@ -147,7 +149,10 @@ function render() {
   const s = state;
   const my = me();
 
-  $('round').textContent = s.round ? `Runda ${s.round}` : 'Przed grą';
+  $('round').textContent =
+    s.phase === 'lobby' ? 'Przed grą'
+    : s.stage === 2 ? `🏆 Finał ${s.finalRound}/${s.config.finalQuestions}`
+    : `Etap 1 · runda ${s.round}`;
   $('phase').textContent = PHASES[s.phase];
   $('phase').classList.toggle('live', s.phase === 'bidding');
 
@@ -155,8 +160,15 @@ function render() {
   $('game').classList.toggle('is-host', s.isHost);
 
   const qVisible = s.question && (s.questionShown || s.phase === 'result') && s.question.text;
-  show($('question'), !!qVisible);
-  if (qVisible) {
+  const special = specialCard(s, my); // czarna skrzynka / 1 na 1
+  show($('question'), !!qVisible || !!special);
+  // Tło pytania w kolorze drużyny, która odpowiada (w pojedynku – neutralne).
+  if (s.winnerTeam && !s.special) $('question').dataset.team = s.winnerTeam;
+  else delete $('question').dataset.team;
+  $('question').classList.toggle('special-card', !!special);
+  if (special) {
+    $('question').innerHTML = special;
+  } else if (qVisible) {
     // W trybie ABCD odpowiedź widać po kolorach przycisków, więc osobny napis jest zbędny.
     const showAnswerLine = s.question.answer && s.phase === 'result' && !s.options;
     $('question').innerHTML =
@@ -190,8 +202,13 @@ function render() {
 // Tablica: górny rząd = licytacja, dolny = stan konta. Bez nazw – drużyny rozpoznaje się po kolorze.
 function renderBoard(my) {
   const s = state;
-  const showBids = ['bidding', 'question', 'result'].includes(s.phase);
-  $('bids').innerHTML = s.teamsMeta
+  const showBids = ['bidding', 'question', 'result', 'box'].includes(s.phase);
+  const metas = s.boardTeams.map((id) => s.teamsMeta.find((t) => t.id === id));
+  // liczba kolumn = drużyny w etapie + pula
+  document.querySelector('.board').style.gridTemplateColumns = `repeat(${metas.length}, minmax(0, 1fr)) minmax(0, 1.15fr)`;
+  document.querySelector('.board-head').style.gridColumn = `1 / ${metas.length + 1}`;
+  document.querySelector('.board-head').textContent = s.stage === 2 ? 'LICYTACJA · FINAŁ' : 'LICYTACJA';
+  $('bids').innerHTML = metas
     .map((m) => {
       const t = s.teams[m.id];
       const leading = s.bidding?.highestTeam === m.id && ['bidding', 'question'].includes(s.phase);
@@ -201,7 +218,7 @@ function renderBoard(my) {
     .join('') + '<div class="board-spacer"></div>';
   // Dymek z awatarami (jeśli był otwarty) przenosimy do nowo narysowanego pola.
   const openPopup = document.querySelector('.avatars-popup');
-  $('money').innerHTML = s.teamsMeta
+  $('money').innerHTML = metas
     .map((m) => {
       const t = s.teams[m.id];
       const winner = s.winnerTeam === m.id && ['result', 'gameover'].includes(s.phase);
@@ -262,6 +279,7 @@ function setTab(tab) {
   show($('chat-log'), tab === 'general');
   show($('team-log'), tab === 'team');
   const log = tab === 'team' ? $('team-log') : $('chat-log');
+  log.dataset.pinned = '1';
   log.scrollTop = log.scrollHeight;
   renderBadges();
   if (state) renderChatInput(me());
@@ -292,7 +310,8 @@ function autoSwitchTab(my) {
 function renderChatInput(my) {
   const s = state;
   const canBid = s.phase === 'bidding' && my?.team && !s.isHost && !s.teams[my.team].out;
-  const canAnswer = (s.mode === 'text' || s.answerMode === 'abcd') && s.phase === 'question' && s.questionShown && my?.team === s.winnerTeam && !s.officialAnswer;
+  const duelist = s.phase === 'duel' && s.questionShown && s.duel?.players?.[my?.team]?.id === s.you && !s.duel.locked.includes(my.team);
+  const canAnswer = duelist || ((s.mode === 'text' || s.answerMode === 'abcd') && s.phase === 'question' && s.questionShown && my?.team === s.winnerTeam && !s.officialAnswer);
   const answerHint = s.answerMode === 'abcd' ? 'Kliknij odpowiedź albo wpisz np. !B' : 'Odpowiedź wpisz z ! (np. !Wisła)';
   const input = $('chat-input');
   if (activeTab === 'team') {
@@ -312,7 +331,7 @@ function addChatLine(e, channel = 'general', history = false) {
     unread[channel]++;
     renderBadges();
   }
-  const nearBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
+  const nearBottom = log.dataset.pinned !== '0';
   const div = document.createElement('div');
   div.className = 'msg';
   const name = (cls = '') => `<b class="${cls}" style="color:${e.color || 'var(--gold)'}">${esc(e.name)}${e.host ? ' ★' : ''}:</b>`;
@@ -346,16 +365,24 @@ function renderLobby(my) {
         .join('')
     : '';
   show($('claim-host'), claim);
-  show($('lobby'), chooseTeam || claim);
+  const champsInfo = s.championsNames?.length && ['lobby', 'gameover'].includes(s.phase);
+  $('champs-info').innerHTML = champsInfo ? `🏆 Mistrzowie z poprzedniej gry: <b>${s.championsNames.map(esc).join(', ')}</b>` : '';
+  show($('champs-info'), !!champsInfo);
+  show($('lobby'), chooseTeam || claim || !!champsInfo);
 }
 
 const ENABLED = {
   draw_category: (s) => s.phase === 'category' && !spinActive(s),
   start_bidding: (s) => s.phase === 'category' && !!s.category && !spinActive(s),
   end_bidding: (s) => s.phase === 'bidding',
-  show_question: (s) => s.phase === 'question' && !s.questionShown,
-  good: (s) => s.phase === 'question' && s.questionShown,
-  bad: (s) => s.phase === 'question' && s.questionShown,
+  show_question: (s) =>
+    (s.phase === 'question' && !s.questionShown) ||
+    (s.phase === 'duel' && !s.questionShown && Object.keys(s.duel?.players ?? {}).length >= s.boardTeams.length),
+  good: (s) => (s.phase === 'question' && s.questionShown) || (s.phase === 'duel' && !!s.duel?.pending),
+  bad: (s) => (s.phase === 'question' && s.questionShown) || (s.phase === 'duel' && !!s.duel?.pending),
+  start_final: (s) => s.stage === 1 && (s.phase === 'result' || (s.phase === 'category' && !s.category)),
+  open_box: (s) => s.phase === 'box',
+  duel_reset: (s) => s.phase === 'duel' && !s.questionShown,
   next_round: (s) => s.phase === 'result',
   start_game: () => true,
   end_game: (s) => !['lobby', 'gameover'].includes(s.phase),
@@ -398,6 +425,16 @@ function renderHostPanel() {
     b.disabled = ['bidding', 'question'].includes(s.phase);
   }
   show(document.querySelector('[data-action="hint"]'), s.answerMode === 'abcd');
+  const sb = document.querySelector('[data-action="start_bidding"]');
+  sb.textContent = s.special === 'duel' ? '⚔️ Start 1 na 1' : s.special === 'box' ? '⬛ Licytuj skrzynkę' : '▶️ Start licytacji';
+  show(document.querySelector('[data-action="open_box"]'), s.phase === 'box');
+  show(document.querySelector('[data-action="duel_reset"]'), s.phase === 'duel' && !s.questionShown);
+  show(document.querySelector('[data-action="start_final"]'), s.stage === 1);
+  if (s.phase === 'duel' && s.duel?.pending) {
+    show($('host-official'), true);
+    $('host-official').innerHTML = `Odpowiedź w pojedynku: <b>${esc(s.duel.pending.text)}</b> <span class="muted">(${esc(s.duel.pending.by)})</span> – oceń Dobrze/Źle`;
+  }
+  renderAssign(s);
 
   const sel = $('adjust-target');
   if (!sel.options.length) {
@@ -413,7 +450,7 @@ function tick() {
   const now = Date.now() + clockOffset;
   let end = null;
   if (state.phase === 'bidding') end = state.bidding?.endsAt;
-  else if (state.phase === 'question' && state.questionShown) end = state.answerEndsAt;
+  else if (['question', 'duel'].includes(state.phase) && state.questionShown) end = state.answerEndsAt;
   const el = $('timer');
   if (!end) {
     el.textContent = '';
@@ -455,6 +492,7 @@ $('question').addEventListener('click', (e) => {
   if (opt && !opt.disabled) sendMsg({ type: 'pick', index: Number(opt.dataset.i) });
   const hint = e.target.closest('#hint-btn');
   if (hint && !hint.disabled) sendMsg({ type: 'hint' });
+  if (e.target.closest('.duel-join')) sendMsg({ type: 'duel_join' });
 });
 
 $('money').addEventListener('click', (e) => {
@@ -510,14 +548,19 @@ $('adjust-form').addEventListener('submit', (e) => {
   }
 })();
 
-// Gdy okno zmienia rozmiar (czat rośnie/maleje), trzymamy czat przy najnowszych wiadomościach.
+// Czat trzyma się najnowszych wiadomości, dopóki gracz sam nie przewinie w górę
+// (kółkiem, palcem albo paskiem). Zmiany układu ekranu tego nie psują.
 for (const log of document.querySelectorAll('.chat-log')) {
-  let atBottom = true;
+  log.dataset.pinned = '1';
+  let userAt = 0;
+  const mark = () => (userAt = Date.now());
+  for (const ev of ['wheel', 'touchmove', 'pointerdown', 'keydown']) log.addEventListener(ev, mark, { passive: true });
   log.addEventListener('scroll', () => {
-    atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
+    if (Date.now() - userAt > 1000) return; // przewinięcie przez program, nie przez gracza
+    log.dataset.pinned = log.scrollHeight - log.scrollTop - log.clientHeight < 40 ? '1' : '0';
   });
   new ResizeObserver(() => {
-    if (atBottom) log.scrollTop = log.scrollHeight;
+    if (log.dataset.pinned === '1') log.scrollTop = log.scrollHeight;
   }).observe(log);
 }
 
@@ -611,9 +654,10 @@ function drawWheel(cats) {
     const [x1, y1] = polar(100, i * seg);
     const [x2, y2] = polar(100, (i + 1) * seg);
     const mid = (i + 0.5) * seg;
-    svg += `<path d="M0 0 L${x1} ${y1} A100 100 0 0 1 ${x2} ${y2} Z" fill="${WHEEL_COLORS[i % WHEEL_COLORS.length]}" stroke="#0b1026" stroke-width="1.5"/>`;
+    const fill = cat === 'Czarna skrzynka' ? '#111' : cat === '1 na 1' ? '#7f1d1d' : WHEEL_COLORS[i % WHEEL_COLORS.length];
+    svg += `<path d="M0 0 L${x1} ${y1} A100 100 0 0 1 ${x2} ${y2} Z" fill="${fill}" stroke="${cat === 'Czarna skrzynka' ? '#ffc83d' : '#0b1026'}" stroke-width="1.5"/>`;
     // napis wzdłuż promienia, od środka na zewnątrz
-    const label = cat.length > 14 ? cat.slice(0, 13) + '…' : cat;
+    const label = cat === 'Czarna skrzynka' ? '⬛ SKRZYNKA' : cat === '1 na 1' ? '⚔️ 1 NA 1' : cat.length > 14 ? cat.slice(0, 13) + '…' : cat;
     svg += `<text transform="rotate(${mid}) translate(0 -58) rotate(90)" text-anchor="middle" dominant-baseline="middle"
       font-size="${n > 6 ? 9 : 10.5}" font-weight="800" fill="#fff" stroke="#0b1026" stroke-width="0.6" paint-order="stroke">${esc(label)}</text>`;
   });
@@ -672,8 +716,9 @@ const LETTERS = ['A', 'B', 'C', 'D'];
 
 function optionsHtml(s, my) {
   if (!s.options) return '';
-  const answering = s.phase === 'question' && s.questionShown && my?.team === s.winnerTeam && !s.isHost;
-  const canPick = answering && !s.officialAnswer;
+  const duelist = s.phase === 'duel' && s.questionShown && s.duel?.players?.[my?.team]?.id === s.you;
+  const answering = duelist || (s.phase === 'question' && s.questionShown && my?.team === s.winnerTeam && !s.isHost);
+  const canPick = duelist ? !s.duel.locked.includes(my.team) : answering && !s.officialAnswer;
   const chosen = s.officialAnswer?.index;
   const btns = s.options
     .map((o, i) => {
@@ -690,7 +735,7 @@ function optionsHtml(s, my) {
     })
     .join('');
   let hint = '';
-  if (answering && !s.hintUsed && !s.officialAnswer) {
+  if (answering && !duelist && !s.hintUsed && !s.officialAnswer) {
     const cost = s.config.hintCost;
     const team = s.teams[my.team];
     hint = `<button type="button" id="hint-btn" class="hint-btn" ${team.money < cost ? 'disabled' : ''}>
@@ -698,3 +743,94 @@ function optionsHtml(s, my) {
   }
   return `<div class="options">${btns}</div>${hint}`;
 }
+
+
+// =====================================================================
+// FINAŁ: karty czarnej skrzynki i pojedynku 1 na 1
+// =====================================================================
+const teamMetaOf = (id) => state.teamsMeta.find((t) => t.id === id);
+
+function specialCard(s, my) {
+  if (s.phase === 'gameover' && s.winnerTeam) {
+    const w = teamMetaOf(s.winnerTeam);
+    const champs = s.championsNames?.length ? `<div class="box-who">🏆 Mistrzowie: <b>${s.championsNames.map(esc).join(', ')}</b></div>` : '';
+    return `<div class="box-card opened winner-card" style="--c:${w.color}">
+      <div class="q-cat">KONIEC GRY</div>
+      <div class="box-icon">🏆</div>
+      <div class="box-prize" style="color:${w.color}">${esc(w.name)}</div>
+      <div class="box-who">Stan konta: <b>${fmt(s.teams[s.winnerTeam].money)}</b></div>${champs}
+    </div>`;
+  }
+  if (!s.special) return '';
+  if (s.special === 'box') {
+    if (!['box', 'result'].includes(s.phase) || (s.phase === 'result' && s.result !== 'box' && !s.boxPrize)) return '';
+    const w = s.winnerTeam ? teamMetaOf(s.winnerTeam) : null;
+    const opened = !!s.boxPrize;
+    return `<div class="box-card ${opened ? 'opened' : ''}">
+      <div class="q-cat">CZARNA SKRZYNKA</div>
+      <div class="box-icon">${opened ? '📭' : '⬛'}</div>
+      ${w ? `<div class="box-who">Wylicytowali: <b style="color:${w.color}">${esc(w.name)}</b></div>` : ''}
+      <div class="box-prize">${opened ? esc(s.boxPrize) : 'Prowadzący zaraz otworzy skrzynkę…'}</div>
+    </div>`;
+  }
+  if (s.special === 'duel' && s.phase === 'duel' && !s.questionShown) {
+    const cols = s.boardTeams
+      .map((id) => {
+        const m = teamMetaOf(id);
+        const pl = s.duel?.players?.[id];
+        const canJoin = !pl && my?.team === id && !s.isHost;
+        return `<div class="duel-side" style="--c:${m.color}">
+          <div class="duel-team">${esc(m.name)}</div>
+          ${pl ? `<div class="duel-name">${esc(pl.name)}</div>` : canJoin
+            ? '<button type="button" class="btn primary duel-join">⚔️ Gram!</button>'
+            : '<div class="muted">czeka na zgłoszenie…</div>'}
+        </div>`;
+      })
+      .join('<div class="duel-vs">VS</div>');
+    return `<div class="q-cat">⚔️ 1 NA 1 · pula ${fmt(s.pool)}</div>
+      <div class="duel-title">Każda drużyna wybiera jednego gracza</div>
+      <div class="duel-row">${cols}</div>`;
+  }
+  if (s.special === 'duel' && s.question?.text && (s.questionShown || s.phase === 'result')) {
+    // pytanie pojedynku: kto gra i kto już odpadł
+    const who = s.boardTeams
+      .map((id) => {
+        const m = teamMetaOf(id);
+        const pl = s.duel?.players?.[id];
+        const out = s.duel?.locked?.includes(id);
+        return `<span class="duel-chip ${out ? 'out' : ''}" style="--c:${m.color}">${esc(pl?.name ?? m.name)}${out ? ' ✗' : ''}</span>`;
+      })
+      .join(' <b>vs</b> ');
+    const pending = s.duel?.pending ? `<div class="answer">Odpowiedź: <b>${esc(s.duel.pending.text)}</b> (${esc(s.duel.pending.by)})</div>` : '';
+    const answerLine = s.phase === 'result' && !s.options && s.question.answer ? `<div class="answer">Odpowiedź: <b>${esc(s.question.answer)}</b></div>` : '';
+    return `<div class="q-cat">${esc(s.category)}</div>
+      <div class="duel-who">${who}</div>
+      <div>${esc(s.question.text)}</div>${pending}${answerLine}${optionsHtml(s, my)}`;
+  }
+  return '';
+}
+
+// Panel prowadzącego: kto w jakiej drużynie (np. ustalenie Mistrzów na starcie gry).
+function renderAssign(s) {
+  const box = $('assign-list');
+  if (box.contains(document.activeElement)) return; // nie przerywamy wybierania
+  const players = s.players.filter((p) => p.id !== s.you);
+  if (!players.length) {
+    box.innerHTML = '<div class="muted">Brak graczy.</div>';
+    return;
+  }
+  const opts = [['', '— bez drużyny —'], ...s.teamsMeta.map((t) => [t.id, t.name])];
+  box.innerHTML = players
+    .map(
+      (p) => `<label class="assign-row"><span class="${p.online ? '' : 'muted'}">${esc(p.name)}</span>
+      <select data-user="${esc(p.id)}">${opts
+        .map(([v, n]) => `<option value="${v}" ${(p.team ?? '') === v ? 'selected' : ''}>${esc(n)}</option>`)
+        .join('')}</select></label>`,
+    )
+    .join('');
+}
+$('assign-list').addEventListener('change', (e) => {
+  const sel = e.target.closest('select[data-user]');
+  if (sel) hostAction('assign', { userId: sel.dataset.user, team: sel.value || null });
+  sel?.blur();
+});

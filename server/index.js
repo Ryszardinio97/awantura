@@ -26,9 +26,10 @@ const voiceChannels = {
   blue: process.env.VOICE_BLUE,
   green: process.env.VOICE_GREEN,
   yellow: process.env.VOICE_YELLOW,
+  champs: process.env.VOICE_CHAMPS, // opcjonalny kanał Mistrzów
 };
 const voice = {
-  ready: !!(BOT_TOKEN && GUILD_ID && Object.values(voiceChannels).every(Boolean)),
+  ready: !!(BOT_TOKEN && GUILD_ID && ['main', 'blue', 'green', 'yellow'].every((k) => voiceChannels[k])),
   channels: voiceChannels,
   // Zwraca 'ok', 'not_in_voice' albo 'error'.
   async move(userId, channelId, retry = true) {
@@ -67,6 +68,24 @@ try {
   /* brak zapisu – zaczynamy od zera */
 }
 
+// ---------- Mistrzowie zapamiętani między grami ----------
+const CHAMPS_FILE = path.join(DATA_DIR, 'champions.json');
+let championsData = { ids: [], names: [] };
+try {
+  championsData = JSON.parse(fs.readFileSync(CHAMPS_FILE, 'utf8'));
+} catch {
+  /* brak Mistrzów */
+}
+const champions = {
+  get: () => championsData,
+  set(data) {
+    championsData = data;
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(CHAMPS_FILE, JSON.stringify(data));
+    console.log('Nowi Mistrzowie:', data.names.join(', '));
+  },
+};
+
 const games = new Map();
 let saveTimer = null;
 function scheduleSave() {
@@ -88,6 +107,7 @@ function getGame(instanceId) {
         hostIds: HOST_IDS,
         onChange: scheduleSave,
         voice,
+        champions,
       }),
     );
   }
