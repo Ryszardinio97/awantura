@@ -130,7 +130,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "W którym roku miał miejsce chrzest Polski?",
   "odpowiedz": "966",
   "bledne": [
@@ -140,7 +140,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "W którym roku odbyła się bitwa pod Grunwaldem?",
   "odpowiedz": "1410",
   "bledne": [
@@ -150,7 +150,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "Kto był pierwszym koronowanym królem Polski?",
   "odpowiedz": "Bolesław Chrobry",
   "bledne": [
@@ -160,7 +160,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "W którym roku wybuchło powstanie warszawskie?",
   "odpowiedz": "1944",
   "bledne": [
@@ -170,7 +170,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "W którym roku uchwalono Konstytucję 3 maja?",
   "odpowiedz": "1791",
   "bledne": [
@@ -180,7 +180,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "W którym roku Polska odzyskała niepodległość?",
   "odpowiedz": "1918",
   "bledne": [
@@ -190,7 +190,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "Kto dowodził wojskami polskimi w bitwie pod Wiedniem w 1683 roku?",
   "odpowiedz": "Jan III Sobieski",
   "bledne": [
@@ -200,7 +200,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "Który król przeniósł dwór królewski z Krakowa do Warszawy?",
   "odpowiedz": "Zygmunt III Waza",
   "bledne": [
@@ -210,7 +210,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "Kto był ostatnim królem Polski?",
   "odpowiedz": "Stanisław August Poniatowski",
   "bledne": [
@@ -220,7 +220,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "W którym roku zawarto unię lubelską?",
   "odpowiedz": "1569",
   "bledne": [
@@ -230,7 +230,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "Kto był pierwszym przewodniczącym NSZZ „Solidarność”?",
   "odpowiedz": "Lech Wałęsa",
   "bledne": [
@@ -240,7 +240,7 @@
   ]
  },
  {
-  "kategoria": "Historia Polski",
+  "kategoria": "Historia",
   "pytanie": "W którym roku odbyła się Bitwa Warszawska, zwana „Cudem nad Wisłą”?",
   "odpowiedz": "1920",
   "bledne": [
@@ -250,7 +250,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "W którym roku Krzysztof Kolumb dotarł do Ameryki?",
   "odpowiedz": "1492",
   "bledne": [
@@ -260,7 +260,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "Kto jako pierwszy człowiek stanął na Księżycu?",
   "odpowiedz": "Neil Armstrong",
   "bledne": [
@@ -270,7 +270,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "W którym roku upadł mur berliński?",
   "odpowiedz": "1989",
   "bledne": [
@@ -280,7 +280,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "Kto był pierwszym człowiekiem w kosmosie?",
   "odpowiedz": "Jurij Gagarin",
   "bledne": [
@@ -290,7 +290,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "W którym roku zatonął Titanic?",
   "odpowiedz": "1912",
   "bledne": [
@@ -300,7 +300,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "Kto był pierwszym prezydentem Stanów Zjednoczonych?",
   "odpowiedz": "George Washington",
   "bledne": [
@@ -310,7 +310,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "W którym roku zakończyła się II wojna światowa w Europie?",
   "odpowiedz": "1945",
   "bledne": [
@@ -320,7 +320,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "Kto był pierwszym cesarzem Francuzów?",
   "odpowiedz": "Napoleon Bonaparte",
   "bledne": [
@@ -330,7 +330,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "Która cywilizacja zbudowała Machu Picchu?",
   "odpowiedz": "Inkowie",
   "bledne": [
@@ -340,7 +340,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "W którym mieście w 1914 roku zastrzelono arcyksięcia Franciszka Ferdynanda?",
   "odpowiedz": "Sarajewo",
   "bledne": [
@@ -350,7 +350,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "Ile lat faktycznie trwała wojna stuletnia?",
   "odpowiedz": "116",
   "bledne": [
@@ -360,7 +360,7 @@
   ]
  },
  {
-  "kategoria": "Historia świata",
+  "kategoria": "Historia",
   "pytanie": "Grobowiec którego faraona odkrył Howard Carter w 1922 roku?",
   "odpowiedz": "Tutanchamona",
   "bledne": [
@@ -370,7 +370,7 @@
   ]
  },
  {
-  "kategoria": "Nauka",
+  "kategoria": "Chemia",
   "pytanie": "Jaki symbol chemiczny ma złoto?",
   "odpowiedz": "Au",
   "bledne": [
@@ -380,27 +380,7 @@
   ]
  },
  {
-  "kategoria": "Nauka",
-  "pytanie": "Która planeta Układu Słonecznego jest największa?",
-  "odpowiedz": "Jowisz",
-  "bledne": [
-   "Saturn",
-   "Neptun",
-   "Uran"
-  ]
- },
- {
-  "kategoria": "Nauka",
-  "pytanie": "Ile kości ma dorosły człowiek?",
-  "odpowiedz": "206",
-  "bledne": [
-   "186",
-   "226",
-   "256"
-  ]
- },
- {
-  "kategoria": "Nauka",
+  "kategoria": "Chemia",
   "pytanie": "Jaki wzór chemiczny ma woda?",
   "odpowiedz": "H₂O",
   "bledne": [
@@ -410,37 +390,7 @@
   ]
  },
  {
-  "kategoria": "Nauka",
-  "pytanie": "Która planeta jest najbliżej Słońca?",
-  "odpowiedz": "Merkury",
-  "bledne": [
-   "Wenus",
-   "Mars",
-   "Ziemia"
-  ]
- },
- {
-  "kategoria": "Nauka",
-  "pytanie": "W jakiej temperaturze wrze woda przy normalnym ciśnieniu?",
-  "odpowiedz": "100°C",
-  "bledne": [
-   "90°C",
-   "120°C",
-   "80°C"
-  ]
- },
- {
-  "kategoria": "Nauka",
-  "pytanie": "Kto stworzył teorię względności?",
-  "odpowiedz": "Albert Einstein",
-  "bledne": [
-   "Isaac Newton",
-   "Niels Bohr",
-   "Max Planck"
-  ]
- },
- {
-  "kategoria": "Nauka",
+  "kategoria": "Chemia",
   "pytanie": "Maria Skłodowska-Curie odkryła polon i jaki drugi pierwiastek?",
   "odpowiedz": "Rad",
   "bledne": [
@@ -450,27 +400,7 @@
   ]
  },
  {
-  "kategoria": "Nauka",
-  "pytanie": "Ile chromosomów ma typowa komórka ciała człowieka?",
-  "odpowiedz": "46",
-  "bledne": [
-   "23",
-   "44",
-   "48"
-  ]
- },
- {
-  "kategoria": "Nauka",
-  "pytanie": "Ile w przybliżeniu wynosi prędkość światła w próżni?",
-  "odpowiedz": "300 000 km/s",
-  "bledne": [
-   "30 000 km/s",
-   "150 000 km/s",
-   "1 000 000 km/s"
-  ]
- },
- {
-  "kategoria": "Nauka",
+  "kategoria": "Chemia",
   "pytanie": "Który naturalny minerał jest najtwardszy?",
   "odpowiedz": "Diament",
   "bledne": [
@@ -480,7 +410,7 @@
   ]
  },
  {
-  "kategoria": "Nauka",
+  "kategoria": "Chemia",
   "pytanie": "Który gaz stanowi większość atmosfery Ziemi?",
   "odpowiedz": "Azot",
   "bledne": [
@@ -490,13 +420,353 @@
   ]
  },
  {
-  "kategoria": "Nauka",
+  "kategoria": "Chemia",
+  "pytanie": "Jaki symbol chemiczny ma żelazo?",
+  "odpowiedz": "Fe",
+  "bledne": [
+   "Ir",
+   "Zn",
+   "F"
+  ]
+ },
+ {
+  "kategoria": "Chemia",
+  "pytanie": "Który pierwiastek ma liczbę atomową 1?",
+  "odpowiedz": "Wodór",
+  "bledne": [
+   "Hel",
+   "Tlen",
+   "Lit"
+  ]
+ },
+ {
+  "kategoria": "Chemia",
+  "pytanie": "Jaki gaz wydychamy jako produkt oddychania?",
+  "odpowiedz": "Dwutlenek węgla",
+  "bledne": [
+   "Tlen",
+   "Wodór",
+   "Hel"
+  ]
+ },
+ {
+  "kategoria": "Chemia",
+  "pytanie": "Jaki wzór chemiczny ma sól kuchenna?",
+  "odpowiedz": "NaCl",
+  "bledne": [
+   "KCl",
+   "CaCO₃",
+   "NaOH"
+  ]
+ },
+ {
+  "kategoria": "Chemia",
+  "pytanie": "Jakie pH ma czysta woda w temperaturze 25°C?",
+  "odpowiedz": "7",
+  "bledne": [
+   "0",
+   "1",
+   "14"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Która planeta Układu Słonecznego jest największa?",
+  "odpowiedz": "Jowisz",
+  "bledne": [
+   "Saturn",
+   "Neptun",
+   "Uran"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Która planeta jest najbliżej Słońca?",
+  "odpowiedz": "Merkury",
+  "bledne": [
+   "Wenus",
+   "Mars",
+   "Ziemia"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
   "pytanie": "Ile planet ma Układ Słoneczny?",
   "odpowiedz": "8",
   "bledne": [
    "9",
    "7",
    "10"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Na której planecie panuje najwyższa średnia temperatura powierzchni?",
+  "odpowiedz": "Na Wenus",
+  "bledne": [
+   "Na Merkurym",
+   "Na Marsie",
+   "Na Jowiszu"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Jak nazywa się gwiazda najbliższa Słońcu?",
+  "odpowiedz": "Proxima Centauri",
+  "bledne": [
+   "Syriusz",
+   "Wega",
+   "Betelgeza"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Kto stworzył heliocentryczny model Układu Słonecznego?",
+  "odpowiedz": "Mikołaj Kopernik",
+  "bledne": [
+   "Galileusz",
+   "Johannes Kepler",
+   "Ptolemeusz"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Ile w przybliżeniu trwa jeden obieg Księżyca wokół Ziemi?",
+  "odpowiedz": "Około 27 dni",
+  "bledne": [
+   "Około 14 dni",
+   "Około 45 dni",
+   "Około 60 dni"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Jak nazywa się nasza galaktyka?",
+  "odpowiedz": "Droga Mleczna",
+  "bledne": [
+   "Andromeda",
+   "Galaktyka Wir",
+   "Sombrero"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Która planeta słynie z najbardziej okazałych pierścieni?",
+  "odpowiedz": "Saturn",
+  "bledne": [
+   "Mars",
+   "Wenus",
+   "Merkury"
+  ]
+ },
+ {
+  "kategoria": "Astronomia",
+  "pytanie": "Którą planetę nazywa się Czerwoną Planetą?",
+  "odpowiedz": "Marsa",
+  "bledne": [
+   "Jowisza",
+   "Wenus",
+   "Saturna"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Ile kości ma dorosły człowiek?",
+  "odpowiedz": "206",
+  "bledne": [
+   "186",
+   "226",
+   "256"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Ile chromosomów ma typowa komórka ciała człowieka?",
+  "odpowiedz": "46",
+  "bledne": [
+   "23",
+   "44",
+   "48"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Jaki jest największy narząd człowieka?",
+  "odpowiedz": "Skóra",
+  "bledne": [
+   "Wątroba",
+   "Płuca",
+   "Mózg"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Z ilu jam składa się serce człowieka?",
+  "odpowiedz": "4",
+  "bledne": [
+   "2",
+   "3",
+   "6"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Która kość jest najdłuższa w ciele człowieka?",
+  "odpowiedz": "Kość udowa",
+  "bledne": [
+   "Kość piszczelowa",
+   "Kość ramienna",
+   "Kość strzałkowa"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Kto odkrył penicylinę?",
+  "odpowiedz": "Alexander Fleming",
+  "bledne": [
+   "Ludwik Pasteur",
+   "Robert Koch",
+   "Edward Jenner"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Jak nazywa się najmniejsza kość człowieka?",
+  "odpowiedz": "Strzemiączko",
+  "bledne": [
+   "Kowadełko",
+   "Młoteczek",
+   "Kość gnykowa"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Który narząd wytwarza insulinę?",
+  "odpowiedz": "Trzustka",
+  "bledne": [
+   "Wątroba",
+   "Śledziona",
+   "Nerki"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Jak nazywa się lekarz specjalizujący się w chorobach serca?",
+  "odpowiedz": "Kardiolog",
+  "bledne": [
+   "Neurolog",
+   "Nefrolog",
+   "Dermatolog"
+  ]
+ },
+ {
+  "kategoria": "Anatomia i medycyna",
+  "pytanie": "Która grupa krwi uważana jest za uniwersalnego dawcę krwinek?",
+  "odpowiedz": "0 Rh−",
+  "bledne": [
+   "AB Rh+",
+   "A Rh+",
+   "B Rh−"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "W jakiej temperaturze wrze woda przy normalnym ciśnieniu?",
+  "odpowiedz": "100°C",
+  "bledne": [
+   "90°C",
+   "120°C",
+   "80°C"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "Kto stworzył teorię względności?",
+  "odpowiedz": "Albert Einstein",
+  "bledne": [
+   "Isaac Newton",
+   "Niels Bohr",
+   "Max Planck"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "Ile w przybliżeniu wynosi prędkość światła w próżni?",
+  "odpowiedz": "300 000 km/s",
+  "bledne": [
+   "30 000 km/s",
+   "150 000 km/s",
+   "1 000 000 km/s"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "Jaka jest jednostka siły w układzie SI?",
+  "odpowiedz": "Niuton",
+  "bledne": [
+   "Dżul",
+   "Wat",
+   "Paskal"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "Jaka jest jednostka mocy w układzie SI?",
+  "odpowiedz": "Wat",
+  "bledne": [
+   "Wolt",
+   "Amper",
+   "Om"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "Kto sformułował prawo powszechnego ciążenia?",
+  "odpowiedz": "Isaac Newton",
+  "bledne": [
+   "Galileusz",
+   "Albert Einstein",
+   "Johannes Kepler"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "W jakiej jednostce mierzy się natężenie prądu?",
+  "odpowiedz": "W amperach",
+  "bledne": [
+   "W woltach",
+   "W omach",
+   "W watach"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "W jakiej temperaturze zamarza czysta woda przy normalnym ciśnieniu?",
+  "odpowiedz": "0°C",
+  "bledne": [
+   "−10°C",
+   "4°C",
+   "32°C"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "Jak nazywa się rozszczepienie światła białego w pryzmacie?",
+  "odpowiedz": "Dyspersja",
+  "bledne": [
+   "Dyfrakcja",
+   "Interferencja",
+   "Polaryzacja"
+  ]
+ },
+ {
+  "kategoria": "Fizyka",
+  "pytanie": "Ile w przybliżeniu wynosi przyspieszenie ziemskie?",
+  "odpowiedz": "9,81 m/s²",
+  "bledne": [
+   "1 m/s²",
+   "3,14 m/s²",
+   "15 m/s²"
   ]
  },
  {
@@ -641,16 +911,6 @@
  },
  {
   "kategoria": "Sport",
-  "pytanie": "Ile minut trwa regulaminowy mecz piłki nożnej bez doliczonego czasu?",
-  "odpowiedz": "90",
-  "bledne": [
-   "80",
-   "100",
-   "60"
-  ]
- },
- {
-  "kategoria": "Sport",
   "pytanie": "Ile punktów daje rzut zza linii 6,75 m w koszykówce?",
   "odpowiedz": "3",
   "bledne": [
@@ -701,16 +961,6 @@
  },
  {
   "kategoria": "Sport",
-  "pytanie": "Ilu zawodników jednej drużyny gra jednocześnie na boisku w piłce nożnej?",
-  "odpowiedz": "11",
-  "bledne": [
-   "10",
-   "12",
-   "9"
-  ]
- },
- {
-  "kategoria": "Sport",
   "pytanie": "Ile wynosi dystans maratonu?",
   "odpowiedz": "42,195 km",
   "bledne": [
@@ -721,6 +971,36 @@
  },
  {
   "kategoria": "Sport",
+  "pytanie": "Ile kół jest na fladze olimpijskiej?",
+  "odpowiedz": "5",
+  "bledne": [
+   "4",
+   "6",
+   "7"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "Ile minut trwa regulaminowy mecz piłki nożnej bez doliczonego czasu?",
+  "odpowiedz": "90",
+  "bledne": [
+   "80",
+   "100",
+   "60"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "Ilu zawodników jednej drużyny gra jednocześnie na boisku w piłce nożnej?",
+  "odpowiedz": "11",
+  "bledne": [
+   "10",
+   "12",
+   "9"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
   "pytanie": "Który kraj był gospodarzem mistrzostw świata w piłce nożnej w 2022 roku?",
   "odpowiedz": "Katar",
   "bledne": [
@@ -730,13 +1010,83 @@
   ]
  },
  {
-  "kategoria": "Sport",
-  "pytanie": "Ile kół jest na fladze olimpijskiej?",
+  "kategoria": "Piłka nożna",
+  "pytanie": "Który klub piłkarski nazywany jest „Królewskimi”?",
+  "odpowiedz": "Real Madryt",
+  "bledne": [
+   "FC Barcelona",
+   "Atlético Madryt",
+   "Juventus"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "Ile goli strzelił Robert Lewandowski w 9 minut w meczu z VfL Wolfsburg w 2015 roku?",
   "odpowiedz": "5",
   "bledne": [
+   "3",
    "4",
-   "6",
-   "7"
+   "6"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "Która reprezentacja zdobyła najwięcej tytułów mistrza świata?",
+  "odpowiedz": "Brazylia",
+  "bledne": [
+   "Niemcy",
+   "Włochy",
+   "Argentyna"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "W którym roku Polska po raz pierwszy zajęła 3. miejsce na mistrzostwach świata?",
+  "odpowiedz": "1974",
+  "bledne": [
+   "1982",
+   "1970",
+   "1986"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "Kto był trenerem reprezentacji Polski na mundialu w 1974 roku?",
+  "odpowiedz": "Kazimierz Górski",
+  "bledne": [
+   "Antoni Piechniczek",
+   "Jacek Gmoch",
+   "Henryk Kasperczak"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "Ile trwa dogrywka w meczu piłki nożnej?",
+  "odpowiedz": "2 × 15 minut",
+  "bledne": [
+   "2 × 10 minut",
+   "2 × 20 minut",
+   "2 × 5 minut"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "Jak nazywa się stadion FC Barcelony?",
+  "odpowiedz": "Camp Nou",
+  "bledne": [
+   "Santiago Bernabéu",
+   "San Siro",
+   "Old Trafford"
+  ]
+ },
+ {
+  "kategoria": "Piłka nożna",
+  "pytanie": "Z jakiej odległości od bramki wykonuje się rzut karny?",
+  "odpowiedz": "11 metrów",
+  "bledne": [
+   "9 metrów",
+   "12 metrów",
+   "16 metrów"
   ]
  },
  {
@@ -870,7 +1220,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Kto wyreżyserował „Listę Schindlera”?",
   "odpowiedz": "Steven Spielberg",
   "bledne": [
@@ -880,7 +1230,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Który polski reżyser dostał Oscara za reżyserię filmu „Pianista”?",
   "odpowiedz": "Roman Polański",
   "bledne": [
@@ -890,7 +1240,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Kto zagrał Jacka w filmie „Titanic” z 1997 roku?",
   "odpowiedz": "Leonardo DiCaprio",
   "bledne": [
@@ -900,7 +1250,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "W którym serialu głównym bohaterem jest nauczyciel chemii Walter White?",
   "odpowiedz": "Breaking Bad",
   "bledne": [
@@ -910,7 +1260,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Kto wyreżyserował komedię „Miś”?",
   "odpowiedz": "Stanisław Bareja",
   "bledne": [
@@ -920,7 +1270,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "W jakim kraju kręcono trylogię „Władca Pierścieni” Petera Jacksona?",
   "odpowiedz": "Nowa Zelandia",
   "bledne": [
@@ -930,7 +1280,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Kto wyreżyserował „Seksmisję”?",
   "odpowiedz": "Juliusz Machulski",
   "bledne": [
@@ -940,7 +1290,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "W którym serialu występuje Ferdynand Kiepski?",
   "odpowiedz": "Świat według Kiepskich",
   "bledne": [
@@ -950,7 +1300,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Jak nazywa się nagroda Amerykańskiej Akademii Filmowej?",
   "odpowiedz": "Oscar",
   "bledne": [
@@ -960,7 +1310,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Na którym festiwalu przyznaje się Złotą Palmę?",
   "odpowiedz": "W Cannes",
   "bledne": [
@@ -970,7 +1320,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Kto wyreżyserował film „Ida”, nagrodzony Oscarem w 2015 roku?",
   "odpowiedz": "Paweł Pawlikowski",
   "bledne": [
@@ -980,7 +1330,7 @@
   ]
  },
  {
-  "kategoria": "Film i seriale",
+  "kategoria": "Film",
   "pytanie": "Jak nazywa się kowboj-zabawka z „Toy Story” w polskiej wersji?",
   "odpowiedz": "Chudy",
   "bledne": [
@@ -990,7 +1340,7 @@
   ]
  },
  {
-  "kategoria": "Muzyka",
+  "kategoria": "Muzyka klasyczna",
   "pytanie": "W jakiej miejscowości urodził się Fryderyk Chopin?",
   "odpowiedz": "Żelazowa Wola",
   "bledne": [
@@ -1000,37 +1350,7 @@
   ]
  },
  {
-  "kategoria": "Muzyka",
-  "pytanie": "Ile strun ma standardowa gitara klasyczna?",
-  "odpowiedz": "6",
-  "bledne": [
-   "4",
-   "5",
-   "8"
-  ]
- },
- {
-  "kategoria": "Muzyka",
-  "pytanie": "Kto był wokalistą zespołu Queen?",
-  "odpowiedz": "Freddie Mercury",
-  "bledne": [
-   "Brian May",
-   "Mick Jagger",
-   "David Bowie"
-  ]
- },
- {
-  "kategoria": "Muzyka",
-  "pytanie": "Z jakiego miasta pochodzi zespół The Beatles?",
-  "odpowiedz": "Liverpool",
-  "bledne": [
-   "Londyn",
-   "Manchester",
-   "Birmingham"
-  ]
- },
- {
-  "kategoria": "Muzyka",
+  "kategoria": "Muzyka klasyczna",
   "pytanie": "Jaki międzynarodowy konkurs pianistyczny odbywa się w Warszawie co 5 lat?",
   "odpowiedz": "Konkurs Chopinowski",
   "bledne": [
@@ -1040,7 +1360,7 @@
   ]
  },
  {
-  "kategoria": "Muzyka",
+  "kategoria": "Muzyka klasyczna",
   "pytanie": "Kto skomponował „Cztery pory roku”?",
   "odpowiedz": "Antonio Vivaldi",
   "bledne": [
@@ -1050,7 +1370,7 @@
   ]
  },
  {
-  "kategoria": "Muzyka",
+  "kategoria": "Muzyka klasyczna",
   "pytanie": "Na jakim instrumencie grał Niccolò Paganini?",
   "odpowiedz": "Na skrzypcach",
   "bledne": [
@@ -1060,7 +1380,7 @@
   ]
  },
  {
-  "kategoria": "Muzyka",
+  "kategoria": "Muzyka klasyczna",
   "pytanie": "Który wielki kompozytor stracił słuch, a mimo to dalej komponował?",
   "odpowiedz": "Ludwig van Beethoven",
   "bledne": [
@@ -1070,27 +1390,7 @@
   ]
  },
  {
-  "kategoria": "Muzyka",
-  "pytanie": "Jak nazywa się hymn Polski?",
-  "odpowiedz": "Mazurek Dąbrowskiego",
-  "bledne": [
-   "Rota",
-   "Bogurodzica",
-   "Pierwsza Brygada"
-  ]
- },
- {
-  "kategoria": "Muzyka",
-  "pytanie": "Michaela Jacksona nazywano królem jakiej muzyki?",
-  "odpowiedz": "Popu",
-  "bledne": [
-   "Rocka",
-   "Bluesa",
-   "Jazzu"
-  ]
- },
- {
-  "kategoria": "Muzyka",
+  "kategoria": "Muzyka klasyczna",
   "pytanie": "Ile klawiszy ma standardowy fortepian?",
   "odpowiedz": "88",
   "bledne": [
@@ -1100,13 +1400,293 @@
   ]
  },
  {
-  "kategoria": "Muzyka",
+  "kategoria": "Muzyka klasyczna",
   "pytanie": "Kto skomponował operę „Straszny dwór”?",
   "odpowiedz": "Stanisław Moniuszko",
   "bledne": [
    "Fryderyk Chopin",
    "Karol Szymanowski",
    "Krzysztof Penderecki"
+  ]
+ },
+ {
+  "kategoria": "Muzyka klasyczna",
+  "pytanie": "Kto skomponował „Eine kleine Nachtmusik”?",
+  "odpowiedz": "Wolfgang Amadeusz Mozart",
+  "bledne": [
+   "Joseph Haydn",
+   "Jan Sebastian Bach",
+   "Franz Schubert"
+  ]
+ },
+ {
+  "kategoria": "Muzyka klasyczna",
+  "pytanie": "Ile symfonii skomponował Ludwig van Beethoven?",
+  "odpowiedz": "9",
+  "bledne": [
+   "7",
+   "10",
+   "12"
+  ]
+ },
+ {
+  "kategoria": "Muzyka klasyczna",
+  "pytanie": "Kto skomponował balet „Jezioro łabędzie”?",
+  "odpowiedz": "Piotr Czajkowski",
+  "bledne": [
+   "Igor Strawiński",
+   "Siergiej Prokofiew",
+   "Modest Musorgski"
+  ]
+ },
+ {
+  "kategoria": "Muzyka klasyczna",
+  "pytanie": "Jakim gatunkiem utworu jest słynna „Rewolucyjna” Fryderyka Chopina?",
+  "odpowiedz": "Etiudą",
+  "bledne": [
+   "Polonezem",
+   "Mazurkiem",
+   "Nokturnem"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Ile strun ma standardowa gitara klasyczna?",
+  "odpowiedz": "6",
+  "bledne": [
+   "4",
+   "5",
+   "8"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Kto był wokalistą zespołu Queen?",
+  "odpowiedz": "Freddie Mercury",
+  "bledne": [
+   "Brian May",
+   "Mick Jagger",
+   "David Bowie"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Z jakiego miasta pochodzi zespół The Beatles?",
+  "odpowiedz": "Liverpool",
+  "bledne": [
+   "Londyn",
+   "Manchester",
+   "Birmingham"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Michaela Jacksona nazywano królem jakiej muzyki?",
+  "odpowiedz": "Popu",
+  "bledne": [
+   "Rocka",
+   "Bluesa",
+   "Jazzu"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Który zespół miał wokalistę Kurta Cobaina?",
+  "odpowiedz": "Nirvana",
+  "bledne": [
+   "Pearl Jam",
+   "Soundgarden",
+   "Foo Fighters"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Z jakiego kraju pochodzi zespół ABBA?",
+  "odpowiedz": "Ze Szwecji",
+  "bledne": [
+   "Z Norwegii",
+   "Z Danii",
+   "Z Finlandii"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Kto jest wokalistą zespołu The Rolling Stones?",
+  "odpowiedz": "Mick Jagger",
+  "bledne": [
+   "Keith Richards",
+   "Freddie Mercury",
+   "Paul McCartney"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Który zespół nagrał przebój „Jolka, Jolka pamiętasz”?",
+  "odpowiedz": "Budka Suflera",
+  "bledne": [
+   "Lady Pank",
+   "Perfect",
+   "Dżem"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Jak nazywał się legendarny wokalista zespołu Dżem?",
+  "odpowiedz": "Ryszard Riedel",
+  "bledne": [
+   "Grzegorz Ciechowski",
+   "Czesław Niemen",
+   "Zbigniew Wodecki"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Kto śpiewał „Dziwny jest ten świat”?",
+  "odpowiedz": "Czesław Niemen",
+  "bledne": [
+   "Marek Grechuta",
+   "Krzysztof Krawczyk",
+   "Seweryn Krajewski"
+  ]
+ },
+ {
+  "kategoria": "Muzyka rozrywkowa",
+  "pytanie": "Ilu muzyków tworzyło zespół The Beatles?",
+  "odpowiedz": "4",
+  "bledne": [
+   "3",
+   "5",
+   "6"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Jak nazywa się hymn Polski?",
+  "odpowiedz": "Mazurek Dąbrowskiego",
+  "bledne": [
+   "Rota",
+   "Bogurodzica",
+   "Pierwsza Brygada"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile dni ma rok przestępny?",
+  "odpowiedz": "366",
+  "bledne": [
+   "365",
+   "364",
+   "367"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile minut ma doba?",
+  "odpowiedz": "1440",
+  "bledne": [
+   "1240",
+   "1400",
+   "1640"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Jaki kolor powstaje ze zmieszania niebieskiego i żółtego?",
+  "odpowiedz": "Zielony",
+  "bledne": [
+   "Fioletowy",
+   "Pomarańczowy",
+   "Brązowy"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile wynosi suma kątów w trójkącie?",
+  "odpowiedz": "180°",
+  "bledne": [
+   "360°",
+   "90°",
+   "270°"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile zer ma milion?",
+  "odpowiedz": "6",
+  "bledne": [
+   "5",
+   "7",
+   "9"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile oznacza rzymska liczba „X”?",
+  "odpowiedz": "10",
+  "bledne": [
+   "5",
+   "50",
+   "100"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile wynosi pierwiastek kwadratowy ze 144?",
+  "odpowiedz": "12",
+  "bledne": [
+   "14",
+   "11",
+   "16"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile sekund ma godzina?",
+  "odpowiedz": "3600",
+  "bledne": [
+   "360",
+   "6000",
+   "1440"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Jakiego koloru jest tzw. czarna skrzynka w samolocie?",
+  "odpowiedz": "Pomarańczowa",
+  "bledne": [
+   "Czarna",
+   "Czerwona",
+   "Żółta"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Który miesiąc ma najmniej dni?",
+  "odpowiedz": "Luty",
+  "bledne": [
+   "Kwiecień",
+   "Listopad",
+   "Czerwiec"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile to jest 15% z 200?",
+  "odpowiedz": "30",
+  "bledne": [
+   "15",
+   "20",
+   "35"
+  ]
+ },
+ {
+  "kategoria": "Rozmaitości",
+  "pytanie": "Ile boków ma sześciokąt?",
+  "odpowiedz": "6",
+  "bledne": [
+   "5",
+   "7",
+   "8"
   ]
  },
  {
@@ -1230,7 +1810,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Kto założył Microsoft razem z Paulem Allenem?",
   "odpowiedz": "Bill Gates",
   "bledne": [
@@ -1240,7 +1820,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Co oznacza skrót „WWW”?",
   "odpowiedz": "World Wide Web",
   "bledne": [
@@ -1250,7 +1830,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Ile bitów ma jeden bajt?",
   "odpowiedz": "8",
   "bledne": [
@@ -1260,7 +1840,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Jak nazywa się system operacyjny Google na telefony?",
   "odpowiedz": "Android",
   "bledne": [
@@ -1270,7 +1850,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "W którym roku zaprezentowano pierwszego iPhone’a?",
   "odpowiedz": "2007",
   "bledne": [
@@ -1280,7 +1860,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Co oznacza skrót CPU?",
   "odpowiedz": "Central Processing Unit",
   "bledne": [
@@ -1290,7 +1870,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Kto jest głównym twórcą Facebooka?",
   "odpowiedz": "Mark Zuckerberg",
   "bledne": [
@@ -1300,7 +1880,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "W jakim języku znaczników tworzy się strony internetowe?",
   "odpowiedz": "HTML",
   "bledne": [
@@ -1310,7 +1890,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Kto w 1876 roku opatentował telefon?",
   "odpowiedz": "Alexander Graham Bell",
   "bledne": [
@@ -1320,7 +1900,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Który polski wynalazca skonstruował lampę naftową?",
   "odpowiedz": "Ignacy Łukasiewicz",
   "bledne": [
@@ -1330,7 +1910,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Co oznacza skrót USB?",
   "odpowiedz": "Universal Serial Bus",
   "bledne": [
@@ -1340,7 +1920,7 @@
   ]
  },
  {
-  "kategoria": "Technologia",
+  "kategoria": "Technika i informatyka",
   "pytanie": "Jaka firma produkuje komputery Mac?",
   "odpowiedz": "Apple",
   "bledne": [
@@ -1350,7 +1930,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Co jest głównym składnikiem guacamole?",
   "odpowiedz": "Awokado",
   "bledne": [
@@ -1360,7 +1940,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Z jakiego kraju pochodzi pizza?",
   "odpowiedz": "Z Włoch",
   "bledne": [
@@ -1370,7 +1950,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Jak nazywa się ostra zielona japońska pasta podawana do sushi?",
   "odpowiedz": "Wasabi",
   "bledne": [
@@ -1380,7 +1960,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Na zakwasie z jakiej mąki tradycyjnie robi się żurek?",
   "odpowiedz": "Żytniej",
   "bledne": [
@@ -1390,7 +1970,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Z jakiego warzywa robi się barszcz czerwony?",
   "odpowiedz": "Z buraków",
   "bledne": [
@@ -1400,7 +1980,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Z jakiego kraju pochodzi paella?",
   "odpowiedz": "Z Hiszpanii",
   "bledne": [
@@ -1410,7 +1990,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Z jakiego kraju pochodzi ser feta?",
   "odpowiedz": "Z Grecji",
   "bledne": [
@@ -1420,7 +2000,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Z jakiego mleka głównie robi się oscypek?",
   "odpowiedz": "Owczego",
   "bledne": [
@@ -1430,7 +2010,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Jak nazywa się włoski deser z biszkoptami, kawą i serem mascarpone?",
   "odpowiedz": "Tiramisu",
   "bledne": [
@@ -1440,7 +2020,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Co jest głównym składnikiem bigosu?",
   "odpowiedz": "Kapusta",
   "bledne": [
@@ -1450,7 +2030,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Z jakiej rośliny robi się kaszę gryczaną?",
   "odpowiedz": "Z gryki",
   "bledne": [
@@ -1460,7 +2040,7 @@
   ]
  },
  {
-  "kategoria": "Kuchnia",
+  "kategoria": "Kulinaria",
   "pytanie": "Jaka przyprawa nadaje curry żółty kolor?",
   "odpowiedz": "Kurkuma",
   "bledne": [
@@ -1700,123 +2280,723 @@
   ]
  },
  {
-  "kategoria": "Liczby",
-  "pytanie": "Ile dni ma rok przestępny?",
-  "odpowiedz": "366",
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Kto był nauczycielem Platona?",
+  "odpowiedz": "Sokrates",
   "bledne": [
-   "365",
-   "364",
-   "367"
+   "Arystoteles",
+   "Pitagoras",
+   "Diogenes"
   ]
  },
  {
-  "kategoria": "Liczby",
-  "pytanie": "Ile minut ma doba?",
-  "odpowiedz": "1440",
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Kto napisał dialog „Państwo”?",
+  "odpowiedz": "Platon",
   "bledne": [
-   "1240",
-   "1400",
-   "1640"
+   "Arystoteles",
+   "Sokrates",
+   "Seneka"
   ]
  },
  {
-  "kategoria": "Liczby",
-  "pytanie": "Jaki kolor powstaje ze zmieszania niebieskiego i żółtego?",
-  "odpowiedz": "Zielony",
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Kto jest autorem zdania „Myślę, więc jestem”?",
+  "odpowiedz": "Kartezjusz",
   "bledne": [
-   "Fioletowy",
-   "Pomarańczowy",
-   "Brązowy"
+   "Immanuel Kant",
+   "Baruch Spinoza",
+   "Blaise Pascal"
   ]
  },
  {
-  "kategoria": "Liczby",
-  "pytanie": "Ile wynosi suma kątów w trójkącie?",
-  "odpowiedz": "180°",
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Jak nazywa się święta księga islamu?",
+  "odpowiedz": "Koran",
   "bledne": [
-   "360°",
-   "90°",
-   "270°"
+   "Tora",
+   "Wedy",
+   "Awesta"
   ]
  },
  {
-  "kategoria": "Liczby",
-  "pytanie": "Ile zer ma milion?",
-  "odpowiedz": "6",
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Kto był założycielem buddyzmu?",
+  "odpowiedz": "Siddhartha Gautama (Budda)",
   "bledne": [
-   "5",
-   "7",
-   "9"
+   "Konfucjusz",
+   "Laozi",
+   "Zaratustra"
   ]
  },
  {
-  "kategoria": "Liczby",
-  "pytanie": "Ile oznacza rzymska liczba „X”?",
-  "odpowiedz": "10",
-  "bledne": [
-   "5",
-   "50",
-   "100"
-  ]
- },
- {
-  "kategoria": "Liczby",
-  "pytanie": "Ile wynosi pierwiastek kwadratowy ze 144?",
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Ilu apostołów wybrał Jezus według Ewangelii?",
   "odpowiedz": "12",
   "bledne": [
-   "14",
-   "11",
-   "16"
-  ]
- },
- {
-  "kategoria": "Liczby",
-  "pytanie": "Ile sekund ma godzina?",
-  "odpowiedz": "3600",
-  "bledne": [
-   "360",
-   "6000",
-   "1440"
-  ]
- },
- {
-  "kategoria": "Liczby",
-  "pytanie": "Jakiego koloru jest tzw. czarna skrzynka w samolocie?",
-  "odpowiedz": "Pomarańczowa",
-  "bledne": [
-   "Czarna",
-   "Czerwona",
-   "Żółta"
-  ]
- },
- {
-  "kategoria": "Liczby",
-  "pytanie": "Który miesiąc ma najmniej dni?",
-  "odpowiedz": "Luty",
-  "bledne": [
-   "Kwiecień",
-   "Listopad",
-   "Czerwiec"
-  ]
- },
- {
-  "kategoria": "Liczby",
-  "pytanie": "Ile to jest 15% z 200?",
-  "odpowiedz": "30",
-  "bledne": [
-   "15",
-   "20",
-   "35"
-  ]
- },
- {
-  "kategoria": "Liczby",
-  "pytanie": "Ile boków ma sześciokąt?",
-  "odpowiedz": "6",
-  "bledne": [
-   "5",
+   "10",
    "7",
-   "8"
+   "14"
+  ]
+ },
+ {
+  "kategoria": "Filozofia i religie",
+  "pytanie": "W którym mieście znajduje się Kaaba?",
+  "odpowiedz": "W Mekce",
+  "bledne": [
+   "W Medynie",
+   "W Jerozolimie",
+   "W Kairze"
+  ]
+ },
+ {
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Który filozof był nauczycielem Aleksandra Wielkiego?",
+  "odpowiedz": "Arystoteles",
+  "bledne": [
+   "Sokrates",
+   "Platon",
+   "Epikur"
+  ]
+ },
+ {
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Jak nazywa się żydowskie Święto Świateł?",
+  "odpowiedz": "Chanuka",
+  "bledne": [
+   "Purim",
+   "Jom Kipur",
+   "Pesach"
+  ]
+ },
+ {
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Kto napisał „Krytykę czystego rozumu”?",
+  "odpowiedz": "Immanuel Kant",
+  "bledne": [
+   "Georg Hegel",
+   "Friedrich Nietzsche",
+   "David Hume"
+  ]
+ },
+ {
+  "kategoria": "Filozofia i religie",
+  "pytanie": "Jak nazywa się szkoła filozoficzna założona przez Zenona z Kition?",
+  "odpowiedz": "Stoicyzm",
+  "bledne": [
+   "Epikureizm",
+   "Cynizm",
+   "Sceptycyzm"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest sonet?",
+  "odpowiedz": "Wiersz złożony z 14 wersów",
+  "bledne": [
+   "Rodzaj tańca",
+   "Instrument dęty",
+   "Figura geometryczna"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest ekslibris?",
+  "odpowiedz": "Znak własnościowy w książce",
+  "bledne": [
+   "Rodzaj szczepionki",
+   "Instrument smyczkowy",
+   "Element zbroi"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest anemometr?",
+  "odpowiedz": "Przyrząd do pomiaru prędkości wiatru",
+  "bledne": [
+   "Przyrząd do pomiaru ciśnienia",
+   "Przyrząd do pomiaru wilgotności",
+   "Przyrząd do pomiaru temperatury"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest mansarda?",
+  "odpowiedz": "Pomieszczenie na poddaszu pod skośnym dachem",
+  "bledne": [
+   "Rodzaj piwnicy",
+   "Ozdobny balkon",
+   "Wieża zamkowa"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest fiord?",
+  "odpowiedz": "Wąska, głęboka zatoka wcinająca się w ląd",
+  "bledne": [
+   "Rodzaj wydmy",
+   "Szczyt górski",
+   "Podziemna rzeka"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Kto to jest sommelier?",
+  "odpowiedz": "Specjalista od win",
+  "bledne": [
+   "Specjalista od serów",
+   "Specjalista od perfum",
+   "Specjalista od herbaty"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest haiku?",
+  "odpowiedz": "Krótki japoński wiersz",
+  "bledne": [
+   "Japoński miecz",
+   "Sztuka walki",
+   "Potrawa z ryżu"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest kontrabas?",
+  "odpowiedz": "Duży instrument smyczkowy",
+  "bledne": [
+   "Instrument dęty blaszany",
+   "Rodzaj bębna",
+   "Instrument klawiszowy"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest monsun?",
+  "odpowiedz": "Wiatr zmieniający kierunek z porą roku",
+  "bledne": [
+   "Rodzaj trzęsienia ziemi",
+   "Tropikalny owoc",
+   "Gatunek małpy"
+  ]
+ },
+ {
+  "kategoria": "Co to jest?",
+  "pytanie": "Co to jest kardigan?",
+  "odpowiedz": "Rozpinany sweter",
+  "bledne": [
+   "Rodzaj kapelusza",
+   "Ciasto drożdżowe",
+   "Instrument perkusyjny"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Z jakiego kraju pochodzi marka Volvo?",
+  "odpowiedz": "Ze Szwecji",
+  "bledne": [
+   "Z Norwegii",
+   "Z Niemiec",
+   "Z Danii"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Jaki samochód nazywano w Polsce „maluchem”?",
+  "odpowiedz": "Fiat 126p",
+  "bledne": [
+   "Fiat 125p",
+   "Syrena",
+   "Polonez"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Która marka ma w logo cztery połączone pierścienie?",
+  "odpowiedz": "Audi",
+  "bledne": [
+   "Opel",
+   "Toyota",
+   "Mercedes-Benz"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Z jakiego kraju pochodzi Ferrari?",
+  "odpowiedz": "Z Włoch",
+  "bledne": [
+   "Z Francji",
+   "Z Hiszpanii",
+   "Z Niemiec"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Kto stworzył Forda T i spopularyzował taśmową produkcję aut?",
+  "odpowiedz": "Henry Ford",
+  "bledne": [
+   "Karl Benz",
+   "Ferdinand Porsche",
+   "Enzo Ferrari"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Do czego służy w samochodzie układ ABS?",
+  "odpowiedz": "Zapobiega blokowaniu kół przy hamowaniu",
+  "bledne": [
+   "Zmienia biegi automatycznie",
+   "Utrzymuje stałą prędkość",
+   "Napełnia poduszki powietrzne"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Która marka produkuje model Golf?",
+  "odpowiedz": "Volkswagen",
+  "bledne": [
+   "Opel",
+   "Ford",
+   "Renault"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Który polski kierowca jeździł w Formule 1 i wygrał Grand Prix Kanady w 2008 roku?",
+  "odpowiedz": "Robert Kubica",
+  "bledne": [
+   "Kajetan Kajetanowicz",
+   "Sobiesław Zasada",
+   "Krzysztof Hołowczyc"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Z jakiego kraju pochodzi marka Škoda?",
+  "odpowiedz": "Z Czech",
+  "bledne": [
+   "Ze Słowacji",
+   "Z Polski",
+   "Z Węgier"
+  ]
+ },
+ {
+  "kategoria": "Motoryzacja",
+  "pytanie": "Jaki samochód FSO zaczęła produkować w 1978 roku?",
+  "odpowiedz": "Polonez",
+  "bledne": [
+   "Syrena",
+   "Warszawa",
+   "Tarpan"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "Jaka jest waluta Japonii?",
+  "odpowiedz": "Jen",
+  "bledne": [
+   "Juan",
+   "Won",
+   "Rupia"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "Gdzie mieści się oficjalna siedziba Parlamentu Europejskiego?",
+  "odpowiedz": "W Strasburgu",
+  "bledne": [
+   "W Brukseli",
+   "W Luksemburgu",
+   "W Hadze"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "W którym roku Polska wstąpiła do Unii Europejskiej?",
+  "odpowiedz": "2004",
+  "bledne": [
+   "1999",
+   "2007",
+   "1989"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "W którym roku Polska wstąpiła do NATO?",
+  "odpowiedz": "1999",
+  "bledne": [
+   "2004",
+   "1995",
+   "1991"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "Ilu posłów liczy Sejm RP?",
+  "odpowiedz": "460",
+  "bledne": [
+   "100",
+   "500",
+   "560"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "Ilu senatorów liczy Senat RP?",
+  "odpowiedz": "100",
+  "bledne": [
+   "50",
+   "120",
+   "460"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "Na ile lat wybierany jest prezydent RP?",
+  "odpowiedz": "5",
+  "bledne": [
+   "4",
+   "6",
+   "7"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "W którym mieście znajduje się główna siedziba ONZ?",
+  "odpowiedz": "W Nowym Jorku",
+  "bledne": [
+   "W Genewie",
+   "W Waszyngtonie",
+   "W Paryżu"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "Co oznacza skrót PKB?",
+  "odpowiedz": "Produkt krajowy brutto",
+  "bledne": [
+   "Polski kapitał bankowy",
+   "Podatek od kapitału brutto",
+   "Państwowa kasa budżetowa"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "Jak nazywa się bank centralny Polski?",
+  "odpowiedz": "Narodowy Bank Polski",
+  "bledne": [
+   "PKO Bank Polski",
+   "Bank Gospodarstwa Krajowego",
+   "Bank Pekao"
+  ]
+ },
+ {
+  "kategoria": "Polityka i gospodarka",
+  "pytanie": "Jaka waluta obowiązuje w Szwajcarii?",
+  "odpowiedz": "Frank szwajcarski",
+  "bledne": [
+   "Euro",
+   "Korona",
+   "Marka"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Dokończ przysłowie: „Gdzie kucharek sześć…”",
+  "odpowiedz": "…tam nie ma co jeść",
+  "bledne": [
+   "…tam obiad w mig",
+   "…tam garnków brak",
+   "…tam wesoło jest"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Dokończ przysłowie: „Nie chwal dnia…”",
+  "odpowiedz": "…przed zachodem słońca",
+  "bledne": [
+   "…przed śniadaniem",
+   "…przed północą",
+   "…przed burzą"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Dokończ przysłowie: „Lepszy wróbel w garści…”",
+  "odpowiedz": "…niż gołąb na dachu",
+  "bledne": [
+   "…niż orzeł na niebie",
+   "…niż kruk na płocie",
+   "…niż sroka na drzewie"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Dokończ przysłowie: „Kto pod kim dołki kopie…”",
+  "odpowiedz": "…ten sam w nie wpada",
+  "bledne": [
+   "…ten szybko się męczy",
+   "…ten łopatę złamie",
+   "…ten skarbu nie znajdzie"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Dokończ powiedzenie: „Apetyt rośnie…”",
+  "odpowiedz": "…w miarę jedzenia",
+  "bledne": [
+   "…przed obiadem",
+   "…po deszczu",
+   "…z wiekiem"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Kto według tradycji powiedział „Veni, vidi, vici”?",
+  "odpowiedz": "Juliusz Cezar",
+  "bledne": [
+   "Neron",
+   "Oktawian August",
+   "Hannibal"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Dokończ przysłowie: „Darowanemu koniowi…”",
+  "odpowiedz": "…nie zagląda się w zęby",
+  "bledne": [
+   "…nie zakłada się siodła",
+   "…nie patrzy się w oczy",
+   "…nie daje się owsa"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Dokończ przysłowie: „Mądry Polak…”",
+  "odpowiedz": "…po szkodzie",
+  "bledne": [
+   "…przed szkodą",
+   "…przy stole",
+   "…w niedzielę"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Z którego dramatu Szekspira pochodzą słowa „Być albo nie być”?",
+  "odpowiedz": "Z „Hamleta”",
+  "bledne": [
+   "Z „Makbeta”",
+   "Z „Otella”",
+   "Z „Króla Leara”"
+  ]
+ },
+ {
+  "kategoria": "Przysłowia i cytaty",
+  "pytanie": "Dokończ przysłowie: „Kto rano wstaje…”",
+  "odpowiedz": "…temu Pan Bóg daje",
+  "bledne": [
+   "…ten się nie wyśpi",
+   "…ten długo żyje",
+   "…ten pierwszy je"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Kto był najważniejszym bogiem greckiego Olimpu?",
+  "odpowiedz": "Zeus",
+  "bledne": [
+   "Posejdon",
+   "Hades",
+   "Apollo"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Jak nazywał się rzymski odpowiednik Zeusa?",
+  "odpowiedz": "Jowisz",
+  "bledne": [
+   "Mars",
+   "Neptun",
+   "Merkury"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Która grecka bogini była boginią mądrości?",
+  "odpowiedz": "Atena",
+  "bledne": [
+   "Afrodyta",
+   "Hera",
+   "Artemida"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Który bohater wykonał dwanaście prac?",
+  "odpowiedz": "Herakles",
+  "bledne": [
+   "Achilles",
+   "Odyseusz",
+   "Perseusz"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Kto zabił Meduzę?",
+  "odpowiedz": "Perseusz",
+  "bledne": [
+   "Tezeusz",
+   "Herakles",
+   "Jazon"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Kto był bogiem mórz w mitologii greckiej?",
+  "odpowiedz": "Posejdon",
+  "bledne": [
+   "Hades",
+   "Hermes",
+   "Ares"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Jak nazywał się skrzydlaty koń z mitologii greckiej?",
+  "odpowiedz": "Pegaz",
+  "bledne": [
+   "Cerber",
+   "Minotaur",
+   "Centaur"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Kto był najwyższym bogiem w mitologii nordyckiej?",
+  "odpowiedz": "Odyn",
+  "bledne": [
+   "Thor",
+   "Loki",
+   "Frejr"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Jak nazywał się słowiański bóg piorunów?",
+  "odpowiedz": "Perun",
+  "bledne": [
+   "Swaróg",
+   "Weles",
+   "Świętowit"
+  ]
+ },
+ {
+  "kategoria": "Mitologia",
+  "pytanie": "Kto zbudował labirynt na Krecie?",
+  "odpowiedz": "Dedal",
+  "bledne": [
+   "Ikar",
+   "Minos",
+   "Tezeusz"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "W którym roku ukończono wieżę Eiffla?",
+  "odpowiedz": "1889",
+  "bledne": [
+   "1900",
+   "1850",
+   "1925"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "W jakim stylu zbudowano katedrę Notre-Dame w Paryżu?",
+  "odpowiedz": "W gotyckim",
+  "bledne": [
+   "W barokowym",
+   "W romańskim",
+   "W klasycystycznym"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "W którym mieście stoi Krzywa Wieża?",
+  "odpowiedz": "W Pizie",
+  "bledne": [
+   "We Florencji",
+   "W Rzymie",
+   "W Wenecji"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "W jakim kraju znajduje się Tadż Mahal?",
+  "odpowiedz": "W Indiach",
+  "bledne": [
+   "W Pakistanie",
+   "W Iranie",
+   "W Turcji"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "Jak nazywa się wzgórze w Krakowie z dawną siedzibą królów Polski?",
+  "odpowiedz": "Wawel",
+  "bledne": [
+   "Malbork",
+   "Książ",
+   "Moszna"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "Który zamek jest największym ceglanym zamkiem na świecie?",
+  "odpowiedz": "Malbork",
+  "bledne": [
+   "Wawel",
+   "Książ",
+   "Czocha"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "Jak nazywa się półkuliste sklepienie, np. rzymskiego Panteonu?",
+  "odpowiedz": "Kopuła",
+  "bledne": [
+   "Łuk",
+   "Kolumnada",
+   "Portyk"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "W którym mieście stoi Koloseum?",
+  "odpowiedz": "W Rzymie",
+  "bledne": [
+   "W Atenach",
+   "W Neapolu",
+   "W Weronie"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "Kto zaprojektował słynny Dom nad Wodospadem?",
+  "odpowiedz": "Frank Lloyd Wright",
+  "bledne": [
+   "Le Corbusier",
+   "Ludwig Mies van der Rohe",
+   "Walter Gropius"
+  ]
+ },
+ {
+  "kategoria": "Architektura",
+  "pytanie": "W którym mieście stoi Pałac Kultury i Nauki?",
+  "odpowiedz": "W Warszawie",
+  "bledne": [
+   "W Krakowie",
+   "W Łodzi",
+   "We Wrocławiu"
   ]
  }
 ]
