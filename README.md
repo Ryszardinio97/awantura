@@ -73,6 +73,23 @@ Bot przenosi tylko osoby, które w tej chwili są na jakimś kanale głosowym. P
 Jeśli bot nie przenosi nikogo, sprawdź, czy rola bota ma uprawnienie *Przenoszenie członków* i dostęp do kanałów drużyn.
 Discord odtwarza dźwięk przy każdym przeniesieniu. Każdy gracz może go wyłączyć u siebie w Ustawieniach → Powiadomienia → Dźwięki.
 
+## Koło i dźwięki
+
+- **🎲 Losuj kategorię** uruchamia u wszystkich koło, które kręci się 10 s (`CONFIG.spinSec` w `server/game.js`).
+  Licytację można zacząć dopiero, gdy koło stanie.
+- Dźwięki wrzuć do `client/public/sounds/` (dokładnie te nazwy):
+
+| Plik | Kiedy gra |
+|---|---|
+| `LOSOWANIE.mp3` | kręcenie kołem |
+| `LICYTACJAEND.mp3` | koniec licytacji (przycisk albo koniec czasu) |
+| `GOOD1.mp3` / `GOOD2.mp3` | dobra odpowiedź (serwer losuje jeden, wszyscy słyszą ten sam) |
+| `TIME.mp3` | pokazanie pytania, czyli czas na odpowiedź |
+| `FAIL.mp3` | zła odpowiedź |
+
+Nowy dźwięk przerywa poprzedni (np. GOOD przerywa TIME). Każdy gracz może wyciszyć dźwięki u siebie przyciskiem 🔊 w nagłówku.
+Przeglądarka nie pozwala grać dźwięków, zanim ktoś kliknie w okno gry, więc pierwsze kliknięcie je „odblokowuje”.
+
 ---
 
 ## Krok 1: Programy
@@ -153,14 +170,27 @@ i ustawiasz URL Mapping na swoją domenę.
 
 ## Pytania
 
-Są w `server/questions.json`:
+Są w `server/questions.json`: 182 pytania w 15 kategoriach. Format jednego pytania:
 
 ```json
-{ "kategoria": "Geografia", "pytanie": "Jak nazywa się najdłuższa rzeka w Polsce?", "odpowiedz": "Wisła" }
+{ "kategoria": "Geografia", "pytanie": "Jak nazywa się najdłuższa rzeka w Polsce?",
+  "odpowiedz": "Wisła", "bledne": ["Odra", "Warta", "Bug"] }
 ```
 
-Dopisuj kolejne w tym samym formacie i zrestartuj serwer. Kategoria losuje się spośród tych,
-w których zostały niewykorzystane pytania. Pytanie nie powtórzy się w jednej grze.
+- `bledne` to 3 złe odpowiedzi, potrzebne do trybu ABCD. Pytania bez nich pojawiają się tylko w trybie „Bez odpowiedzi”.
+- Nową kategorię tworzysz, wpisując nową nazwę w `kategoria`. Na kole mieści się 8 pól (wylosowana kategoria + 7 innych).
+- Po zmianach zrestartuj serwer. Pytanie nie powtórzy się w jednej grze.
+
+## Rodzaj pytań: ABCD albo bez odpowiedzi
+
+Prowadzący wybiera w panelu: **🅰️ ABCD** albo **✍️ Bez odpowiedzi**. Zmiana jest możliwa między rundami.
+
+**🅰️ ABCD:** pod pytaniem są 4 odpowiedzi w losowej kolejności.
+- Drużyna, która wygrała licytację, klika odpowiedź albo wpisuje na czacie `!B`. Liczy się pierwsza odpowiedź.
+- **💡 Podpowiedź 50/50** usuwa dwie złe odpowiedzi. Kupuje ją drużyna (przycisk pod odpowiedziami) albo prowadzący w jej imieniu, np. gdy lider poprosi głosowo. Kosztuje `CONFIG.hintCost` (domyślnie 500 zł, ustaw 0 dla darmowej). Pieniądze trafiają do puli. Jedna podpowiedź na pytanie.
+- Prowadzący widzi poprawną odpowiedź (zielona przerywana ramka) i klika Dobrze/Źle. Po ocenie wszyscy widzą dobrą odpowiedź na zielono i ewentualnie złą na czerwono.
+
+**✍️ Bez odpowiedzi:** samo pytanie. Drużyna odpowiada głosem albo na czacie przez `!odpowiedź`, a prowadzący ocenia.
 
 ## Pliki
 

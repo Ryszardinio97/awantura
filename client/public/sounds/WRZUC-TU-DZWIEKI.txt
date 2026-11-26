@@ -1,0 +1,10 @@
+Wrzuć do tego folderu swoje pliki dźwiękowe (dokładnie te nazwy, wielkie litery):
+
+LOSOWANIE.mp3      – kręcenie kołem przy losowaniu kategorii (koło kręci się 10 s)
+LICYTACJAEND.mp3   – koniec licytacji (przycisk albo koniec czasu)
+GOOD1.mp3          – dobra odpowiedź (losowo GOOD1 albo GOOD2)
+GOOD2.mp3
+TIME.mp3           – drużyna ma czas na odpowiedź (po pokazaniu pytania)
+FAIL.mp3           – zła odpowiedź
+
+Brakujący plik = po prostu brak dźwięku w tym momencie, gra działa dalej.

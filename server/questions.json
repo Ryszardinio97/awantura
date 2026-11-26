@@ -1,25 +1,1822 @@
 [
-  { "kategoria": "Geografia", "pytanie": "Jak nazywa się najdłuższa rzeka w Polsce?", "odpowiedz": "Wisła" },
-  { "kategoria": "Geografia", "pytanie": "Stolicą którego państwa jest Canberra?", "odpowiedz": "Australii" },
-  { "kategoria": "Geografia", "pytanie": "Jak nazywa się najwyższy szczyt polskich Tatr?", "odpowiedz": "Rysy" },
-
-  { "kategoria": "Historia", "pytanie": "W którym roku miał miejsce chrzest Polski?", "odpowiedz": "966" },
-  { "kategoria": "Historia", "pytanie": "W którym roku wybuchło powstanie warszawskie?", "odpowiedz": "1944" },
-  { "kategoria": "Historia", "pytanie": "Który król Polski przegrał bitwę pod Warną?", "odpowiedz": "Władysław III Warneńczyk" },
-
-  { "kategoria": "Nauka", "pytanie": "Jaki symbol chemiczny ma złoto?", "odpowiedz": "Au" },
-  { "kategoria": "Nauka", "pytanie": "Która planeta Układu Słonecznego jest największa?", "odpowiedz": "Jowisz" },
-  { "kategoria": "Nauka", "pytanie": "Ile kości ma dorosły człowiek (w przybliżeniu)?", "odpowiedz": "206" },
-
-  { "kategoria": "Sport", "pytanie": "Ilu zawodników jednej drużyny jest jednocześnie na boisku w siatkówce halowej?", "odpowiedz": "6" },
-  { "kategoria": "Sport", "pytanie": "W jakim mieście odbyły się Letnie Igrzyska Olimpijskie w 2024 roku?", "odpowiedz": "Paryż" },
-  { "kategoria": "Sport", "pytanie": "Ile minut trwa regulaminowy mecz piłki nożnej bez doliczonego czasu?", "odpowiedz": "90" },
-
-  { "kategoria": "Literatura", "pytanie": "Kto napisał „Pana Tadeusza”?", "odpowiedz": "Adam Mickiewicz" },
-  { "kategoria": "Literatura", "pytanie": "Jak nazywa się wiedźmin z sagi Andrzeja Sapkowskiego?", "odpowiedz": "Geralt z Rivii" },
-  { "kategoria": "Literatura", "pytanie": "Kto jest autorem „Lalki”?", "odpowiedz": "Bolesław Prus" },
-
-  { "kategoria": "Gry", "pytanie": "Jakie polskie studio stworzyło grę „Cyberpunk 2077”?", "odpowiedz": "CD Projekt RED" },
-  { "kategoria": "Gry", "pytanie": "Jak nazywa się główny bohater serii „The Legend of Zelda”?", "odpowiedz": "Link" },
-  { "kategoria": "Gry", "pytanie": "Z ilu pól składa się szachownica?", "odpowiedz": "64" }
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Jak nazywa się najdłuższa rzeka w Polsce?",
+  "odpowiedz": "Wisła",
+  "bledne": [
+   "Odra",
+   "Warta",
+   "Bug"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Stolicą którego państwa jest Canberra?",
+  "odpowiedz": "Australii",
+  "bledne": [
+   "Nowej Zelandii",
+   "Kanady",
+   "RPA"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Jak nazywa się najwyższy szczyt polskich Tatr?",
+  "odpowiedz": "Rysy",
+  "bledne": [
+   "Giewont",
+   "Kasprowy Wierch",
+   "Świnica"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Jak nazywa się najwyższy szczyt świata?",
+  "odpowiedz": "Mount Everest",
+  "bledne": [
+   "K2",
+   "Kangczendzonga",
+   "Mont Blanc"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Który ocean jest największy?",
+  "odpowiedz": "Spokojny",
+  "bledne": [
+   "Atlantycki",
+   "Indyjski",
+   "Arktyczny"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Które jezioro jest największe w Polsce pod względem powierzchni?",
+  "odpowiedz": "Śniardwy",
+  "bledne": [
+   "Mamry",
+   "Hańcza",
+   "Gopło"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Które jezioro jest najgłębsze w Polsce?",
+  "odpowiedz": "Hańcza",
+  "bledne": [
+   "Śniardwy",
+   "Wigry",
+   "Morskie Oko"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Jak nazywa się stolica Kanady?",
+  "odpowiedz": "Ottawa",
+  "bledne": [
+   "Toronto",
+   "Montreal",
+   "Vancouver"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Które państwo jest największe na świecie pod względem powierzchni?",
+  "odpowiedz": "Rosja",
+  "bledne": [
+   "Kanada",
+   "Chiny",
+   "USA"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Ile województw ma Polska?",
+  "odpowiedz": "16",
+  "bledne": [
+   "14",
+   "18",
+   "12"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Na którym kontynencie płynie Amazonka?",
+  "odpowiedz": "Ameryka Południowa",
+  "bledne": [
+   "Afryka",
+   "Azja",
+   "Ameryka Północna"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Z iloma państwami graniczy Polska?",
+  "odpowiedz": "7",
+  "bledne": [
+   "6",
+   "8",
+   "5"
+  ]
+ },
+ {
+  "kategoria": "Geografia",
+  "pytanie": "Która rzeka jest najdłuższa w Europie?",
+  "odpowiedz": "Wołga",
+  "bledne": [
+   "Dunaj",
+   "Ren",
+   "Dniepr"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "W którym roku miał miejsce chrzest Polski?",
+  "odpowiedz": "966",
+  "bledne": [
+   "1025",
+   "1000",
+   "1410"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "W którym roku odbyła się bitwa pod Grunwaldem?",
+  "odpowiedz": "1410",
+  "bledne": [
+   "1525",
+   "1385",
+   "1683"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "Kto był pierwszym koronowanym królem Polski?",
+  "odpowiedz": "Bolesław Chrobry",
+  "bledne": [
+   "Mieszko I",
+   "Kazimierz Wielki",
+   "Władysław Łokietek"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "W którym roku wybuchło powstanie warszawskie?",
+  "odpowiedz": "1944",
+  "bledne": [
+   "1939",
+   "1943",
+   "1945"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "W którym roku uchwalono Konstytucję 3 maja?",
+  "odpowiedz": "1791",
+  "bledne": [
+   "1772",
+   "1795",
+   "1918"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "W którym roku Polska odzyskała niepodległość?",
+  "odpowiedz": "1918",
+  "bledne": [
+   "1920",
+   "1914",
+   "1945"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "Kto dowodził wojskami polskimi w bitwie pod Wiedniem w 1683 roku?",
+  "odpowiedz": "Jan III Sobieski",
+  "bledne": [
+   "Stefan Batory",
+   "Zygmunt III Waza",
+   "August II Mocny"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "Który król przeniósł dwór królewski z Krakowa do Warszawy?",
+  "odpowiedz": "Zygmunt III Waza",
+  "bledne": [
+   "Kazimierz Wielki",
+   "Jan III Sobieski",
+   "Stanisław August Poniatowski"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "Kto był ostatnim królem Polski?",
+  "odpowiedz": "Stanisław August Poniatowski",
+  "bledne": [
+   "August III Sas",
+   "Jan Kazimierz",
+   "Stanisław Leszczyński"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "W którym roku zawarto unię lubelską?",
+  "odpowiedz": "1569",
+  "bledne": [
+   "1385",
+   "1410",
+   "1791"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "Kto był pierwszym przewodniczącym NSZZ „Solidarność”?",
+  "odpowiedz": "Lech Wałęsa",
+  "bledne": [
+   "Tadeusz Mazowiecki",
+   "Jacek Kuroń",
+   "Bronisław Geremek"
+  ]
+ },
+ {
+  "kategoria": "Historia Polski",
+  "pytanie": "W którym roku odbyła się Bitwa Warszawska, zwana „Cudem nad Wisłą”?",
+  "odpowiedz": "1920",
+  "bledne": [
+   "1918",
+   "1939",
+   "1926"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "W którym roku Krzysztof Kolumb dotarł do Ameryki?",
+  "odpowiedz": "1492",
+  "bledne": [
+   "1453",
+   "1517",
+   "1610"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "Kto jako pierwszy człowiek stanął na Księżycu?",
+  "odpowiedz": "Neil Armstrong",
+  "bledne": [
+   "Buzz Aldrin",
+   "Jurij Gagarin",
+   "Michael Collins"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "W którym roku upadł mur berliński?",
+  "odpowiedz": "1989",
+  "bledne": [
+   "1991",
+   "1985",
+   "1961"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "Kto był pierwszym człowiekiem w kosmosie?",
+  "odpowiedz": "Jurij Gagarin",
+  "bledne": [
+   "Neil Armstrong",
+   "Aleksiej Leonow",
+   "John Glenn"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "W którym roku zatonął Titanic?",
+  "odpowiedz": "1912",
+  "bledne": [
+   "1905",
+   "1921",
+   "1898"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "Kto był pierwszym prezydentem Stanów Zjednoczonych?",
+  "odpowiedz": "George Washington",
+  "bledne": [
+   "Abraham Lincoln",
+   "Thomas Jefferson",
+   "John Adams"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "W którym roku zakończyła się II wojna światowa w Europie?",
+  "odpowiedz": "1945",
+  "bledne": [
+   "1944",
+   "1946",
+   "1939"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "Kto był pierwszym cesarzem Francuzów?",
+  "odpowiedz": "Napoleon Bonaparte",
+  "bledne": [
+   "Ludwik XIV",
+   "Karol Wielki",
+   "Ludwik XVI"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "Która cywilizacja zbudowała Machu Picchu?",
+  "odpowiedz": "Inkowie",
+  "bledne": [
+   "Majowie",
+   "Aztekowie",
+   "Olmekowie"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "W którym mieście w 1914 roku zastrzelono arcyksięcia Franciszka Ferdynanda?",
+  "odpowiedz": "Sarajewo",
+  "bledne": [
+   "Wiedeń",
+   "Belgrad",
+   "Budapeszt"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "Ile lat faktycznie trwała wojna stuletnia?",
+  "odpowiedz": "116",
+  "bledne": [
+   "100",
+   "99",
+   "130"
+  ]
+ },
+ {
+  "kategoria": "Historia świata",
+  "pytanie": "Grobowiec którego faraona odkrył Howard Carter w 1922 roku?",
+  "odpowiedz": "Tutanchamona",
+  "bledne": [
+   "Ramzesa II",
+   "Cheopsa",
+   "Echnatona"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Jaki symbol chemiczny ma złoto?",
+  "odpowiedz": "Au",
+  "bledne": [
+   "Ag",
+   "Go",
+   "Gd"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Która planeta Układu Słonecznego jest największa?",
+  "odpowiedz": "Jowisz",
+  "bledne": [
+   "Saturn",
+   "Neptun",
+   "Uran"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Ile kości ma dorosły człowiek?",
+  "odpowiedz": "206",
+  "bledne": [
+   "186",
+   "226",
+   "256"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Jaki wzór chemiczny ma woda?",
+  "odpowiedz": "H₂O",
+  "bledne": [
+   "CO₂",
+   "O₂",
+   "H₂O₂"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Która planeta jest najbliżej Słońca?",
+  "odpowiedz": "Merkury",
+  "bledne": [
+   "Wenus",
+   "Mars",
+   "Ziemia"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "W jakiej temperaturze wrze woda przy normalnym ciśnieniu?",
+  "odpowiedz": "100°C",
+  "bledne": [
+   "90°C",
+   "120°C",
+   "80°C"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Kto stworzył teorię względności?",
+  "odpowiedz": "Albert Einstein",
+  "bledne": [
+   "Isaac Newton",
+   "Niels Bohr",
+   "Max Planck"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Maria Skłodowska-Curie odkryła polon i jaki drugi pierwiastek?",
+  "odpowiedz": "Rad",
+  "bledne": [
+   "Uran",
+   "Radon",
+   "Tor"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Ile chromosomów ma typowa komórka ciała człowieka?",
+  "odpowiedz": "46",
+  "bledne": [
+   "23",
+   "44",
+   "48"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Ile w przybliżeniu wynosi prędkość światła w próżni?",
+  "odpowiedz": "300 000 km/s",
+  "bledne": [
+   "30 000 km/s",
+   "150 000 km/s",
+   "1 000 000 km/s"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Który naturalny minerał jest najtwardszy?",
+  "odpowiedz": "Diament",
+  "bledne": [
+   "Kwarc",
+   "Korund",
+   "Topaz"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Który gaz stanowi większość atmosfery Ziemi?",
+  "odpowiedz": "Azot",
+  "bledne": [
+   "Tlen",
+   "Dwutlenek węgla",
+   "Argon"
+  ]
+ },
+ {
+  "kategoria": "Nauka",
+  "pytanie": "Ile planet ma Układ Słoneczny?",
+  "odpowiedz": "8",
+  "bledne": [
+   "9",
+   "7",
+   "10"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Jaki ssak jest największy na świecie?",
+  "odpowiedz": "Płetwal błękitny",
+  "bledne": [
+   "Słoń afrykański",
+   "Kaszalot",
+   "Orka"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Ile nóg ma pająk?",
+  "odpowiedz": "8",
+  "bledne": [
+   "6",
+   "10",
+   "12"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Które zwierzę lądowe jest najszybsze?",
+  "odpowiedz": "Gepard",
+  "bledne": [
+   "Lew",
+   "Antylopa widłoroga",
+   "Koń"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Czym głównie żywi się panda wielka?",
+  "odpowiedz": "Bambusem",
+  "bledne": [
+   "Eukaliptusem",
+   "Rybami",
+   "Owocami"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Jak nazywa się młode konia?",
+  "odpowiedz": "Źrebię",
+  "bledne": [
+   "Cielę",
+   "Koźlę",
+   "Jagnię"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Który kot jest największy na świecie?",
+  "odpowiedz": "Tygrys",
+  "bledne": [
+   "Lew",
+   "Jaguar",
+   "Pantera śnieżna"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Ile serc ma ośmiornica?",
+  "odpowiedz": "3",
+  "bledne": [
+   "1",
+   "2",
+   "8"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Który z tych ptaków nie potrafi latać?",
+  "odpowiedz": "Pingwin",
+  "bledne": [
+   "Albatros",
+   "Jaskółka",
+   "Czapla"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "W której części komórki roślinnej zachodzi fotosynteza?",
+  "odpowiedz": "W chloroplastach",
+  "bledne": [
+   "W mitochondriach",
+   "W rybosomach",
+   "W jądrze komórkowym"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Jaki gatunek drzewa osiąga największą wysokość na świecie?",
+  "odpowiedz": "Sekwoja wieczniezielona",
+  "bledne": [
+   "Baobab",
+   "Dąb szypułkowy",
+   "Cedr libański"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Jak nazywa się zimowy sen niektórych zwierząt?",
+  "odpowiedz": "Hibernacja",
+  "bledne": [
+   "Estywacja",
+   "Migracja",
+   "Linienie"
+  ]
+ },
+ {
+  "kategoria": "Przyroda",
+  "pytanie": "Jaki ptak jest przedstawiony w godle Polski?",
+  "odpowiedz": "Orzeł",
+  "bledne": [
+   "Sokół",
+   "Jastrząb",
+   "Bocian"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Ilu zawodników jednej drużyny gra jednocześnie na boisku w siatkówce halowej?",
+  "odpowiedz": "6",
+  "bledne": [
+   "5",
+   "7",
+   "11"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "W jakim mieście odbyły się Letnie Igrzyska Olimpijskie w 2024 roku?",
+  "odpowiedz": "Paryż",
+  "bledne": [
+   "Los Angeles",
+   "Tokio",
+   "Londyn"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Ile minut trwa regulaminowy mecz piłki nożnej bez doliczonego czasu?",
+  "odpowiedz": "90",
+  "bledne": [
+   "80",
+   "100",
+   "60"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Ile punktów daje rzut zza linii 6,75 m w koszykówce?",
+  "odpowiedz": "3",
+  "bledne": [
+   "2",
+   "4",
+   "1"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "W jakiej dyscyplinie walczy się o Puchar Stanleya?",
+  "odpowiedz": "Hokej na lodzie",
+  "bledne": [
+   "Koszykówka",
+   "Baseball",
+   "Futbol amerykański"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Ile setów trzeba wygrać w męskim meczu Wielkiego Szlema?",
+  "odpowiedz": "3",
+  "bledne": [
+   "2",
+   "4",
+   "5"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Który polski chodziarz zdobył cztery złote medale olimpijskie?",
+  "odpowiedz": "Robert Korzeniowski",
+  "bledne": [
+   "Bronisław Malinowski",
+   "Waldemar Baszanowski",
+   "Jacek Wszoła"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "W jakim mieście znajduje się skocznia Wielka Krokiew?",
+  "odpowiedz": "Zakopane",
+  "bledne": [
+   "Wisła",
+   "Szczyrk",
+   "Karpacz"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Ilu zawodników jednej drużyny gra jednocześnie na boisku w piłce nożnej?",
+  "odpowiedz": "11",
+  "bledne": [
+   "10",
+   "12",
+   "9"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Ile wynosi dystans maratonu?",
+  "odpowiedz": "42,195 km",
+  "bledne": [
+   "40 km",
+   "42 km",
+   "45,195 km"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Który kraj był gospodarzem mistrzostw świata w piłce nożnej w 2022 roku?",
+  "odpowiedz": "Katar",
+  "bledne": [
+   "Rosja",
+   "Brazylia",
+   "Arabia Saudyjska"
+  ]
+ },
+ {
+  "kategoria": "Sport",
+  "pytanie": "Ile kół jest na fladze olimpijskiej?",
+  "odpowiedz": "5",
+  "bledne": [
+   "4",
+   "6",
+   "7"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto napisał „Pana Tadeusza”?",
+  "odpowiedz": "Adam Mickiewicz",
+  "bledne": [
+   "Juliusz Słowacki",
+   "Henryk Sienkiewicz",
+   "Cyprian Kamil Norwid"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Jak ma na imię wiedźmin z sagi Andrzeja Sapkowskiego?",
+  "odpowiedz": "Geralt",
+  "bledne": [
+   "Jaskier",
+   "Vesemir",
+   "Eskel"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto jest autorem „Lalki”?",
+  "odpowiedz": "Bolesław Prus",
+  "bledne": [
+   "Stefan Żeromski",
+   "Eliza Orzeszkowa",
+   "Władysław Reymont"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto napisał „Quo vadis”?",
+  "odpowiedz": "Henryk Sienkiewicz",
+  "bledne": [
+   "Bolesław Prus",
+   "Stefan Żeromski",
+   "Władysław Reymont"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto otrzymał Nagrodę Nobla w 1924 roku za powieść „Chłopi”?",
+  "odpowiedz": "Władysław Reymont",
+  "bledne": [
+   "Henryk Sienkiewicz",
+   "Czesław Miłosz",
+   "Stefan Żeromski"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto jest autorką serii o Harrym Potterze?",
+  "odpowiedz": "J.K. Rowling",
+  "bledne": [
+   "Agatha Christie",
+   "Suzanne Collins",
+   "Stephenie Meyer"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto napisał „Romea i Julię”?",
+  "odpowiedz": "William Szekspir",
+  "bledne": [
+   "Molier",
+   "Johann Wolfgang Goethe",
+   "Dante Alighieri"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto jest autorem „Małego Księcia”?",
+  "odpowiedz": "Antoine de Saint-Exupéry",
+  "bledne": [
+   "Juliusz Verne",
+   "Victor Hugo",
+   "Aleksander Dumas"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Który hobbit niesie Jedyny Pierścień do Mordoru we „Władcy Pierścieni”?",
+  "odpowiedz": "Frodo Baggins",
+  "bledne": [
+   "Bilbo Baggins",
+   "Samwise Gamgee",
+   "Peregrin Tuk"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto napisał „Krzyżaków”?",
+  "odpowiedz": "Henryk Sienkiewicz",
+  "bledne": [
+   "Józef Ignacy Kraszewski",
+   "Bolesław Prus",
+   "Adam Mickiewicz"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "W którym roku Wisława Szymborska otrzymała Nagrodę Nobla?",
+  "odpowiedz": "1996",
+  "bledne": [
+   "1980",
+   "2004",
+   "1989"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto jest autorem „Zbrodni i kary”?",
+  "odpowiedz": "Fiodor Dostojewski",
+  "bledne": [
+   "Lew Tołstoj",
+   "Antoni Czechow",
+   "Aleksander Puszkin"
+  ]
+ },
+ {
+  "kategoria": "Literatura",
+  "pytanie": "Kto stworzył Koziołka Matołka?",
+  "odpowiedz": "Kornel Makuszyński",
+  "bledne": [
+   "Jan Brzechwa",
+   "Julian Tuwim",
+   "Maria Konopnicka"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Kto wyreżyserował „Listę Schindlera”?",
+  "odpowiedz": "Steven Spielberg",
+  "bledne": [
+   "Roman Polański",
+   "Martin Scorsese",
+   "Andrzej Wajda"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Który polski reżyser dostał Oscara za reżyserię filmu „Pianista”?",
+  "odpowiedz": "Roman Polański",
+  "bledne": [
+   "Andrzej Wajda",
+   "Krzysztof Kieślowski",
+   "Agnieszka Holland"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Kto zagrał Jacka w filmie „Titanic” z 1997 roku?",
+  "odpowiedz": "Leonardo DiCaprio",
+  "bledne": [
+   "Brad Pitt",
+   "Matt Damon",
+   "Johnny Depp"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "W którym serialu głównym bohaterem jest nauczyciel chemii Walter White?",
+  "odpowiedz": "Breaking Bad",
+  "bledne": [
+   "Ozark",
+   "Narcos",
+   "Prison Break"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Kto wyreżyserował komedię „Miś”?",
+  "odpowiedz": "Stanisław Bareja",
+  "bledne": [
+   "Juliusz Machulski",
+   "Marek Piwowski",
+   "Sylwester Chęciński"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "W jakim kraju kręcono trylogię „Władca Pierścieni” Petera Jacksona?",
+  "odpowiedz": "Nowa Zelandia",
+  "bledne": [
+   "Australia",
+   "Irlandia",
+   "Kanada"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Kto wyreżyserował „Seksmisję”?",
+  "odpowiedz": "Juliusz Machulski",
+  "bledne": [
+   "Stanisław Bareja",
+   "Andrzej Wajda",
+   "Jerzy Hoffman"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "W którym serialu występuje Ferdynand Kiepski?",
+  "odpowiedz": "Świat według Kiepskich",
+  "bledne": [
+   "Ranczo",
+   "Miodowe lata",
+   "Złotopolscy"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Jak nazywa się nagroda Amerykańskiej Akademii Filmowej?",
+  "odpowiedz": "Oscar",
+  "bledne": [
+   "Złoty Glob",
+   "Emmy",
+   "Złota Palma"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Na którym festiwalu przyznaje się Złotą Palmę?",
+  "odpowiedz": "W Cannes",
+  "bledne": [
+   "W Wenecji",
+   "W Berlinie",
+   "W Gdyni"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Kto wyreżyserował film „Ida”, nagrodzony Oscarem w 2015 roku?",
+  "odpowiedz": "Paweł Pawlikowski",
+  "bledne": [
+   "Agnieszka Holland",
+   "Władysław Pasikowski",
+   "Wojciech Smarzowski"
+  ]
+ },
+ {
+  "kategoria": "Film i seriale",
+  "pytanie": "Jak nazywa się kowboj-zabawka z „Toy Story” w polskiej wersji?",
+  "odpowiedz": "Chudy",
+  "bledne": [
+   "Buzz",
+   "Rex",
+   "Hamm"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "W jakiej miejscowości urodził się Fryderyk Chopin?",
+  "odpowiedz": "Żelazowa Wola",
+  "bledne": [
+   "Warszawa",
+   "Kraków",
+   "Paryż"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Ile strun ma standardowa gitara klasyczna?",
+  "odpowiedz": "6",
+  "bledne": [
+   "4",
+   "5",
+   "8"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Kto był wokalistą zespołu Queen?",
+  "odpowiedz": "Freddie Mercury",
+  "bledne": [
+   "Brian May",
+   "Mick Jagger",
+   "David Bowie"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Z jakiego miasta pochodzi zespół The Beatles?",
+  "odpowiedz": "Liverpool",
+  "bledne": [
+   "Londyn",
+   "Manchester",
+   "Birmingham"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Jaki międzynarodowy konkurs pianistyczny odbywa się w Warszawie co 5 lat?",
+  "odpowiedz": "Konkurs Chopinowski",
+  "bledne": [
+   "Konkurs Wieniawskiego",
+   "Konkurs Paderewskiego",
+   "Konkurs Moniuszkowski"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Kto skomponował „Cztery pory roku”?",
+  "odpowiedz": "Antonio Vivaldi",
+  "bledne": [
+   "Wolfgang Amadeusz Mozart",
+   "Jan Sebastian Bach",
+   "Ludwig van Beethoven"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Na jakim instrumencie grał Niccolò Paganini?",
+  "odpowiedz": "Na skrzypcach",
+  "bledne": [
+   "Na fortepianie",
+   "Na wiolonczeli",
+   "Na flecie"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Który wielki kompozytor stracił słuch, a mimo to dalej komponował?",
+  "odpowiedz": "Ludwig van Beethoven",
+  "bledne": [
+   "Wolfgang Amadeusz Mozart",
+   "Fryderyk Chopin",
+   "Joseph Haydn"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Jak nazywa się hymn Polski?",
+  "odpowiedz": "Mazurek Dąbrowskiego",
+  "bledne": [
+   "Rota",
+   "Bogurodzica",
+   "Pierwsza Brygada"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Michaela Jacksona nazywano królem jakiej muzyki?",
+  "odpowiedz": "Popu",
+  "bledne": [
+   "Rocka",
+   "Bluesa",
+   "Jazzu"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Ile klawiszy ma standardowy fortepian?",
+  "odpowiedz": "88",
+  "bledne": [
+   "76",
+   "96",
+   "104"
+  ]
+ },
+ {
+  "kategoria": "Muzyka",
+  "pytanie": "Kto skomponował operę „Straszny dwór”?",
+  "odpowiedz": "Stanisław Moniuszko",
+  "bledne": [
+   "Fryderyk Chopin",
+   "Karol Szymanowski",
+   "Krzysztof Penderecki"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Jakie polskie studio stworzyło grę „Cyberpunk 2077”?",
+  "odpowiedz": "CD Projekt RED",
+  "bledne": [
+   "Techland",
+   "CI Games",
+   "People Can Fly"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Jak nazywa się główny bohater serii „The Legend of Zelda”?",
+  "odpowiedz": "Link",
+  "bledne": [
+   "Zelda",
+   "Ganon",
+   "Epona"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Z ilu pól składa się szachownica?",
+  "odpowiedz": "64",
+  "bledne": [
+   "81",
+   "49",
+   "100"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Które polskie studio stworzyło grę „Dying Light”?",
+  "odpowiedz": "Techland",
+  "bledne": [
+   "CD Projekt RED",
+   "11 bit studios",
+   "Bloober Team"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Jak ma na imię hydraulik – maskotka Nintendo?",
+  "odpowiedz": "Mario",
+  "bledne": [
+   "Luigi",
+   "Wario",
+   "Yoshi"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "W której grze buduje się z bloków i ucieka przed Creeperami?",
+  "odpowiedz": "Minecraft",
+  "bledne": [
+   "Terraria",
+   "Roblox",
+   "Fortnite"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Które polskie studio stworzyło grę „This War of Mine”?",
+  "odpowiedz": "11 bit studios",
+  "bledne": [
+   "Techland",
+   "CD Projekt RED",
+   "Bloober Team"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Jak w szachach nazywa się ruch króla razem z wieżą?",
+  "odpowiedz": "Roszada",
+  "bledne": [
+   "Gambit",
+   "Promocja",
+   "Bicie w przelocie"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Ile kart ma standardowa talia do pokera bez jokerów?",
+  "odpowiedz": "52",
+  "bledne": [
+   "54",
+   "48",
+   "32"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Ile oczek łącznie jest na zwykłej sześciennej kostce do gry?",
+  "odpowiedz": "21",
+  "bledne": [
+   "18",
+   "24",
+   "36"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Jaka firma produkuje konsole PlayStation?",
+  "odpowiedz": "Sony",
+  "bledne": [
+   "Microsoft",
+   "Nintendo",
+   "Sega"
+  ]
+ },
+ {
+  "kategoria": "Gry",
+  "pytanie": "Jak nazywa się gra, w której układa się spadające klocki z czterech kwadratów?",
+  "odpowiedz": "Tetris",
+  "bledne": [
+   "Arkanoid",
+   "Pong",
+   "Snake"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Kto założył Microsoft razem z Paulem Allenem?",
+  "odpowiedz": "Bill Gates",
+  "bledne": [
+   "Steve Jobs",
+   "Mark Zuckerberg",
+   "Larry Page"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Co oznacza skrót „WWW”?",
+  "odpowiedz": "World Wide Web",
+  "bledne": [
+   "World Wide Wire",
+   "Web World Wide",
+   "Wide World Web"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Ile bitów ma jeden bajt?",
+  "odpowiedz": "8",
+  "bledne": [
+   "4",
+   "16",
+   "10"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Jak nazywa się system operacyjny Google na telefony?",
+  "odpowiedz": "Android",
+  "bledne": [
+   "iOS",
+   "Windows Phone",
+   "Symbian"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "W którym roku zaprezentowano pierwszego iPhone’a?",
+  "odpowiedz": "2007",
+  "bledne": [
+   "2005",
+   "2009",
+   "2010"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Co oznacza skrót CPU?",
+  "odpowiedz": "Central Processing Unit",
+  "bledne": [
+   "Computer Personal Unit",
+   "Central Program Utility",
+   "Core Power Unit"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Kto jest głównym twórcą Facebooka?",
+  "odpowiedz": "Mark Zuckerberg",
+  "bledne": [
+   "Elon Musk",
+   "Jeff Bezos",
+   "Jack Dorsey"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "W jakim języku znaczników tworzy się strony internetowe?",
+  "odpowiedz": "HTML",
+  "bledne": [
+   "Python",
+   "SQL",
+   "C++"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Kto w 1876 roku opatentował telefon?",
+  "odpowiedz": "Alexander Graham Bell",
+  "bledne": [
+   "Thomas Edison",
+   "Nikola Tesla",
+   "Guglielmo Marconi"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Który polski wynalazca skonstruował lampę naftową?",
+  "odpowiedz": "Ignacy Łukasiewicz",
+  "bledne": [
+   "Jan Szczepanik",
+   "Kazimierz Prószyński",
+   "Stefan Drzewiecki"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Co oznacza skrót USB?",
+  "odpowiedz": "Universal Serial Bus",
+  "bledne": [
+   "United System Bus",
+   "Universal Speed Bridge",
+   "Unified Serial Board"
+  ]
+ },
+ {
+  "kategoria": "Technologia",
+  "pytanie": "Jaka firma produkuje komputery Mac?",
+  "odpowiedz": "Apple",
+  "bledne": [
+   "Dell",
+   "Lenovo",
+   "HP"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Co jest głównym składnikiem guacamole?",
+  "odpowiedz": "Awokado",
+  "bledne": [
+   "Pomidor",
+   "Ogórek",
+   "Groszek"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Z jakiego kraju pochodzi pizza?",
+  "odpowiedz": "Z Włoch",
+  "bledne": [
+   "Z Grecji",
+   "Z Hiszpanii",
+   "Z Francji"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Jak nazywa się ostra zielona japońska pasta podawana do sushi?",
+  "odpowiedz": "Wasabi",
+  "bledne": [
+   "Miso",
+   "Teriyaki",
+   "Gari"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Na zakwasie z jakiej mąki tradycyjnie robi się żurek?",
+  "odpowiedz": "Żytniej",
+  "bledne": [
+   "Pszennej",
+   "Kukurydzianej",
+   "Ryżowej"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Z jakiego warzywa robi się barszcz czerwony?",
+  "odpowiedz": "Z buraków",
+  "bledne": [
+   "Z pomidorów",
+   "Z kapusty",
+   "Z marchwi"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Z jakiego kraju pochodzi paella?",
+  "odpowiedz": "Z Hiszpanii",
+  "bledne": [
+   "Z Portugalii",
+   "Z Meksyku",
+   "Z Włoch"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Z jakiego kraju pochodzi ser feta?",
+  "odpowiedz": "Z Grecji",
+  "bledne": [
+   "Z Turcji",
+   "Z Włoch",
+   "Z Bułgarii"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Z jakiego mleka głównie robi się oscypek?",
+  "odpowiedz": "Owczego",
+  "bledne": [
+   "Krowiego",
+   "Koziego",
+   "Bawolego"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Jak nazywa się włoski deser z biszkoptami, kawą i serem mascarpone?",
+  "odpowiedz": "Tiramisu",
+  "bledne": [
+   "Panna cotta",
+   "Cannoli",
+   "Gelato"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Co jest głównym składnikiem bigosu?",
+  "odpowiedz": "Kapusta",
+  "bledne": [
+   "Ziemniaki",
+   "Fasola",
+   "Ryż"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Z jakiej rośliny robi się kaszę gryczaną?",
+  "odpowiedz": "Z gryki",
+  "bledne": [
+   "Z jęczmienia",
+   "Z prosa",
+   "Z owsa"
+  ]
+ },
+ {
+  "kategoria": "Kuchnia",
+  "pytanie": "Jaka przyprawa nadaje curry żółty kolor?",
+  "odpowiedz": "Kurkuma",
+  "bledne": [
+   "Papryka",
+   "Cynamon",
+   "Imbir"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Ile liter ma polski alfabet?",
+  "odpowiedz": "32",
+  "bledne": [
+   "26",
+   "30",
+   "35"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Jak nazywa się część mowy oznaczająca czynność lub stan?",
+  "odpowiedz": "Czasownik",
+  "bledne": [
+   "Rzeczownik",
+   "Przymiotnik",
+   "Przysłówek"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Która forma jest poprawna?",
+  "odpowiedz": "Wziąć",
+  "bledne": [
+   "Wziąść",
+   "Wziąźć",
+   "Wzionć"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Jak brzmi liczba mnoga od słowa „człowiek”?",
+  "odpowiedz": "Ludzie",
+  "bledne": [
+   "Człowieki",
+   "Człowiekowie",
+   "Ludy"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Jak nazywa się wyraz o przeciwnym znaczeniu?",
+  "odpowiedz": "Antonim",
+  "bledne": [
+   "Synonim",
+   "Homonim",
+   "Akronim"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Ile przypadków ma język polski?",
+  "odpowiedz": "7",
+  "bledne": [
+   "6",
+   "5",
+   "8"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Co oznacza powiedzenie „mieć muchy w nosie”?",
+  "odpowiedz": "Być obrażonym i w złym humorze",
+  "bledne": [
+   "Być przeziębionym",
+   "Być głodnym",
+   "Kłamać"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Jak nazywa się wyraz czytany tak samo od przodu i od tyłu, np. „kajak”?",
+  "odpowiedz": "Palindrom",
+  "bledne": [
+   "Anagram",
+   "Akronim",
+   "Neologizm"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Która forma jest poprawna?",
+  "odpowiedz": "Poszedłem",
+  "bledne": [
+   "Poszłem",
+   "Poszedem",
+   "Poszedełem"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Które słowo jest synonimem słowa „szybki”?",
+  "odpowiedz": "Prędki",
+  "bledne": [
+   "Powolny",
+   "Ciężki",
+   "Cichy"
+  ]
+ },
+ {
+  "kategoria": "Język polski",
+  "pytanie": "Jak nazywa się wypowiedzenie bez osobowej formy czasownika, np. „Pożar!”?",
+  "odpowiedz": "Równoważnik zdania",
+  "bledne": [
+   "Zdanie złożone",
+   "Zdanie pojedyncze",
+   "Wykrzyknik"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto namalował „Mona Lisę”?",
+  "odpowiedz": "Leonardo da Vinci",
+  "bledne": [
+   "Michał Anioł",
+   "Rafael",
+   "Rembrandt"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto namalował obraz „Bitwa pod Grunwaldem”?",
+  "odpowiedz": "Jan Matejko",
+  "bledne": [
+   "Józef Chełmoński",
+   "Jacek Malczewski",
+   "Stanisław Wyspiański"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "W którym mieście można oglądać „Damę z gronostajem”?",
+  "odpowiedz": "W Krakowie",
+  "bledne": [
+   "W Warszawie",
+   "We Wrocławiu",
+   "W Gdańsku"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto namalował „Gwiaździstą noc”?",
+  "odpowiedz": "Vincent van Gogh",
+  "bledne": [
+   "Claude Monet",
+   "Paul Cézanne",
+   "Pablo Picasso"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto wyrzeźbił marmurowego Dawida stojącego we Florencji (1504)?",
+  "odpowiedz": "Michał Anioł",
+  "bledne": [
+   "Donatello",
+   "Gian Lorenzo Bernini",
+   "Auguste Rodin"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto namalował freski na sklepieniu Kaplicy Sykstyńskiej?",
+  "odpowiedz": "Michał Anioł",
+  "bledne": [
+   "Leonardo da Vinci",
+   "Rafael",
+   "Sandro Botticelli"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto namalował „Krzyk”?",
+  "odpowiedz": "Edvard Munch",
+  "bledne": [
+   "Gustav Klimt",
+   "Salvador Dalí",
+   "Egon Schiele"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Z jakim kierunkiem w sztuce kojarzony jest przede wszystkim Pablo Picasso?",
+  "odpowiedz": "Z kubizmem",
+  "bledne": [
+   "Z impresjonizmem",
+   "Z surrealizmem",
+   "Z barokiem"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto zaprojektował barcelońską Sagradę Família?",
+  "odpowiedz": "Antoni Gaudí",
+  "bledne": [
+   "Le Corbusier",
+   "Frank Lloyd Wright",
+   "Gustave Eiffel"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "W którym mieście znajduje się muzeum Luwr?",
+  "odpowiedz": "W Paryżu",
+  "bledne": [
+   "W Londynie",
+   "W Madrycie",
+   "W Rzymie"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto namalował obraz „Stańczyk”?",
+  "odpowiedz": "Jan Matejko",
+  "bledne": [
+   "Stanisław Wyspiański",
+   "Jacek Malczewski",
+   "Wojciech Kossak"
+  ]
+ },
+ {
+  "kategoria": "Sztuka",
+  "pytanie": "Kto zaprojektował witraż „Bóg Ojciec – Stań się” w krakowskim kościele franciszkanów?",
+  "odpowiedz": "Stanisław Wyspiański",
+  "bledne": [
+   "Jan Matejko",
+   "Józef Mehoffer",
+   "Jacek Malczewski"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile dni ma rok przestępny?",
+  "odpowiedz": "366",
+  "bledne": [
+   "365",
+   "364",
+   "367"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile minut ma doba?",
+  "odpowiedz": "1440",
+  "bledne": [
+   "1240",
+   "1400",
+   "1640"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Jaki kolor powstaje ze zmieszania niebieskiego i żółtego?",
+  "odpowiedz": "Zielony",
+  "bledne": [
+   "Fioletowy",
+   "Pomarańczowy",
+   "Brązowy"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile wynosi suma kątów w trójkącie?",
+  "odpowiedz": "180°",
+  "bledne": [
+   "360°",
+   "90°",
+   "270°"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile zer ma milion?",
+  "odpowiedz": "6",
+  "bledne": [
+   "5",
+   "7",
+   "9"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile oznacza rzymska liczba „X”?",
+  "odpowiedz": "10",
+  "bledne": [
+   "5",
+   "50",
+   "100"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile wynosi pierwiastek kwadratowy ze 144?",
+  "odpowiedz": "12",
+  "bledne": [
+   "14",
+   "11",
+   "16"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile sekund ma godzina?",
+  "odpowiedz": "3600",
+  "bledne": [
+   "360",
+   "6000",
+   "1440"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Jakiego koloru jest tzw. czarna skrzynka w samolocie?",
+  "odpowiedz": "Pomarańczowa",
+  "bledne": [
+   "Czarna",
+   "Czerwona",
+   "Żółta"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Który miesiąc ma najmniej dni?",
+  "odpowiedz": "Luty",
+  "bledne": [
+   "Kwiecień",
+   "Listopad",
+   "Czerwiec"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile to jest 15% z 200?",
+  "odpowiedz": "30",
+  "bledne": [
+   "15",
+   "20",
+   "35"
+  ]
+ },
+ {
+  "kategoria": "Liczby",
+  "pytanie": "Ile boków ma sześciokąt?",
+  "odpowiedz": "6",
+  "bledne": [
+   "5",
+   "7",
+   "8"
+  ]
+ }
 ]

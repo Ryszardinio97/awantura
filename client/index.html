@@ -27,25 +27,19 @@
         <div id="phase" class="pill"></div>
         <div id="mode-pill" class="pill"></div>
         <div id="timer" class="timer"></div>
+        <button id="sound-toggle" class="pill theme-btn" type="button" title="Włącz / wyłącz dźwięki (tylko u ciebie)"></button>
         <button id="theme-toggle" class="pill theme-btn" type="button" title="Zmień wygląd (tylko u ciebie)"></button>
       </header>
 
       <div class="layout">
         <div class="left">
-          <!-- Pula: na górze, na środku -->
-          <section class="pool-wrap">
-            <div class="pool-card">
-              <div class="pool-label">PULA</div>
-              <div id="pool" class="pool">0 zł</div>
-            </div>
-          </section>
-
           <div id="question" class="question hidden"></div>
           <div id="official" class="official hidden"></div>
 
           <!-- Tablica: LICYTACJA / STAN KONTA. Kliknięcie w stan konta pokazuje awatary drużyny. -->
           <section class="board">
             <div class="board-head">LICYTACJA</div>
+            <div class="board-spacer"></div>
             <div id="bids" class="board-row"></div>
             <div id="money" class="board-row"></div>
           </section>
@@ -79,6 +73,11 @@
               <button type="button" class="btn mode-btn" data-mode="voice">🎙️ Głosowy</button>
               <button type="button" class="btn mode-btn" data-mode="text">⌨️ Tekstowy</button>
             </div>
+            <div class="mode-switch">
+              <span class="muted">Pytania:</span>
+              <button type="button" class="btn amode-btn" data-amode="abcd">🅰️ ABCD</button>
+              <button type="button" class="btn amode-btn" data-amode="open">✍️ Bez odpowiedzi</button>
+            </div>
             <div id="host-answer" class="answer"></div>
             <div id="host-official" class="host-official hidden"></div>
             <div class="row wrap">
@@ -88,6 +87,7 @@
               <button class="btn primary" data-action="show_question">❓ Pokaż pytanie</button>
               <button class="btn good" data-action="good">✅ Dobrze</button>
               <button class="btn bad" data-action="bad">❌ Źle</button>
+              <button class="btn" data-action="hint">💡 Podpowiedź 50/50</button>
               <button class="btn primary" data-action="next_round">⏭️ Następna runda</button>
             </div>
             <div id="voice-row" class="row wrap">
@@ -110,6 +110,19 @@
         </aside>
       </div>
     </main>
+
+    <!-- Koło losowania kategorii -->
+    <div id="wheel-overlay" class="wheel-overlay hidden">
+      <div class="wheel-box">
+        <div class="wheel-title">LOSOWANIE KATEGORII</div>
+        <div class="wheel-wrap">
+          <div class="wheel-pointer"></div>
+          <svg id="wheel" class="wheel" viewBox="-110 -110 220 220"></svg>
+          <div class="wheel-hub"></div>
+        </div>
+        <div id="wheel-result" class="wheel-result"></div>
+      </div>
+    </div>
 
     <div id="toast" class="toast hidden"></div>
     <script type="module" src="./main.js"></script>

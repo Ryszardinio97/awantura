@@ -108,6 +108,8 @@ function connect() {
       $('team-log').innerHTML = '';
       msg.general.forEach((e) => addChatLine(e, 'general', true));
       msg.team.forEach((e) => addChatLine(e, 'team', true));
+    } else if (msg.type === 'sfx') {
+      playSfx(msg.name);
     } else if (msg.type === 'error') {
       toast(msg.message);
     } else if (msg.type === 'fatal') {
@@ -150,17 +152,18 @@ function render() {
   $('phase').classList.toggle('live', s.phase === 'bidding');
 
   // Pula: w trakcie licytacji pokazujemy też to, co już zalicytowano.
-  const bidsSum = Object.values(s.teams).reduce((a, t) => a + (s.phase === 'bidding' ? t.bid : 0), 0);
-  $('pool').innerHTML = money(s.pool + bidsSum);
   $('game').classList.toggle('is-host', s.isHost);
 
   const qVisible = s.question && (s.questionShown || s.phase === 'result') && s.question.text;
   show($('question'), !!qVisible);
   if (qVisible) {
+    // W trybie ABCD odpowiedź widać po kolorach przycisków, więc osobny napis jest zbędny.
+    const showAnswerLine = s.question.answer && s.phase === 'result' && !s.options;
     $('question').innerHTML =
       `<div class="q-cat">${esc(s.category)}</div>` +
       `<div>${esc(s.question.text)}</div>` +
-      (s.question.answer && s.phase === 'result' ? `<div class="answer">Odpowiedź: <b>${esc(s.question.answer)}</b></div>` : '');
+      (showAnswerLine ? `<div class="answer">Odpowiedź: <b>${esc(s.question.answer)}</b></div>` : '') +
+      optionsHtml(s, my);
   }
 
   // Tryb gry i oficjalna odpowiedź drużyny (tryb tekstowy)
@@ -173,6 +176,7 @@ function render() {
     $('official').innerHTML = `<span class="muted">Odpowiedź drużyny ${esc(m.name)}:</span> <b>${esc(s.officialAnswer.text)}</b>`;
   }
 
+  maybeSpin(s);
   autoSwitchTab(my);
   prevPhase = s.phase;
   prevShown = s.questionShown;
@@ -194,7 +198,7 @@ function renderBoard(my) {
       return `<div class="tile team-${m.id} ${leading ? 'leading' : ''} ${t.out ? 'out' : ''}" style="--c:${m.color}">
         <div class="tile-value">${money(showBids ? t.bid : 0)}</div></div>`;
     })
-    .join('');
+    .join('') + '<div class="board-spacer"></div>';
   // Dymek z awatarami (jeśli był otwarty) przenosimy do nowo narysowanego pola.
   const openPopup = document.querySelector('.avatars-popup');
   $('money').innerHTML = s.teamsMeta
@@ -207,6 +211,10 @@ function renderBoard(my) {
         <div class="tile-value">${money(t.money)}</div></div>`;
     })
     .join('');
+  // Pula – czwarte pole, obok stanów kont. W trakcie licytacji doliczamy to, co już zalicytowano.
+  const bidsSum = s.phase === 'bidding' ? Object.values(s.teams).reduce((a, t) => a + t.bid, 0) : 0;
+  $('money').insertAdjacentHTML('beforeend',
+    `<div class="tile pool-tile"><div class="tile-label">PULA</div><div class="tile-value">${money(s.pool + bidsSum)}</div></div>`);
   if (openPopup) $('money').querySelector(`[data-team="${openPopup.dataset.team}"]`)?.append(openPopup);
 }
 
@@ -284,13 +292,14 @@ function autoSwitchTab(my) {
 function renderChatInput(my) {
   const s = state;
   const canBid = s.phase === 'bidding' && my?.team && !s.isHost && !s.teams[my.team].out;
-  const canAnswer = s.mode === 'text' && s.phase === 'question' && s.questionShown && my?.team === s.winnerTeam && !s.officialAnswer;
+  const canAnswer = (s.mode === 'text' || s.answerMode === 'abcd') && s.phase === 'question' && s.questionShown && my?.team === s.winnerTeam && !s.officialAnswer;
+  const answerHint = s.answerMode === 'abcd' ? 'Kliknij odpowiedź albo wpisz np. !B' : 'Odpowiedź wpisz z ! (np. !Wisła)';
   const input = $('chat-input');
   if (activeTab === 'team') {
-    input.placeholder = canAnswer ? 'Naradźcie się… odpowiedź wpisz z ! (np. !Wisła)' : 'Wiadomość do drużyny (widzi tylko wasza drużyna)…';
+    input.placeholder = canAnswer ? `Naradźcie się… ${answerHint}` : 'Wiadomość do drużyny (widzi tylko wasza drużyna)…';
     input.inputMode = 'text';
   } else {
-    input.placeholder = canBid ? 'Wpisz kwotę, aby licytować…' : canAnswer ? 'Odpowiedź wpisz z ! (np. !Wisła)' : 'Napisz wiadomość…';
+    input.placeholder = canBid ? 'Wpisz kwotę, aby licytować…' : canAnswer ? answerHint : 'Napisz wiadomość…';
     input.inputMode = canBid ? 'numeric' : 'text';
   }
   const color = my?.team ? s.teamsMeta.find((t) => t.id === my.team).color : 'var(--line)';
@@ -341,8 +350,8 @@ function renderLobby(my) {
 }
 
 const ENABLED = {
-  draw_category: (s) => s.phase === 'category',
-  start_bidding: (s) => s.phase === 'category' && !!s.category,
+  draw_category: (s) => s.phase === 'category' && !spinActive(s),
+  start_bidding: (s) => s.phase === 'category' && !!s.category && !spinActive(s),
   end_bidding: (s) => s.phase === 'bidding',
   show_question: (s) => s.phase === 'question' && !s.questionShown,
   good: (s) => s.phase === 'question' && s.questionShown,
@@ -351,6 +360,7 @@ const ENABLED = {
   start_game: () => true,
   end_game: (s) => !['lobby', 'gameover'].includes(s.phase),
   release_host: () => true,
+  hint: (s) => s.answerMode === 'abcd' && s.phase === 'question' && s.questionShown && !s.hintUsed && !s.officialAnswer,
   voice_split: (s) => s.mode === 'voice' && s.voiceReady && !s.voiceBusy,
   voice_join: (s) => s.mode === 'voice' && s.voiceReady && !s.voiceBusy,
 };
@@ -379,9 +389,15 @@ function renderHostPanel() {
   }
 
   const q = s.question;
+  const letter = s.options && s.correctIndex != null ? `${LETTERS[s.correctIndex]}) ` : '';
   $('host-answer').innerHTML = q
-    ? `<div class="muted">Kategoria: ${esc(s.category)} · pytanie widzisz tylko ty, dopóki go nie pokażesz:</div><div>${esc(q.text)}</div><div>Odpowiedź: <b>${esc(q.answer)}</b></div>`
+    ? `<div class="muted">Kategoria: ${esc(s.category)} · pytanie widzisz tylko ty, dopóki go nie pokażesz:</div><div>${esc(q.text)}</div><div>Odpowiedź: <b>${letter}${esc(q.answer)}</b></div>`
     : '<div class="muted">Brak wylosowanego pytania.</div>';
+  for (const b of document.querySelectorAll('.amode-btn')) {
+    b.classList.toggle('active', b.dataset.amode === s.answerMode);
+    b.disabled = ['bidding', 'question'].includes(s.phase);
+  }
+  show(document.querySelector('[data-action="hint"]'), s.answerMode === 'abcd');
 
   const sel = $('adjust-target');
   if (!sel.options.length) {
@@ -424,9 +440,21 @@ $('chat-tabs').addEventListener('click', (e) => {
   if (b) setTab(b.dataset.tab);
 });
 
-document.querySelector('.mode-switch').addEventListener('click', (e) => {
-  const b = e.target.closest('.mode-btn');
-  if (b && !b.disabled) hostAction('set_mode', { mode: b.dataset.mode });
+for (const sw of document.querySelectorAll('.mode-switch')) {
+  sw.addEventListener('click', (e) => {
+    const b = e.target.closest('.mode-btn');
+    if (b && !b.disabled) hostAction('set_mode', { mode: b.dataset.mode });
+    const a = e.target.closest('.amode-btn');
+    if (a && !a.disabled) hostAction('set_answer_mode', { answerMode: a.dataset.amode });
+  });
+}
+
+// Kliknięcie odpowiedzi A–D i podpowiedź (drużyna, która odpowiada)
+$('question').addEventListener('click', (e) => {
+  const opt = e.target.closest('.opt[data-i]');
+  if (opt && !opt.disabled) sendMsg({ type: 'pick', index: Number(opt.dataset.i) });
+  const hint = e.target.closest('#hint-btn');
+  if (hint && !hint.disabled) sendMsg({ type: 'hint' });
 });
 
 $('money').addEventListener('click', (e) => {
@@ -481,3 +509,192 @@ $('adjust-form').addEventListener('submit', (e) => {
     $('loading-text').textContent = 'Błąd logowania: ' + err.message;
   }
 })();
+
+// Gdy okno zmienia rozmiar (czat rośnie/maleje), trzymamy czat przy najnowszych wiadomościach.
+for (const log of document.querySelectorAll('.chat-log')) {
+  let atBottom = true;
+  log.addEventListener('scroll', () => {
+    atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
+  });
+  new ResizeObserver(() => {
+    if (atBottom) log.scrollTop = log.scrollHeight;
+  }).observe(log);
+}
+
+
+// =====================================================================
+// DŹWIĘKI – pliki w client/public/sounds/. Serwer mówi, kiedy grać,
+// więc wszyscy słyszą je w tym samym momencie.
+// =====================================================================
+const SOUND_FILES = {
+  losowanie: 'LOSOWANIE.mp3',
+  licytacjaend: 'LICYTACJAEND.mp3',
+  good1: 'GOOD1.mp3',
+  good2: 'GOOD2.mp3',
+  time: 'TIME.mp3',
+  fail: 'FAIL.mp3',
+};
+const sounds = {};
+for (const [name, file] of Object.entries(SOUND_FILES)) {
+  const a = new Audio(`/sounds/${file}`);
+  a.preload = 'auto';
+  a.volume = 0.8;
+  sounds[name] = a;
+}
+
+function getMuted() {
+  try { return localStorage.getItem('muted') === '1'; } catch { return false; }
+}
+function applyMuted(m) {
+  $('sound-toggle').textContent = m ? '🔇' : '🔊';
+  try { localStorage.setItem('muted', m ? '1' : '0'); } catch { /* ignoruj */ }
+  if (m) stopAllSfx();
+}
+applyMuted(getMuted());
+$('sound-toggle').addEventListener('click', () => applyMuted(!getMuted()));
+
+function stopAllSfx() {
+  for (const a of Object.values(sounds)) {
+    a.pause();
+    a.currentTime = 0;
+  }
+}
+
+let soundHintShown = false;
+// offset = od której sekundy zacząć (gdy ktoś dołączy w trakcie kręcenia kołem)
+function playSfx(name, offset = 0) {
+  const a = sounds[name];
+  if (!a || getMuted()) return;
+  stopAllSfx(); // nowy dźwięk ucisza poprzedni (np. dobra odpowiedź przerywa TIME)
+  try { a.currentTime = offset; } catch { /* ignoruj */ }
+  a.play().catch(() => {
+    // Przeglądarka blokuje dźwięk, dopóki ktoś nie kliknie w okno gry.
+    if (!soundHintShown) {
+      soundHintShown = true;
+      toast('Kliknij gdziekolwiek w grze, żeby włączyć dźwięki 🔊', 'info');
+    }
+  });
+}
+
+// Pierwsze kliknięcie w grze "odblokowuje" dźwięk w przeglądarce.
+function unlockAudio() {
+  for (const a of Object.values(sounds)) {
+    const v = a.volume;
+    a.volume = 0;
+    a.play().then(() => { a.pause(); a.currentTime = 0; a.volume = v; }).catch(() => { a.volume = v; });
+  }
+  window.removeEventListener('pointerdown', unlockAudio);
+  window.removeEventListener('keydown', unlockAudio);
+}
+window.addEventListener('pointerdown', unlockAudio);
+window.addEventListener('keydown', unlockAudio);
+
+// =====================================================================
+// KOŁO LOSOWANIA KATEGORII
+// =====================================================================
+const WHEEL_COLORS = ['#3b82f6', '#22c55e', '#eab308', '#ef4444', '#a855f7', '#f97316', '#06b6d4', '#ec4899'];
+let lastSpinId = null;
+let wheelTimer = null;
+
+const spinActive = (s) => !!s.spin && s.spin.endsAt > Date.now() + clockOffset;
+
+function polar(r, deg) {
+  const a = ((deg - 90) * Math.PI) / 180; // 0° = góra, zgodnie z ruchem wskazówek
+  return [r * Math.cos(a), r * Math.sin(a)];
+}
+
+function drawWheel(cats) {
+  const n = cats.length;
+  const seg = 360 / n;
+  let svg = '';
+  cats.forEach((cat, i) => {
+    const [x1, y1] = polar(100, i * seg);
+    const [x2, y2] = polar(100, (i + 1) * seg);
+    const mid = (i + 0.5) * seg;
+    svg += `<path d="M0 0 L${x1} ${y1} A100 100 0 0 1 ${x2} ${y2} Z" fill="${WHEEL_COLORS[i % WHEEL_COLORS.length]}" stroke="#0b1026" stroke-width="1.5"/>`;
+    // napis wzdłuż promienia, od środka na zewnątrz
+    const label = cat.length > 14 ? cat.slice(0, 13) + '…' : cat;
+    svg += `<text transform="rotate(${mid}) translate(0 -58) rotate(90)" text-anchor="middle" dominant-baseline="middle"
+      font-size="${n > 6 ? 9 : 10.5}" font-weight="800" fill="#fff" stroke="#0b1026" stroke-width="0.6" paint-order="stroke">${esc(label)}</text>`;
+  });
+  svg += '<circle r="101" fill="none" stroke="#ffc83d" stroke-width="3"/>';
+  $('wheel').innerHTML = svg;
+}
+
+function maybeSpin(s) {
+  if (!s.spin || s.phase !== 'category' || s.spin.id === lastSpinId) return;
+  lastSpinId = s.spin.id;
+  const now = Date.now() + clockOffset;
+  const remaining = (s.spin.endsAt - now) / 1000;
+  if (remaining < 0.4) return; // koło już stanęło, zanim dołączyliśmy
+  const total = s.config.spinSec;
+  spinWheel(s.spin, remaining, Math.max(0, total - remaining));
+}
+
+function spinWheel(spin, duration, elapsed) {
+  const wheel = $('wheel');
+  const n = spin.cats.length;
+  const seg = 360 / n;
+  drawWheel(spin.cats);
+  $('wheel-result').textContent = '';
+  $('wheel-result').classList.remove('show');
+  show($('wheel-overlay'), true);
+
+  // Kąt końcowy: środek wylosowanego pola dokładnie pod wskaźnikiem (na górze) + kilka pełnych obrotów.
+  const jitter = (Math.random() - 0.5) * seg * 0.5;
+  const target = 360 * Math.max(3, Math.round(duration * 0.8)) - (spin.index + 0.5) * seg + jitter;
+  wheel.style.transition = 'none';
+  wheel.style.transform = 'rotate(0deg)';
+  void wheel.getBoundingClientRect(); // wymuszenie przerysowania przed animacją
+  wheel.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.55, 0.1, 1)`;
+  wheel.style.transform = `rotate(${target}deg)`;
+
+  playSfx('losowanie', elapsed);
+
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(() => {
+    $('wheel-result').textContent = spin.cats[spin.index];
+    $('wheel-result').classList.add('show');
+    wheelTimer = setTimeout(() => show($('wheel-overlay'), false), 2500);
+  }, duration * 1000);
+}
+
+// Kliknięcie w tło zamyka koło (np. gdy ktoś chce wrócić do czatu).
+$('wheel-overlay').addEventListener('click', (e) => {
+  if (e.target === $('wheel-overlay')) show($('wheel-overlay'), false);
+});
+
+
+// =====================================================================
+// ODPOWIEDZI ABCD
+// =====================================================================
+const LETTERS = ['A', 'B', 'C', 'D'];
+
+function optionsHtml(s, my) {
+  if (!s.options) return '';
+  const answering = s.phase === 'question' && s.questionShown && my?.team === s.winnerTeam && !s.isHost;
+  const canPick = answering && !s.officialAnswer;
+  const chosen = s.officialAnswer?.index;
+  const btns = s.options
+    .map((o, i) => {
+      const removed = s.removed.includes(i);
+      const cls = ['opt'];
+      if (removed) cls.push('removed');
+      if (chosen === i) cls.push('chosen');
+      if (s.correctIndex === i && s.phase === 'result') cls.push('correct');
+      else if (s.correctIndex === i && s.isHost) cls.push('host-correct');
+      if (s.phase === 'result' && chosen === i && s.correctIndex !== i) cls.push('wrong');
+      const disabled = !canPick || removed;
+      return `<button type="button" class="${cls.join(' ')}" data-i="${i}" ${disabled ? 'disabled' : ''}>
+        <span class="opt-letter">${LETTERS[i]}</span><span class="opt-text">${esc(o)}</span></button>`;
+    })
+    .join('');
+  let hint = '';
+  if (answering && !s.hintUsed && !s.officialAnswer) {
+    const cost = s.config.hintCost;
+    const team = s.teams[my.team];
+    hint = `<button type="button" id="hint-btn" class="hint-btn" ${team.money < cost ? 'disabled' : ''}>
+      💡 Podpowiedź 50/50${cost ? ` (${fmt(cost)})` : ''}</button>`;
+  }
+  return `<div class="options">${btns}</div>${hint}`;
+}

@@ -9,6 +9,18 @@ export const CONFIG = {
   firstBidTimerSec: 20,  // ile czasu na pierwszą ofertę po otwarciu licytacji
   bidTimerSec: 10,       // ile sekund bez przebicia zamyka licytację
   answerTimerSec: 60,    // czas na odpowiedź (tylko odliczanie, decyduje prowadzący)
+  spinSec: 10,           // jak długo kręci się koło przy losowaniu kategorii
+  hintCost: 500,         // cena podpowiedzi 50/50 (trafia do puli); 0 = za darmo
+};
+
+const LETTERS = ['A', 'B', 'C', 'D'];
+const shuffle = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 };
 
 export const TEAMS = [
@@ -50,6 +62,11 @@ function freshState() {
     answerEndsAt: null,
     officialAnswer: null, // tryb tekstowy: { text, by } – odpowiedź drużyny wpisana z "!"
     mode: 'voice', // 'voice' = gracze na głosowym, 'text' = wszystko na czacie
+    answerMode: 'abcd', // 'abcd' = pytanie z 4 odpowiedziami, 'open' = bez odpowiedzi
+    options: null, // tryb ABCD: 4 odpowiedzi w wylosowanej kolejności
+    correctIndex: null,
+    removed: [], // odpowiedzi usunięte podpowiedzią 50/50
+    hintUsed: false,
     message: 'Czekamy na prowadzącego.',
   };
 }
@@ -70,6 +87,11 @@ export class Game {
     this.chatRate = new Map(); // userId -> czasy ostatnich wiadomości (ochrona przed spamem)
     this.state = saved ?? freshState();
     this.state.mode ??= 'voice'; // stare zapisy gry nie miały trybu
+    this.state.answerMode ??= 'abcd';
+    this.state.removed ??= [];
+    this.spinTimer = null;
+    // Restart serwera w trakcie kręcenia kołem – dokończ ogłoszenie kategorii.
+    if (this.state.spin && this.state.spin.endsAt > Date.now()) this.armSpin();
 
     // Po restarcie serwera w trakcie licytacji dajemy graczom świeży czas.
     if (this.state.phase === 'bidding') {
@@ -150,7 +172,7 @@ export class Game {
     const isHost = userId === s.hostId;
 
     // Tryb tekstowy: "!odpowiedź" od drużyny, która wygrała licytację = oficjalna odpowiedź.
-    if (text.startsWith('!') && s.mode === 'text' && p?.team && !isHost) {
+    if (text.startsWith('!') && (s.mode === 'text' || s.answerMode === 'abcd') && p?.team && !isHost) {
       return this.officialAnswer(userId, text.slice(1).trim());
     }
 
@@ -174,9 +196,45 @@ export class Game {
     if (s.phase !== 'question' || !s.questionShown) return 'Teraz nie ma pytania do odpowiedzi.';
     if (p.team !== s.winnerTeam) return `Odpowiada drużyna ${teamName(s.winnerTeam)}.`;
     if (s.officialAnswer) return 'Wasza drużyna już podała odpowiedź.';
-    if (!text) return 'Wpisz odpowiedź po wykrzykniku, np. !Wisła';
-    s.officialAnswer = { text: text.slice(0, 150), by: p.name };
+    if (!text) return s.answerMode === 'abcd' ? 'Wpisz literę po wykrzykniku, np. !B' : 'Wpisz odpowiedź po wykrzykniku, np. !Wisła';
+    if (s.answerMode === 'abcd' && s.options) {
+      // litera A–D albo dokładny tekst odpowiedzi
+      const t = text.trim().replace(/[).:]$/, '').toUpperCase();
+      let i = LETTERS.indexOf(t);
+      if (i < 0) i = s.options.findIndex((o) => o.toUpperCase() === text.trim().toUpperCase());
+      if (i < 0) return 'Wybierz jedną z odpowiedzi: A, B, C albo D (np. !B).';
+      if (s.removed.includes(i)) return 'Ta odpowiedź została odrzucona przez podpowiedź.';
+      s.officialAnswer = { text: `${LETTERS[i]}) ${s.options[i]}`, index: i, by: p.name };
+    } else {
+      s.officialAnswer = { text: text.slice(0, 150), by: p.name };
+    }
     this.addChat({ name: p.name, team: p.team, answer: true, text: s.officialAnswer.text });
+    this.changed();
+    return null;
+  }
+
+  // Podpowiedź 50/50: usuwa dwie złe odpowiedzi. Kupuje ją drużyna, która odpowiada
+  // (albo prowadzący w jej imieniu, np. gdy lider poprosi głosowo). Cena trafia do puli.
+  useHint(userId) {
+    const s = this.state;
+    const isHost = userId === s.hostId;
+    if (s.answerMode !== 'abcd' || !s.options) return 'Podpowiedź działa tylko przy pytaniach z odpowiedziami ABCD.';
+    if (s.phase !== 'question' || !s.questionShown) return 'Teraz nie ma pytania.';
+    if (!isHost && s.players[userId]?.team !== s.winnerTeam) return 'Podpowiedź może wziąć tylko drużyna, która odpowiada.';
+    if (s.hintUsed) return 'Podpowiedź została już wykorzystana.';
+    if (s.officialAnswer) return 'Odpowiedź już padła.';
+    const team = s.teams[s.winnerTeam];
+    if (team.money < CONFIG.hintCost) return `Drużyny nie stać na podpowiedź (${fmt(CONFIG.hintCost)}).`;
+    team.money -= CONFIG.hintCost;
+    s.pool += CONFIG.hintCost;
+    const wrong = shuffle([0, 1, 2, 3].filter((i) => i !== s.correctIndex));
+    s.removed = wrong.slice(0, 2);
+    s.hintUsed = true;
+    this.say(
+      CONFIG.hintCost
+        ? `💡 ${teamName(s.winnerTeam)} kupują podpowiedź za ${fmt(CONFIG.hintCost)} – odpadają ${s.removed.map((i) => LETTERS[i]).sort().join(' i ')}.`
+        : `💡 Podpowiedź – odpadają ${s.removed.map((i) => LETTERS[i]).sort().join(' i ')}.`,
+    );
     this.changed();
     return null;
   }
@@ -271,6 +329,12 @@ export class Game {
       message: s.message,
       mode: s.mode,
       officialAnswer: s.officialAnswer,
+      answerMode: s.answerMode,
+      options: s.options && (isHost || s.questionShown) ? s.options : null,
+      correctIndex: isHost || s.phase === 'result' ? s.correctIndex : null,
+      removed: s.removed,
+      hintUsed: s.hintUsed,
+      spin: s.spin ?? null,
       voiceReady: !!this.voice?.ready,
       voiceBusy: this.voiceBusy,
       questionsLeft: this.questions.length - s.usedQuestions.length,
@@ -293,6 +357,15 @@ export class Game {
         return this.chatMessage(userId, msg.text, msg.channel === 'team' ? 'team' : 'general');
       case 'bid':
         return this.bid(userId, msg.text);
+      case 'pick': {
+        // kliknięcie odpowiedzi A–D
+        const p = s.players[userId];
+        if (!p?.team || userId === s.hostId) return 'Odpowiada drużyna, nie prowadzący.';
+        if (s.answerMode !== 'abcd') return 'To pytanie jest bez odpowiedzi do wyboru.';
+        return this.officialAnswer(userId, LETTERS[msg.index] ?? '');
+      }
+      case 'hint':
+        return this.useHint(userId);
       case 'host':
         if (userId !== s.hostId) return 'Tylko prowadzący może to zrobić.';
         return this.hostAction(msg);
@@ -375,12 +448,13 @@ export class Game {
 
     switch (msg.action) {
       case 'start_game': {
-        const { hostId, players, mode } = s;
+        const { hostId, players, mode, answerMode } = s;
         this.clearTimer();
         this.state = freshState();
         this.state.hostId = hostId;
         this.state.players = players;
         this.state.mode = mode;
+        this.state.answerMode = answerMode;
         this.state.phase = 'category';
         this.state.round = 1;
         this.say('Runda 1 – prowadzący losuje kategorię.');
@@ -389,9 +463,12 @@ export class Game {
       case 'draw_category': {
         const err = need('category');
         if (err) return err;
+        if (this.spinning()) return 'Koło jeszcze się kręci.';
         // Poprzednio wylosowane, ale niezagrane pytanie wraca do puli.
         if (s.question) s.usedQuestions = s.usedQuestions.filter((id) => id !== s.question.id);
-        const free = this.questions.filter((q) => !s.usedQuestions.includes(q.id));
+        const free = this.questions.filter(
+          (q) => !s.usedQuestions.includes(q.id) && (s.answerMode !== 'abcd' || q.bledne?.length >= 3),
+        );
         if (!free.length) return 'Skończyły się pytania – dopisz nowe do questions.json.';
         const cats = [...new Set(free.map((q) => q.kategoria))];
         const cat = cats[Math.floor(Math.random() * cats.length)];
@@ -401,13 +478,27 @@ export class Game {
         s.category = cat;
         s.question = q;
         s.questionShown = false;
-        this.say(`Kategoria: ${cat}`);
+        this.prepareOptions();
+        // Koło: wylosowana kategoria + do 7 innych (gdy kategorii jest mało, powtarzamy je).
+        const others = cats.filter((c) => c !== cat).sort(() => Math.random() - 0.5).slice(0, 7);
+        let wheel = [cat, ...others];
+        while (wheel.length < 6) wheel = wheel.concat(wheel);
+        wheel = wheel.slice(0, 8).sort(() => Math.random() - 0.5);
+        s.spin = {
+          id: Date.now(),
+          cats: wheel,
+          index: wheel.indexOf(cat),
+          endsAt: Date.now() + CONFIG.spinSec * 1000,
+        };
+        this.say('Losowanie kategorii… 🎡');
+        this.armSpin();
         break;
       }
       case 'start_bidding': {
         const err = need('category');
         if (err) return err;
         if (!s.category) return 'Najpierw wylosuj kategorię.';
+        if (this.spinning()) return 'Poczekaj, aż koło się zatrzyma.';
         const staffed = this.staffedTeams();
         if (staffed.length < 2) return 'Do gry potrzeba co najmniej dwóch drużyn z graczami.';
         for (const id of TEAM_IDS) {
@@ -443,12 +534,22 @@ export class Game {
         if (err) return err;
         s.questionShown = true;
         s.officialAnswer = null;
+        this.sfx('time');
         s.answerEndsAt = Date.now() + CONFIG.answerTimerSec * 1000;
-        this.say(
-          s.mode === 'text'
-            ? `Pytanie dla drużyny ${teamName(s.winnerTeam)}! Naradźcie się na czacie drużyny i wpiszcie odpowiedź z wykrzyknikiem, np. !Wisła`
-            : `Pytanie dla drużyny ${teamName(s.winnerTeam)}!`,
-        );
+        const who = `Pytanie dla drużyny ${teamName(s.winnerTeam)}!`;
+        if (s.answerMode === 'abcd') {
+          this.say(
+            s.mode === 'text'
+              ? `${who} Naradźcie się na czacie drużyny i kliknijcie odpowiedź (albo wpiszcie np. !B).`
+              : `${who} Lider podaje odpowiedź albo klika ją na ekranie.`,
+          );
+        } else {
+          this.say(
+            s.mode === 'text'
+              ? `${who} Naradźcie się na czacie drużyny i wpiszcie odpowiedź z wykrzyknikiem, np. !Wisła`
+              : who,
+          );
+        }
         break;
       }
       case 'good':
@@ -458,11 +559,13 @@ export class Game {
         if (!s.questionShown) return 'Najpierw pokaż pytanie.';
         const w = teamName(s.winnerTeam);
         if (msg.action === 'good') {
+          this.sfx(Math.random() < 0.5 ? 'good1' : 'good2');
           s.teams[s.winnerTeam].money += s.pool;
           this.say(`Dobra odpowiedź! ${w} zgarniają ${fmt(s.pool)}!`);
           s.pool = 0;
           s.result = 'good';
         } else {
+          this.sfx('fail');
           this.say(`Zła odpowiedź! Pula ${fmt(s.pool)} przechodzi do następnej rundy.`);
           s.result = 'bad';
         }
@@ -480,6 +583,11 @@ export class Game {
         s.category = null;
         s.question = null;
         s.questionShown = false;
+        s.spin = null;
+        s.options = null;
+        s.correctIndex = null;
+        s.removed = [];
+        s.hintUsed = false;
         s.bidding = null;
         s.log = [];
         s.winnerTeam = null;
@@ -514,6 +622,16 @@ export class Game {
         this.say(msg.mode === 'voice' ? 'Tryb gry: głosowy 🎙️' : 'Tryb gry: tekstowy ⌨️');
         break;
       }
+      case 'set_answer_mode': {
+        if (!['abcd', 'open'].includes(msg.answerMode)) return 'Nieznany rodzaj pytań.';
+        if (['bidding', 'question'].includes(s.phase)) return 'Rodzaj pytań zmienisz po zakończeniu rundy.';
+        s.answerMode = msg.answerMode;
+        this.prepareOptions();
+        this.say(msg.answerMode === 'abcd' ? 'Pytania z odpowiedziami ABCD 🅰️' : 'Pytania bez odpowiedzi do wyboru ✍️');
+        break;
+      }
+      case 'hint':
+        return this.useHint(s.hostId);
       case 'voice_split':
       case 'voice_join': {
         if (s.mode !== 'voice') return 'Przenoszenie działa tylko w trybie głosowym.';
@@ -551,6 +669,7 @@ export class Game {
     const s = this.state;
     this.clearTimer();
     if (s.phase !== 'bidding') return;
+    this.sfx('licytacjaend');
     // Wszystkie zalicytowane kwoty idą do puli – także drużyn, które przegrały licytację.
     for (const id of TEAM_IDS) {
       const t = s.teams[id];
@@ -569,6 +688,44 @@ export class Game {
       this.say(`Licytację wygrywają ${teamName(s.winnerTeam)} za ${fmt(s.bidding.highest)}! Pula: ${fmt(s.pool)}.`);
     }
     this.changed();
+  }
+
+  // Tryb ABCD: poprawna + 3 błędne odpowiedzi w losowej kolejności.
+  prepareOptions() {
+    const s = this.state;
+    s.removed = [];
+    s.hintUsed = false;
+    const q = s.question;
+    if (s.answerMode !== 'abcd' || !q || !(q.bledne?.length >= 3)) {
+      s.options = null;
+      s.correctIndex = null;
+      return;
+    }
+    s.options = shuffle([q.odpowiedz, ...q.bledne.slice(0, 3)]);
+    s.correctIndex = s.options.indexOf(q.odpowiedz);
+  }
+
+  // ---------- koło i dźwięki ----------
+
+  spinning() {
+    return !!this.state.spin && this.state.spin.endsAt > Date.now();
+  }
+
+  // Po zatrzymaniu koła ogłaszamy kategorię i odblokowujemy licytację.
+  armSpin() {
+    clearTimeout(this.spinTimer);
+    const spin = this.state.spin;
+    this.spinTimer = setTimeout(() => {
+      if (this.state.spin?.id !== spin.id) return;
+      this.say(`Kategoria: ${this.state.category}`);
+      this.changed();
+    }, Math.max(0, spin.endsAt - Date.now()));
+  }
+
+  // Dźwięk u wszystkich graczy naraz (pliki w client/public/sounds).
+  sfx(name) {
+    const data = JSON.stringify({ type: 'sfx', name });
+    for (const ws of this.sockets) if (ws.readyState === 1) ws.send(data);
   }
 
   // Drużyny, do których ktoś dołączył (puste drużyny nie grają).
