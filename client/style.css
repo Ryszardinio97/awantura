@@ -770,3 +770,7 @@ main:not(.is-host) .right { display: none; }
 .assign-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.9rem; }
 .assign-row select { padding: 4px 6px; font-size: 0.85rem; }
 .winner-card .box-prize { text-shadow: 0 0 24px var(--c); }
+
+/* koło ze wszystkimi kategoriami – jak największe */
+.wheel-wrap { width: min(calc(100vh - 150px), 92vw, 820px); }
+.wheel-hub { width: 11%; }

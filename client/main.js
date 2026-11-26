@@ -649,17 +649,27 @@ function polar(r, deg) {
 function drawWheel(cats) {
   const n = cats.length;
   const seg = 360 / n;
+  const many = n > 12; // pełne koło z wszystkimi kategoriami
   let svg = '';
   cats.forEach((cat, i) => {
     const [x1, y1] = polar(100, i * seg);
     const [x2, y2] = polar(100, (i + 1) * seg);
     const mid = (i + 0.5) * seg;
-    const fill = cat === 'Czarna skrzynka' ? '#111' : cat === '1 na 1' ? '#7f1d1d' : WHEEL_COLORS[i % WHEEL_COLORS.length];
-    svg += `<path d="M0 0 L${x1} ${y1} A100 100 0 0 1 ${x2} ${y2} Z" fill="${fill}" stroke="${cat === 'Czarna skrzynka' ? '#ffc83d' : '#0b1026'}" stroke-width="1.5"/>`;
-    // napis wzdłuż promienia, od środka na zewnątrz
-    const label = cat === 'Czarna skrzynka' ? '⬛ SKRZYNKA' : cat === '1 na 1' ? '⚔️ 1 NA 1' : cat.length > 14 ? cat.slice(0, 13) + '…' : cat;
-    svg += `<text transform="rotate(${mid}) translate(0 -58) rotate(90)" text-anchor="middle" dominant-baseline="middle"
-      font-size="${n > 6 ? 9 : 10.5}" font-weight="800" fill="#fff" stroke="#0b1026" stroke-width="0.6" paint-order="stroke">${esc(label)}</text>`;
+    const box = cat === 'Czarna skrzynka';
+    const duel = cat === '1 na 1';
+    const fill = box ? '#111' : duel ? '#7f1d1d' : WHEEL_COLORS[i % WHEEL_COLORS.length];
+    svg += `<path d="M0 0 L${x1} ${y1} A100 100 0 0 1 ${x2} ${y2} Z" fill="${fill}" stroke="${box ? '#ffc83d' : '#0b1026'}" stroke-width="${many ? 0.7 : 1.5}"/>`;
+    const label = box ? '⬛ SKRZYNKA' : duel ? '⚔️ 1 NA 1' : cat;
+    if (many) {
+      // napis wzdłuż promienia: od brzegu koła w stronę środka
+      const fit = label.length > 17 ? ' textLength="70" lengthAdjust="spacingAndGlyphs"' : '';
+      svg += `<text transform="rotate(${mid}) translate(0 -95) rotate(90)" text-anchor="start" dominant-baseline="middle"${fit}
+        font-size="6.3" font-weight="800" fill="#fff" stroke="#0b1026" stroke-width="0.45" paint-order="stroke">${esc(label)}</text>`;
+    } else {
+      const short = label.length > 14 ? label.slice(0, 13) + '…' : label;
+      svg += `<text transform="rotate(${mid}) translate(0 -58) rotate(90)" text-anchor="middle" dominant-baseline="middle"
+        font-size="${n > 6 ? 9 : 10.5}" font-weight="800" fill="#fff" stroke="#0b1026" stroke-width="0.6" paint-order="stroke">${esc(short)}</text>`;
+    }
   });
   svg += '<circle r="101" fill="none" stroke="#ffc83d" stroke-width="3"/>';
   $('wheel').innerHTML = svg;

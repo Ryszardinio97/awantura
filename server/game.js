@@ -536,20 +536,24 @@ export class Game {
           (q) => !s.usedQuestions.includes(q.id) && (s.answerMode !== 'abcd' || q.bledne?.length >= 3),
         );
         if (!free.length) return 'Skończyły się pytania – dopisz nowe do questions.json.';
-        const cats = [...new Set(free.map((q) => q.kategoria))];
+        const cats = [...new Set(free.map((q) => q.kategoria))]; // kategorie z niewykorzystanymi pytaniami
+        // Koło jak w telewizji: zawsze wszystkie kategorie, w stałej kolejności (z pliku pytań).
+        const allCats = [...new Set(this.questions.map((q) => q.kategoria))];
         // W finale na kole są też pola specjalne (każde najwyżej raz na finał).
         const specials = s.stage === 2 ? [BOX, DUEL].filter((x) => !s.usedSpecials.includes(x)) : [];
-        // Koło: do 8 pól (kategorie + pola specjalne); przy małej liczbie kategorii powtarzamy je.
-        let wheelCats = shuffle(cats).slice(0, 8 - specials.length);
-        while (wheelCats.length + specials.length < 6) wheelCats = wheelCats.concat(wheelCats);
-        const wheel = shuffle([...wheelCats.slice(0, 8 - specials.length), ...specials]);
-        let index = Math.floor(Math.random() * wheel.length);
+        const wheel = [...allCats];
+        specials.forEach((sp, i) => {
+          // pola specjalne w stałych miejscach koła (ok. 1/3 i 2/3 obwodu)
+          wheel.splice(Math.round((wheel.length * (i + 1)) / (specials.length + 1)), 0, sp);
+        });
+        // Losowanie: pole specjalne z szansą ok. 1/8 na każde (jak wcześniej), inaczej kategoria z pytaniami.
+        let picked = null;
+        for (const sp of shuffle(specials)) if (!picked && Math.random() < 1 / 8) picked = sp;
         // Gwarancja: pod koniec finału koło musi trafić w niewykorzystane pole specjalne.
         const left = CONFIG.finalQuestions - s.finalRound + 1;
-        if (specials.length && specials.length >= left) {
-          index = wheel.indexOf(specials[Math.floor(Math.random() * specials.length)]);
-        }
-        const picked = wheel[index];
+        if (specials.length && specials.length >= left) picked = specials[Math.floor(Math.random() * specials.length)];
+        if (!picked) picked = cats[Math.floor(Math.random() * cats.length)];
+        const index = wheel.indexOf(picked);
 
         s.special = picked === BOX ? 'box' : picked === DUEL ? 'duel' : null;
         s.duel = null;
