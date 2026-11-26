@@ -113,6 +113,20 @@ Przeglądarka nie pozwala grać dźwięków, zanim ktoś kliknie w okno gry, wi�
 
 Opcjonalnie w `.env`: `VOICE_CHAMPS` to kanał głosowy Mistrzów do narad w trybie głosowym.
 
+## Uruchamianie przez ngrok (stały adres)
+
+Darmowe konto ngrok daje jeden stały adres `twoja-nazwa.ngrok-free.app`, więc URL Mappings ustawiasz tylko raz.
+
+1. Załóż konto na https://ngrok.com i zainstaluj ngrok (`winget install ngrok.ngrok` albo instalator ze strony).
+2. Skopiuj authtoken z panelu ngrok (*Your Authtoken*) i wpisz w terminalu: `ngrok config add-authtoken TWÓJ_TOKEN`.
+3. W panelu ngrok w zakładce *Domains* sprawdź swój adres, np. `jakas-nazwa.ngrok-free.app`.
+4. W Developer Portal → Activities → URL Mappings wpisz ten adres (bez `https://`). To jedyny raz.
+5. Przed każdą grą wpisz tylko: `npm run ngrok`.
+
+`npm run ngrok` buduje grę i uruchamia gotową wersję (port 3001) razem z tunelem. Po zmianach w kodzie lub pytaniach wystarczy uruchomić to polecenie ponownie.
+Darmowy plan ngrok ma limit 20 000 zapytań i 1 GB transferu miesięcznie. Na granie ze znajomymi to dużo, ale do testowania zmian lepiej używać `npm run dev` w przeglądarce.
+Darmowy ngrok może pokazać stronę ostrzeżenia „You are about to visit…”. Jeśli pojawi się w oknie aktywności, kliknij **Visit Site**. Wybór zostaje zapamiętany na 7 dni.
+
 ---
 
 ## Krok 1: Programy
