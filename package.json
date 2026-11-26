@@ -9,7 +9,8 @@
     "dev:discord": "cross-env TUNNEL=1 concurrently -n serwer,strona -c blue,yellow \"node --watch server/index.js\" \"vite\"",
     "discord": "cross-env TUNNEL=1 concurrently -n serwer,strona,tunel -c blue,yellow,magenta \"node --watch server/index.js\" \"vite\" \"cloudflared tunnel --url http://localhost:5173\"",
     "build": "vite build",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "ngrok": "npm run build && concurrently -n serwer,tunel -c blue,magenta \"node server/index.js\" \"ngrok http 3001 --log stdout --log-format logfmt\""
   },
   "dependencies": {
     "@discord/embedded-app-sdk": "^2.4.0",
