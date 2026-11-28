@@ -194,6 +194,8 @@ function render() {
   prevShown = s.questionShown;
   renderBoard(my);
   renderChatInput(my);
+  renderQuickBid(my);
+  show($('auto-pill'), s.autoActive && !['lobby', 'gameover'].includes(s.phase));
   renderLobby(my);
   renderHostPanel();
   tick();
@@ -322,7 +324,7 @@ function renderChatInput(my) {
     input.inputMode = canBid ? 'numeric' : 'text';
   }
   const color = my?.team ? s.teamsMeta.find((t) => t.id === my.team).color : 'var(--line)';
-  $('chat-form').style.setProperty('--mine', color);
+  document.querySelector('.chat').style.setProperty('--mine', color);
 }
 
 function addChatLine(e, channel = 'general', history = false) {
@@ -365,10 +367,12 @@ function renderLobby(my) {
         .join('')
     : '';
   show($('claim-host'), claim);
+  const autoStart = s.autoActive && !s.isHost && ['lobby', 'gameover'].includes(s.phase);
+  show($('auto-start'), autoStart);
   const champsInfo = s.championsNames?.length && ['lobby', 'gameover'].includes(s.phase);
   $('champs-info').innerHTML = champsInfo ? `🏆 Mistrzowie z poprzedniej gry: <b>${s.championsNames.map(esc).join(', ')}</b>` : '';
   show($('champs-info'), !!champsInfo);
-  show($('lobby'), chooseTeam || claim || !!champsInfo);
+  show($('lobby'), chooseTeam || claim || !!champsInfo || autoStart);
 }
 
 const ENABLED = {
@@ -396,8 +400,9 @@ function renderHostPanel() {
   const s = state;
   show($('host-panel'), s.isHost);
   if (!s.isHost) return;
+  const soundWait = soundLeft() > 0;
   for (const btn of $('host-panel').querySelectorAll('[data-action]')) {
-    btn.disabled = !ENABLED[btn.dataset.action](s);
+    btn.disabled = !ENABLED[btn.dataset.action](s) || (soundWait && SOUND_GATED.includes(btn.dataset.action));
     // Nowa gra w lobby/po grze nie potrzebuje potwierdzenia
     if (btn.dataset.action === 'start_game' && !btn.dataset.armed) btn.textContent = ['lobby', 'gameover'].includes(s.phase) ? '🚀 Start gry' : '🔄 Nowa gra';
   }
@@ -435,13 +440,15 @@ function renderHostPanel() {
     $('host-official').innerHTML = `Odpowiedź w pojedynku: <b>${esc(s.duel.pending.text)}</b> <span class="muted">(${esc(s.duel.pending.by)})</span> – oceń Dobrze/Źle`;
   }
   renderAssign(s);
+  $('auto-toggle').checked = !!s.auto;
 
   const sel = $('adjust-target');
   if (!sel.options.length) {
     sel.innerHTML =
       s.teamsMeta.map((t) => `<option value="${t.id}">${esc(t.name)}</option>`).join('') + '<option value="pool">Pula</option>';
   }
-  $('host-info').textContent = `Pozostało pytań: ${s.questionsLeft}`;
+  $('host-info').textContent =
+    (soundWait ? `🔊 Czekam na koniec dźwięku… ${Math.ceil(soundLeft() / 1000)} s · ` : '') + `Pozostało pytań: ${s.questionsLeft}`;
 }
 
 // Odliczanie – liczone lokalnie z czasu końca podanego przez serwer.
@@ -462,6 +469,19 @@ function tick() {
   el.className = `timer ${sec <= 3 ? 'urgent' : ''}`;
 }
 setInterval(tick, 200);
+
+// Przyciski następnego kroku czekają na koniec dźwięku (np. LICYTACJAEND, GOOD, FAIL).
+const SOUND_GATED = ['draw_category', 'start_bidding', 'show_question', 'next_round', 'start_final', 'open_box'];
+const soundLeft = () => (state ? Math.max(0, state.soundUntil - (Date.now() + clockOffset)) : 0);
+let lastSoundSec = -1;
+setInterval(() => {
+  if (!state?.isHost) return;
+  const sec = Math.ceil(soundLeft() / 1000);
+  if (sec !== lastSoundSec) {
+    lastSoundSec = sec;
+    renderHostPanel(); // odświeża blokadę przycisków i odliczanie
+  }
+}, 250);
 
 // ---------- obsługa kliknięć ----------
 $('chat-form').addEventListener('submit', (e) => {
@@ -844,3 +864,36 @@ $('assign-list').addEventListener('change', (e) => {
   if (sel) hostAction('assign', { userId: sel.dataset.user, team: sel.value || null });
   sel?.blur();
 });
+
+
+// =====================================================================
+// SZYBKA LICYTACJA: +100 / +1000 / VA BANQUE (przebijają najwyższą ofertę)
+// =====================================================================
+function renderQuickBid(my) {
+  const s = state;
+  const team = my?.team ? s.teams[my.team] : null;
+  const can = s.phase === 'bidding' && team && !s.isHost && !team.out;
+  show($('bid-quick'), !!can);
+  if (!can) return;
+  const leading = s.bidding.highestTeam === my.team;
+  for (const b of document.querySelectorAll('#bid-quick .qbid')) {
+    if (b.dataset.add === 'vabank') {
+      b.disabled = leading || team.money <= s.bidding.highest;
+      b.title = `Wszystko: ${fmt(team.money)}`;
+      continue;
+    }
+    const amount = s.bidding.highest + Number(b.dataset.add);
+    b.dataset.amount = amount;
+    b.innerHTML = `+${Number(b.dataset.add).toLocaleString('pl-PL')} <small>→ ${fmt(amount)}</small>`;
+    b.disabled = leading || amount > team.money;
+  }
+}
+
+$('bid-quick').addEventListener('click', (e) => {
+  const b = e.target.closest('.qbid');
+  if (!b || b.disabled) return;
+  sendMsg({ type: 'bid', text: b.dataset.add === 'vabank' ? 'vabank' : b.dataset.amount });
+});
+
+$('auto-toggle').addEventListener('change', (e) => hostAction('set_auto', { on: e.target.checked }));
+$('auto-start').addEventListener('click', () => sendMsg({ type: 'auto_start' }));

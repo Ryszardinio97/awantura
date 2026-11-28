@@ -127,6 +127,21 @@ Darmowe konto ngrok daje jeden stały adres `twoja-nazwa.ngrok-free.app`, więc 
 Darmowy plan ngrok ma limit 20 000 zapytań i 1 GB transferu miesięcznie. Na granie ze znajomymi to dużo, ale do testowania zmian lepiej używać `npm run dev` w przeglądarce.
 Darmowy ngrok może pokazać stronę ostrzeżenia „You are about to visit…”. Jeśli pojawi się w oknie aktywności, kliknij **Visit Site**. Wybór zostaje zapamiętany na 7 dni.
 
+## Szybka licytacja
+
+W czasie licytacji nad polem czatu są przyciski **+100**, **+1000** i **VA BANQUE**. Przebijają najwyższą ofertę o podaną kwotę, a przycisk pokazuje, ile wyniesie oferta. Wpisywanie kwoty na czacie dalej działa.
+
+## 🤖 Tryb Auto (gra bez prowadzącego)
+
+Gra prowadzi się sama: losuje kategorię, otwiera licytację, pokazuje pytanie, ocenia odpowiedź, przechodzi do kolejnej rundy i po 7 rundach etapu 1 do finału (`CONFIG.stage1Rounds`).
+- **Włącza się sam**, gdy w grze nie ma prowadzącego albo prowadzący jest offline. Wtedy każdy gracz może kliknąć **🚀 Start gry**.
+- **Prowadzący** włącza i wyłącza Auto w każdej chwili przełącznikiem na górze swojego panelu. Przyciski panelu działają też przy włączonym Auto.
+- Ocena: w trybie ABCD po literze, a w trybie bez odpowiedzi przez porównanie tekstu wpisanego z `!` (bez polskich znaków, wielkości liter i drobnych literówek; liczby muszą się zgadzać dokładnie). Odpowiedzi głosowych gra nie słyszy, więc w Auto drużyny muszą je wpisać albo kliknąć.
+- Brak odpowiedzi do końca czasu oznacza złą odpowiedź. W 1 na 1, gdy nikt się nie zgłosi przez 25 s, gra losuje gracza z drużyny.
+- Przerwy między krokami ustawisz w `CONFIG.autoDelay` w `server/game.js`.
+
+**Czekanie na dźwięki:** gra (w Auto i przy przyciskach prowadzącego) czeka, aż skończy się dźwięk: LOSOWANIE 15 s (koło kręci się tyle samo), LICYTACJAEND 7 s, GOOD1/GOOD2 6 s, FAIL 8 s. Do tego czasu przyciski następnego kroku są wyszarzone, a w panelu widać odliczanie. Po podmianie plików mp3 popraw ich długości w `CONFIG.soundSec`.
+
 ---
 
 ## Krok 1: Programy
@@ -207,7 +222,7 @@ i ustawiasz URL Mapping na swoją domenę.
 
 ## Pytania
 
-Są w `server/questions.json`: 182 pytania w 15 kategoriach. Format jednego pytania:
+Są w `server/questions.json`: 300 pytań w 26 kategoriach wzorowanych na programie (m.in. „Co to jest?”, „Przysłowia i cytaty”, „Anatomia i medycyna”, „Polityka i gospodarka”). Format jednego pytania:
 
 ```json
 { "kategoria": "Geografia", "pytanie": "Jak nazywa się najdłuższa rzeka w Polsce?",

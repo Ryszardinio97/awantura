@@ -774,3 +774,46 @@ main:not(.is-host) .right { display: none; }
 /* koło ze wszystkimi kategoriami – jak największe */
 .wheel-wrap { width: min(calc(100vh - 150px), 92vw, 820px); }
 .wheel-hub { width: 11%; }
+
+/* ---------- szybka licytacja ---------- */
+.bid-quick {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  padding: 6px 8px 0;
+  border-top: 1px solid var(--line);
+}
+.qbid {
+  padding: 7px 6px;
+  border-radius: 8px;
+  border: 2px solid var(--mine, var(--line));
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  line-height: 1.15;
+}
+.qbid small { display: block; font-weight: 600; font-size: 0.75rem; color: var(--muted); }
+.qbid:hover:not(:disabled) { filter: brightness(1.25); transform: translateY(-1px); }
+.qbid:disabled { opacity: 0.35; cursor: not-allowed; }
+.qbid.vb { background: var(--bad); border-color: var(--bad); color: #fff; letter-spacing: 0.03em; }
+.bid-quick + .chat-form { border-top: none; }
+
+/* ---------- tryb Auto ---------- */
+.auto-pill { background: #0e7490; border-color: #22d3ee; font-weight: 700; }
+.auto-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.auto-switch input { width: 18px; height: 18px; accent-color: #22d3ee; }
+#auto-start { margin-top: 8px; width: 100%; }

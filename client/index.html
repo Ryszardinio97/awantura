@@ -26,6 +26,7 @@
         <div id="round" class="pill"></div>
         <div id="phase" class="pill"></div>
         <div id="mode-pill" class="pill"></div>
+        <div id="auto-pill" class="pill auto-pill hidden">🤖 Auto</div>
         <div id="timer" class="timer"></div>
         <button id="sound-toggle" class="pill theme-btn" type="button" title="Włącz / wyłącz dźwięki (tylko u ciebie)"></button>
         <button id="theme-toggle" class="pill theme-btn" type="button" title="Zmień wygląd (tylko u ciebie)"></button>
@@ -52,6 +53,12 @@
             </div>
             <div id="chat-log" class="chat-log" data-log="general"></div>
             <div id="team-log" class="chat-log hidden" data-log="team"></div>
+            <!-- szybka licytacja: +100 / +1000 / VA BANQUE -->
+            <div id="bid-quick" class="bid-quick hidden">
+              <button type="button" class="qbid" data-add="100"></button>
+              <button type="button" class="qbid" data-add="1000"></button>
+              <button type="button" class="qbid vb" data-add="vabank">VA BANQUE</button>
+            </div>
             <form id="chat-form" class="chat-form">
               <input id="chat-input" autocomplete="off" maxlength="200" placeholder="Napisz wiadomość…" />
               <button type="submit" class="btn primary">➤</button>
@@ -62,6 +69,7 @@
           <section id="lobby" class="card hidden">
             <div id="champs-info" class="champs-info hidden"></div>
             <div id="team-buttons" class="row wrap"></div>
+            <button id="auto-start" class="btn primary hidden">🚀 Start gry (bez prowadzącego)</button>
             <button id="claim-host" class="btn ghost hidden">Zostań prowadzącym</button>
           </section>
         </div>
@@ -69,6 +77,10 @@
         <aside class="right">
           <section id="host-panel" class="card hidden">
             <h2>Panel prowadzącego</h2>
+            <label class="auto-switch">
+              <input type="checkbox" id="auto-toggle" />
+              <span>🤖 <b>Auto</b> – gra prowadzi się sama (możesz wyłączyć w każdej chwili)</span>
+            </label>
             <div class="mode-switch">
               <span class="muted">Tryb gry:</span>
               <button type="button" class="btn mode-btn" data-mode="voice">🎙️ Głosowy</button>

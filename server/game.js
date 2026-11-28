@@ -9,9 +9,15 @@ export const CONFIG = {
   firstBidTimerSec: 20,  // ile czasu na pierwszą ofertę po otwarciu licytacji
   bidTimerSec: 10,       // ile sekund bez przebicia zamyka licytację
   answerTimerSec: 60,    // czas na odpowiedź (tylko odliczanie, decyduje prowadzący)
-  spinSec: Number(process.env.SPIN_SEC) || 10, // jak długo kręci się koło przy losowaniu kategorii
+  spinSec: Number(process.env.SPIN_SEC) || 15, // jak długo kręci się koło (tyle, ile trwa LOSOWANIE.mp3)
+  // Długość dźwięków w sekundach. Gra czeka, aż się skończą, zanim przejdzie dalej.
+  // Jeśli podmienisz pliki mp3 na inne, popraw tu ich długość. TIME nie blokuje (przerywa go ocena).
+  soundSec: { losowanie: 15, licytacjaend: 7, good1: 6, good2: 6, fail: 8, time: 0 },
   hintCost: 500,         // cena podpowiedzi 50/50 (trafia do puli); 0 = za darmo
   finalQuestions: 7,     // ile pytań ma finał z Mistrzami
+  stage1Rounds: 7,       // tryb Auto: po tylu rundach etapu 1 gra sama przechodzi do finału
+  // tryb Auto: przerwy między krokami (ms)
+  autoDelay: { draw: 3000, bidding: 2500, show: 2500, judge: 2000, next: 4000, box: 3500, duelPick: 25000 },
   duelFee: 500,          // 1 na 1: tyle wpłaca każda drużyna do puli…
   duelBonus: 1000,       // …a tyle dokłada prowadzący
   // Czarna skrzynka: losowana nagroda dla drużyny, która ją wylicytuje.
@@ -81,6 +87,7 @@ function freshState() {
     answerEndsAt: null,
     officialAnswer: null, // tryb tekstowy: { text, by } – odpowiedź drużyny wpisana z "!"
     mode: 'voice', // 'voice' = gracze na głosowym, 'text' = wszystko na czacie
+    auto: false, // tryb Auto włączony przez prowadzącego (bez prowadzącego działa zawsze)
     answerMode: 'abcd', // 'abcd' = pytanie z 4 odpowiedziami, 'open' = bez odpowiedzi
     options: null, // tryb ABCD: 4 odpowiedzi w wylosowanej kolejności
     correctIndex: null,
@@ -96,6 +103,48 @@ function freshState() {
     message: 'Czekamy na prowadzącego.',
   };
 }
+
+// ---------- porównywanie odpowiedzi tekstowych (tryb Auto) ----------
+const PREPS = new Set(['z', 'ze', 'w', 'we', 'na', 'do', 'od', 'o', 'i', 'the']);
+function norm(t) {
+  return String(t)
+    .toLowerCase()
+    .replace(/ł/g, 'l')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9 ]+/g, ' ')
+    .split(/\s+/)
+    .filter((w) => w && !PREPS.has(w))
+    .join(' ');
+}
+function levenshtein(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++)
+    for (let j = 1; j <= b.length; j++)
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+export function answersMatch(given, correct) {
+  const g = norm(given);
+  const c = norm(correct);
+  if (!g || !c) return false;
+  if (g === c) return true;
+  // liczby (lata, ilości) i bardzo krótkie odpowiedzi muszą się zgadzać dokładnie
+  if (/\d/.test(c)) return g.replace(/ /g, '') === c.replace(/ /g, '');
+  if (c.length <= 3) return false;
+  const tol = Math.max(1, Math.floor(c.length / 5)); // drobne literówki
+  if (levenshtein(g, c) <= tol) return true;
+  // „Wisła” ↔ „rzeka Wisła”, „Włochy” ↔ „z Włoch”, „Mickiewicz” ↔ „Adam Mickiewicz”
+  if (g.length >= 4 && c.includes(g)) return true;
+  if (c.length >= 4 && g.includes(c)) return true;
+  const last = c.split(' ').pop();
+  if (last.length >= 4 && g.split(' ').some((w) => levenshtein(w, last) <= 1)) return true;
+  return false;
+}
+
+// Akcje, które czekają na koniec dźwięku (żeby nie przerwać np. LICYTACJAEND albo GOOD).
+const SOUND_GATED = ['draw_category', 'start_bidding', 'show_question', 'next_round', 'start_final', 'open_box'];
 
 export class Game {
   constructor(id, questions, { saved, hostIds = [], onChange, voice, champions } = {}) {
@@ -118,6 +167,8 @@ export class Game {
     this.state.answerMode ??= 'abcd';
     this.state.removed ??= [];
     this.state.stage ??= 1;
+    this.state.auto ??= false;
+    this.autoPlan = null; // { key, timer } – zaplanowany krok trybu Auto
     this.state.usedSpecials ??= [];
     this.spinTimer = null;
     // Restart serwera w trakcie kręcenia kołem – dokończ ogłoszenie kategorii.
@@ -329,6 +380,7 @@ export class Game {
       }
     }
     if (save) this.onChange(this);
+    this.scheduleAuto();
   }
 
   // Każdy gracz dostaje swój widok: odpowiedź widzi tylko prowadzący
@@ -386,6 +438,9 @@ export class Game {
         : null,
       boxPrize: s.boxPrize,
       championsNames: this.champions.get().names,
+      auto: s.auto,
+      autoActive: this.autoActive(),
+      soundUntil: this.soundUntil ?? 0,
       spin: s.spin ?? null,
       voiceReady: !!this.voice?.ready,
       voiceBusy: this.voiceBusy,
@@ -405,6 +460,11 @@ export class Game {
         return this.joinTeam(userId, msg.team);
       case 'claim_host':
         return this.claimHost(userId);
+      case 'auto_start':
+        // bez prowadzącego (albo w trybie Auto) grę może zacząć każdy gracz
+        if (!this.autoActive()) return 'Grę zaczyna prowadzący.';
+        if (!['lobby', 'gameover'].includes(s.phase)) return 'Gra już trwa.';
+        return this.hostAction({ action: 'start_game' });
       case 'chat':
         return this.chatMessage(userId, msg.text, msg.channel === 'team' ? 'team' : 'general');
       case 'bid':
@@ -500,16 +560,20 @@ export class Game {
     const s = this.state;
     const need = (...phases) =>
       phases.includes(s.phase) ? null : 'Tej akcji nie można teraz wykonać.';
+    // Kolejny krok dopiero po końcu dźwięku (np. koniec licytacji, dobra/zła odpowiedź).
+    const left = this.soundLeft();
+    if (left > 0 && SOUND_GATED.includes(msg.action)) return `Poczekaj, aż skończy się dźwięk (${Math.ceil(left / 1000)} s).`;
 
     switch (msg.action) {
       case 'start_game': {
-        const { hostId, players, mode, answerMode } = s;
+        const { hostId, players, mode, answerMode, auto } = s;
         this.clearTimer();
         this.state = freshState();
         this.state.hostId = hostId;
         this.state.players = players;
         this.state.mode = mode;
         this.state.answerMode = answerMode;
+        this.state.auto = auto;
         // Zapamiętani Mistrzowie -> drużyna Mistrzów; byli Mistrzowie bez tytułu -> bez drużyny.
         const champIds = this.champions.get().ids;
         if (champIds.length) {
@@ -520,7 +584,7 @@ export class Game {
         }
         this.state.phase = 'category';
         this.state.round = 1;
-        this.say('Etap 1, runda 1 – prowadzący losuje kategorię.');
+        this.say('Etap 1, runda 1 – losujemy kategorię.');
         for (const ws of this.sockets) this.sendHistory(ws);
         break;
       }
@@ -581,6 +645,8 @@ export class Game {
           index,
           endsAt: Date.now() + CONFIG.spinSec * 1000,
         };
+        // LOSOWANIE.mp3 gra u graczy razem z kołem – kolejny krok dopiero po jego końcu
+        this.soundUntil = Math.max(this.soundUntil ?? 0, Date.now() + (CONFIG.soundSec.losowanie ?? 0) * 1000);
         this.say('Losowanie kategorii… 🎡');
         this.armSpin();
         break;
@@ -711,8 +777,8 @@ export class Game {
         for (const id of TEAM_IDS) s.teams[id].bid = 0;
         this.say(
           s.stage === 2
-            ? `Finał – pytanie ${s.finalRound} z ${CONFIG.finalQuestions}. Prowadzący losuje kategorię.`
-            : `Etap 1, runda ${s.round} – prowadzący losuje kategorię.`,
+            ? `Finał – pytanie ${s.finalRound} z ${CONFIG.finalQuestions}. Losujemy kategorię.`
+            : `Etap 1, runda ${s.round} – losujemy kategorię.`,
         );
         break;
       }
@@ -784,6 +850,10 @@ export class Game {
         });
         return null;
       }
+      case 'set_auto':
+        s.auto = !!msg.on;
+        this.say(s.auto ? '🤖 Tryb Auto włączony – gra prowadzi się sama.' : '🤖 Tryb Auto wyłączony – prowadzący przejmuje stery.');
+        break;
       case 'release_host':
         s.hostId = null;
         this.say('Gra nie ma prowadzącego.');
@@ -855,6 +925,110 @@ export class Game {
     s.correctIndex = s.options.indexOf(q.odpowiedz);
   }
 
+  // ---------- tryb Auto ----------
+  // Gra prowadzi się sama, gdy prowadzący włączy Auto albo gdy prowadzącego nie ma (lub jest offline).
+
+  autoActive() {
+    const s = this.state;
+    return s.auto || !s.hostId || !this.isOnline(s.hostId);
+  }
+
+  // Po każdej zmianie stanu planujemy jeden kolejny krok. Ten sam krok nie jest planowany dwa razy,
+  // więc częste odświeżenia (np. nowe oferty) nie przesuwają go w nieskończoność.
+  scheduleAuto() {
+    const plan = this.autoActive() && this.sockets.size ? this.nextAutoStep() : null;
+    if (plan && this.autoPlan?.key === plan.key) return;
+    clearTimeout(this.autoPlan?.timer);
+    this.autoPlan = null;
+    if (!plan) return;
+    const timer = setTimeout(() => {
+      this.autoPlan = null;
+      if (!this.autoActive()) return;
+      const err = plan.run();
+      if (err) {
+        // np. za mało drużyn – spróbujemy ponownie za chwilę
+        this.autoPlan = { key: plan.key, timer: setTimeout(() => { this.autoPlan = null; this.scheduleAuto(); }, 5000) };
+      }
+    }, Math.max(0, plan.delay));
+    this.autoPlan = { key: plan.key, timer };
+  }
+
+  nextAutoStep() {
+    const s = this.state;
+    const D = CONFIG.autoDelay;
+    const host = (action) => () => this.hostAction({ action });
+    const key = (...parts) => [s.round, s.phase, ...parts].join('|');
+    const now = Date.now();
+    const afterSound = (ms) => { const left = this.soundLeft(); return Math.max(ms, left ? left + 400 : 0); }; // nie wchodzimy w trwający dźwięk
+    switch (s.phase) {
+      case 'category':
+        if (this.spinning()) return { key: key('spin', s.spin.id), delay: afterSound(s.spin.endsAt - now + D.bidding), run: host('start_bidding') };
+        if (!s.category) return { key: key('draw'), delay: afterSound(D.draw), run: host('draw_category') };
+        return { key: key('bid', s.spin?.id), delay: afterSound(D.bidding), run: host('start_bidding') };
+      case 'question':
+        if (!s.questionShown) return { key: key('show'), delay: afterSound(D.show), run: host('show_question') };
+        if (s.officialAnswer) {
+          const ok = this.isCorrect(s.officialAnswer);
+          return { key: key('judge'), delay: D.judge, run: host(ok ? 'good' : 'bad') };
+        }
+        if (s.answerEndsAt) return { key: key('timeout', s.answerEndsAt), delay: s.answerEndsAt - now + 500, run: () => this.autoTimeout() };
+        return null;
+      case 'duel': {
+        const teams = this.activeTeams();
+        if (!s.questionShown) {
+          if (Object.keys(s.duel.players).length >= teams.length) return { key: key('duelshow'), delay: afterSound(D.show), run: host('show_question') };
+          return { key: key('duelpick'), delay: D.duelPick, run: () => this.autoPickDuelists() };
+        }
+        if (s.duel.pending) {
+          const ok = this.isCorrect(s.duel.pending);
+          return { key: key('dueljudge', s.duel.locked.length), delay: D.judge, run: () => this.judgeDuel(ok) };
+        }
+        if (s.answerEndsAt) return { key: key('dueltimeout', s.answerEndsAt), delay: s.answerEndsAt - now + 500, run: () => this.duelNoWin() };
+        return null;
+      }
+      case 'box':
+        return { key: key('box'), delay: afterSound(D.box), run: host('open_box') };
+      case 'result':
+        if (s.stage === 1 && s.round >= CONFIG.stage1Rounds) return { key: key('final'), delay: afterSound(D.next), run: () => this.startFinal(true) };
+        return { key: key('next'), delay: afterSound(D.next), run: host('next_round') };
+      default:
+        return null; // lobby, licytacja (zamyka ją timer), koniec gry
+    }
+  }
+
+  // Czas na odpowiedź minął, a drużyna nic nie podała.
+  autoTimeout() {
+    const s = this.state;
+    if (s.phase !== 'question' || s.officialAnswer) return null;
+    this.say('⏱ Czas minął – brak odpowiedzi.');
+    return this.hostAction({ action: 'bad' });
+  }
+
+  // W pojedynku nikt się nie zgłosił – losujemy gracza z drużyny (najlepiej kogoś online).
+  autoPickDuelists() {
+    const s = this.state;
+    for (const team of this.activeTeams()) {
+      if (s.duel.players[team]) continue;
+      const pool = Object.values(s.players).filter((p) => p.team === team && p.id !== s.hostId);
+      const online = pool.filter((p) => this.isOnline(p.id));
+      const pick = (online.length ? online : pool)[Math.floor(Math.random() * (online.length || pool.length))];
+      if (pick) {
+        s.duel.players[team] = pick.id;
+        this.say(`${teamName(team)}: nikt się nie zgłosił – do pojedynku losowo staje ${pick.name}.`);
+      }
+    }
+    this.changed();
+    return null;
+  }
+
+  // Ocena odpowiedzi w trybie Auto: ABCD – po literze; bez odpowiedzi – porównanie tekstu
+  // (bez wielkości liter, polskich znaków i drobnych literówek).
+  isCorrect(answer) {
+    const s = this.state;
+    if (answer.index != null) return answer.index === s.correctIndex;
+    return answersMatch(answer.text, s.question?.odpowiedz ?? '');
+  }
+
   // ---------- koło i dźwięki ----------
 
   spinning() {
@@ -878,8 +1052,15 @@ export class Game {
 
   // Dźwięk u wszystkich graczy naraz (pliki w client/public/sounds).
   sfx(name) {
+    const sec = CONFIG.soundSec[name] ?? 0;
+    if (sec > 0) this.soundUntil = Math.max(this.soundUntil ?? 0, Date.now() + sec * 1000);
     const data = JSON.stringify({ type: 'sfx', name });
     for (const ws of this.sockets) if (ws.readyState === 1) ws.send(data);
+  }
+
+  // Ile ms zostało do końca bieżącego dźwięku.
+  soundLeft() {
+    return Math.max(0, (this.soundUntil ?? 0) - Date.now());
   }
 
   // Drużyny, do których ktoś dołączył (puste drużyny nie grają).
